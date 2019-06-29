@@ -4,7 +4,7 @@ Subnet is a Crystal library designed to make the use of IPv4 and IPv6 (soon) add
 
 Subnet is written with a full OO interface, and its code is easy to read, maintain and extend. The documentation is full of examples, to let you start being productive immediately.
 
-This document provides a brief introduction to the library and examples of typical usage.
+This document provides a brief introduction to the library and examples of typical usage. You can check out the full documentation [here](https://watzon.github.io/subnet/).
 
 ## Installation
 
