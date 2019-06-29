@@ -110,28 +110,28 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/version.cr#L1" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet/version.cr#L1" target="_blank">
         subnet/version.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/prefix.cr#L3" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet/prefix.cr#L3" target="_blank">
         subnet/prefix.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L3" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet/ipv4.cr#L3" target="_blank">
         subnet/ipv4.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L7" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L7" target="_blank">
         subnet.cr
       </a>
     
@@ -279,7 +279,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -294,14 +294,13 @@
       
         <div class="doc"><p>Converts a unit32 to IPv4</p>
 
-<p>Subnet::ntoa(167837953)</p>
-
-<pre><code><span class="c">#-&gt; &quot;10.1.1.1&quot;</span></code></pre></div>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>ntoa(<span class="n">167837953</span>)
+  <span class="c"># =&gt; &quot;10.1.1.1&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -317,25 +316,25 @@
         <div class="doc"><p>Parse the argument string to create a new
 IPv4, IPv6 or Mapped IP object</p>
 
-<p>ip  = Subnet.parse 167837953 # 10.1.1.1
-  ip  = Subnet.parse "172.16.10.1/24"
-  ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
-  ip_mapped = Subnet.parse "::ffff:172.16.10.1/128"</p>
+<pre><code>ip  <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="n">167837953</span> <span class="c"># 10.1.1.1</span>
+ip  <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;172.16.10.1/24&quot;</span>
+ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+ip_mapped <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
 
 <p>All the object created will be instances of the
 correct class:</p>
 
-<p>ip.class
-   #=> Subnet::IPv4
- ip6.class
-   #=> Subnet::IPv6
- ip_mapped.class
-   #=> Subnet::IPv6::Mapped</p></div>
+<pre><code>ip.<span class="k">class</span>
+  <span class="c"># =&gt; Subnet::IPv4</span>
+ip6.<span class="k">class</span>
+  <span class="c"># =&gt; Subnet::IPv6</span>
+ip_mapped.<span class="k">class</span>
+  <span class="c"># =&gt; Subnet::IPv6::Mapped</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -352,26 +351,22 @@ correct class:</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid? "10.0.0.0/24"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid? <span class="s">&quot;10.0.0.0/24&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
+<span class="t">Subnet</span><span class="t">::</span>valid? <span class="s">&quot;2002::1&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<p>Subnet::valid? "2002::1"</p>
+<span class="t">Subnet</span><span class="t">::</span>valid? <span class="s">&quot;10.0.0.256&quot;</span>
+  <span class="c"># =&gt; false</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>Subnet::valid? "10.0.0.256"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre>
-
-<p>Subnet::valid? "10.0.0.0/999"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid? <span class="s">&quot;10.0.0.0/999&quot;</span>
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -389,18 +384,16 @@ either IPv4 or IPv6</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid_ip? "2002::1"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid_ip? <span class="s">&quot;2002::1&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>Subnet::valid_ip? "10.0.0.256"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid_ip? <span class="s">&quot;10.0.0.256&quot;</span>
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -417,18 +410,16 @@ either IPv4 or IPv6</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid_ipv4? "2002::1"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid_ipv4? <span class="s">&quot;2002::1&quot;</span>
+  <span class="c"># =&gt; false</span>
 
-<pre><code><span class="c">#=&gt; false</span></code></pre>
-
-<p>Subnet::valid_ipv4? "172.16.10.1"</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv4? <span class="s">&quot;172.16.10.1&quot;</span>
+  <span class="c"># =&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L184" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -444,14 +435,13 @@ either IPv4 or IPv6</p>
         <div class="doc"><p>Checks if the argument is a valid IPv4 netmask
 expressed in dotted decimal format.</p>
 
-<p>Subnet.valid_ipv4_netmask? "255.255.0.0"</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<pre><code><span class="t">Subnet</span>.valid_ipv4_netmask? <span class="s">&quot;255.255.0.0&quot;</span>
+  <span class="c"># =&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -468,22 +458,19 @@ expressed in dotted decimal format.</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid_ipv4_subnet? "10.0.0.0/24"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid_ipv4_subnet? <span class="s">&quot;10.0.0.0/24&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv4_subnet? <span class="s">&quot;10.0.0.0/255.255.255.0&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<p>Subnet::valid_ipv4_subnet? "10.0.0.0/255.255.255.0"</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>Subnet::valid_ipv4_subnet? "10.0.0.0/64"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv4_subnet? <span class="s">&quot;10.0.0.0/64&quot;</span>
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L143" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -500,18 +487,16 @@ expressed in dotted decimal format.</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid_ipv6? "2002::1"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid_ipv6? <span class="s">&quot;2002::1&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>Subnet::valid_ipv6? "2002::DEAD::BEEF"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv6? <span class="s">&quot;2002::DEAD::BEEF&quot;</span>
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L199" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L218" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -528,22 +513,19 @@ expressed in dotted decimal format.</p>
 
 <p>Example:</p>
 
-<p>Subnet::valid_ipv6_subnet? "::/0"</p>
+<pre><code><span class="t">Subnet</span><span class="t">::</span>valid_ipv6_subnet? <span class="s">&quot;::/0&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv6_subnet? <span class="s">&quot;dead:beef:cafe:babe::/64&quot;</span>
+  <span class="c"># =&gt; true</span>
 
-<p>Subnet::valid_ipv6_subnet? "dead:beef:cafe:babe::/64"</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>Subnet::valid_ipv6_subnet? "2001::1/129"</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span>valid_ipv6_subnet? <span class="s">&quot;2001::1/129&quot;</span>
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -563,16 +545,15 @@ expressed in dotted decimal format.</p>
       
         <div class="doc"><p>True if the object is an IPv4 address</p>
 
-<p>ip = Subnet.parse("192.168.10.100/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.100/24&quot;</span>)
 
-<p>ip.ipv4?</p>
-
-<pre><code><span class="c">#-&gt; true</span></code></pre></div>
+ip.ipv4?
+  <span class="c"># =&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -587,16 +568,15 @@ expressed in dotted decimal format.</p>
       
         <div class="doc"><p>True if the object is an IPv6 address</p>
 
-<p>ip = Subnet.parse("192.168.10.100/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.100/24&quot;</span>)
 
-<p>ip.ipv6?</p>
-
-<pre><code><span class="c">#-&gt; false</span></code></pre></div>
+ip.ipv6?
+  <span class="c"># =&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/a509be09c26271b2f54c109ee28d8ce405acad7e/src/subnet.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>

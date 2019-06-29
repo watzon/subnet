@@ -8,20 +8,24 @@ module Subnet
   # Parse the argument string to create a new
   # IPv4, IPv6 or Mapped IP object
   #
-  #   ip  = Subnet.parse 167837953 # 10.1.1.1
-  #   ip  = Subnet.parse "172.16.10.1/24"
-  #   ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
-  #   ip_mapped = Subnet.parse "::ffff:172.16.10.1/128"
+  # ```
+  # ip  = Subnet.parse 167837953 # 10.1.1.1
+  # ip  = Subnet.parse "172.16.10.1/24"
+  # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
+  # ip_mapped = Subnet.parse "::ffff:172.16.10.1/128"
+  # ```
   #
   # All the object created will be instances of the
   # correct class:
   #
-  #  ip.class
-  #    #=> Subnet::IPv4
-  #  ip6.class
-  #    #=> Subnet::IPv6
-  #  ip_mapped.class
-  #    #=> Subnet::IPv6::Mapped
+  # ```
+  # ip.class
+  #   # => Subnet::IPv4
+  # ip6.class
+  #   # => Subnet::IPv6
+  # ip_mapped.class
+  #   # => Subnet::IPv6::Mapped
+  # ```
   def self.parse(str)
 
     # Check if an int was passed
@@ -29,24 +33,24 @@ module Subnet
       return Subnet::IPv4.new(ntoa(str))
     end
 
-    Subnet::IPv4.new(str)
-    # case str
+    case str
     # when /:.+\./
     #   Subnet::IPv6::Mapped.new(str)
-    # when /\./
-    #   Subnet::IPv4.new(str)
+    when /\./
+      Subnet::IPv4.new(str)
     # when /:/
-    #   Subnet::IPv6.new(str)
-    # else
-    #   raise ArgumentError.new("Unknown IP Address #{str}")
-    # end
+      # Subnet::IPv6.new(str)
+    else
+      raise ArgumentError.new("Unknown IP Address #{str}")
+    end
   end
 
   # Converts a unit32 to IPv4
   #
-  #   Subnet::ntoa(167837953)
-  #     #-> "10.1.1.1"
-  #
+  # ```
+  # Subnet::ntoa(167837953)
+  #   # => "10.1.1.1"
+  # ```
   def self.ntoa(uint)
     unless uint.is_a? Number && uint <= 0xffffffff && uint >= 0
       raise ArgumentError.new("not a long integer: #{uint.inspect}")
@@ -62,10 +66,12 @@ module Subnet
 
   # True if the object is an IPv4 address
   #
-  #   ip = Subnet.parse("192.168.10.100/24")
+  # ```
+  # ip = Subnet.parse("192.168.10.100/24")
   #
-  #   ip.ipv4?
-  #     #-> true
+  # ip.ipv4?
+  #   # => true
+  # ```
   def ipv4?
     self.is_a? Subnet::IPv4
   end
@@ -73,10 +79,12 @@ module Subnet
   #
   # True if the object is an IPv6 address
   #
-  #   ip = Subnet.parse("192.168.10.100/24")
+  # ```
+  # ip = Subnet.parse("192.168.10.100/24")
   #
-  #   ip.ipv6?
-  #     #-> false
+  # ip.ipv6?
+  #   # => false
+  # ```
   def ipv6?
     self.kind_of? Subnet::IPv6
   end
@@ -85,17 +93,19 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid? "10.0.0.0/24"
-  #     #=> true
+  # ```
+  # Subnet::valid? "10.0.0.0/24"
+  #   # => true
   #
-  #   Subnet::valid? "2002::1"
-  #     #=> true
+  # Subnet::valid? "2002::1"
+  #   # => true
   #
-  #   Subnet::valid? "10.0.0.256"
-  #     #=> false
+  # Subnet::valid? "10.0.0.256"
+  #   # => false
   #
-  #   Subnet::valid? "10.0.0.0/999"
-  #     #=> false
+  # Subnet::valid? "10.0.0.0/999"
+  #   # => false
+  # ```
   def self.valid?(addr)
     valid_ip?(addr) || valid_ipv4_subnet?(addr) || valid_ipv6_subnet?(addr)
   end
@@ -105,12 +115,13 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid_ip? "2002::1"
-  #     #=> true
+  # ```
+  # Subnet::valid_ip? "2002::1"
+  #   # => true
   #
-  #   Subnet::valid_ip? "10.0.0.256"
-  #     #=> false
-  #
+  # Subnet::valid_ip? "10.0.0.256"
+  #   # => false
+  # ```
   def self.valid_ip?(addr)
     valid_ipv4?(addr) || valid_ipv6?(addr)
   end
@@ -119,14 +130,16 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid_ipv4_subnet? "10.0.0.0/24"
-  #     #=> true
+  # ```
+  # Subnet::valid_ipv4_subnet? "10.0.0.0/24"
+  #   # => true
   #
-  #   Subnet::valid_ipv4_subnet? "10.0.0.0/255.255.255.0"
-  #     #=> true
+  # Subnet::valid_ipv4_subnet? "10.0.0.0/255.255.255.0"
+  #   # => true
   #
-  #   Subnet::valid_ipv4_subnet? "10.0.0.0/64"
-  #     #=> false
+  # Subnet::valid_ipv4_subnet? "10.0.0.0/64"
+  #   # => false
+  # ```
   def self.valid_ipv4_subnet?(addr)
     ip, netmask = addr.split('/')
 
@@ -137,14 +150,16 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid_ipv6_subnet? "::/0"
-  #     #=> true
+  # ```
+  # Subnet::valid_ipv6_subnet? "::/0"
+  #   # => true
   #
-  #   Subnet::valid_ipv6_subnet? "dead:beef:cafe:babe::/64"
-  #     #=> true
+  # Subnet::valid_ipv6_subnet? "dead:beef:cafe:babe::/64"
+  #   # => true
   #
-  #   Subnet::valid_ipv6_subnet? "2001::1/129"
-  #     #=> false
+  # Subnet::valid_ipv6_subnet? "2001::1/129"
+  #   # => false
+  # ```
   def self.valid_ipv6_subnet?(addr)
     ip, netmask = addr.split('/')
 
@@ -159,11 +174,13 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid_ipv4? "2002::1"
-  #     #=> false
+  # ```
+  # Subnet::valid_ipv4? "2002::1"
+  #   # => false
   #
-  #   Subnet::valid_ipv4? "172.16.10.1"
-  #     #=> true
+  # Subnet::valid_ipv4? "172.16.10.1"
+  #   # => true
+  # ```
   def self.valid_ipv4?(addr)
     if /\A(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\Z/ =~ addr
       return $~.captures.all? {|i| i.to_i < 256 unless i.nil? }
@@ -174,9 +191,10 @@ module Subnet
   # Checks if the argument is a valid IPv4 netmask
   # expressed in dotted decimal format.
   #
-  #   Subnet.valid_ipv4_netmask? "255.255.0.0"
-  #     #=> true
-  #
+  # ```
+  # Subnet.valid_ipv4_netmask? "255.255.0.0"
+  #   # => true
+  # ```
   def self.valid_ipv4_netmask?(addr)
     arr = addr.split(".").map{|i| i.to_u8}
     bin = Slice.new(arr.to_unsafe, arr.size).hexstring.to_u32(16).to_s(2)
@@ -190,12 +208,13 @@ module Subnet
   #
   # Example:
   #
-  #   Subnet::valid_ipv6? "2002::1"
-  #     #=> true
+  # ```
+  # Subnet::valid_ipv6? "2002::1"
+  #   # => true
   #
-  #   Subnet::valid_ipv6? "2002::DEAD::BEEF"
-  #     #=> false
-  #
+  # Subnet::valid_ipv6? "2002::DEAD::BEEF"
+  #   # => false
+  # ```
   def self.valid_ipv6?(addr)
     # https://gist.github.com/cpetschnig/294476
     # http://forums.intermapper.com/viewtopic.php?t=452
