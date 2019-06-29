@@ -23,31 +23,36 @@ module Subnet
     # Returns the address portion of the IPv4 object
     # as a string.
     #
-    #   ip = Subnet.parse("172.16.100.4/22")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4/22")
     #
-    #   ip.address
-    #     #=> "172.16.100.4"
+    # ip.address
+    #   #=> "172.16.100.4"
+    # ```
     getter address : String
 
     # Returns the prefix portion of the IPv4 object
     # as a Subnet::Prefix32 object
     #
-    #   ip = Subnet.parse("172.16.100.4/22")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4/22")
     #
-    #   ip.prefix
-    #     #=> 22
+    # ip.prefix
+    #   #=> 22
     #
-    #   ip.prefix.class
-    #     #=> Subnet::Prefix32
-    #
+    # ip.prefix.class
+    #   #=> Subnet::Prefix32
+    # ```
     getter prefix : Prefix32
 
     # Returns the address as an array of decimal values
     #
-    #   ip = Subnet.parse("172.16.100.4")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4")
     #
-    #   ip.octets
-    #     #=> [172, 16, 100, 4]
+    # ip.octets
+    #   #=> [172, 16, 100, 4]
+    # ```
     getter octets : Array(Int32)
 
     # Returns the address portion in unsigned
@@ -57,10 +62,12 @@ module Subnet
     # inet_pton to create a 32 bits address family
     # structure.
     #
-    #   ip = Subnet.parse("10.0.0.0/8")
+    # ```crystal
+    # ip = Subnet.parse("10.0.0.0/8")
     #
-    #   ip.to_i
-    #     #=> 167772160
+    # ip.to_i
+    #   #=> 167772160
+    # ```
     getter u32 : Int64
 
     @allocator : Int32
@@ -81,13 +88,15 @@ module Subnet
     #
     # Examples:
     #
-    #   # These two are the same
-    #   ip = Subnet::IPv4.new("10.0.0.1/24")
-    #   ip = Subnet.parse("10.0.0.1/24")
+    # ```crystal
+    # # These two are the same
+    # ip = Subnet::IPv4.new("10.0.0.1/24")
+    # ip = Subnet.parse("10.0.0.1/24")
     #
-    #   # These two are the same
-    #   Subnet::IPv4.new "10.0.0.1/8"
-    #   Subnet::IPv4.new "10.0.0.1/255.0.0.0"
+    # # These two are the same
+    # Subnet::IPv4.new "10.0.0.1/8"
+    # Subnet::IPv4.new "10.0.0.1/255.0.0.0"
+    # ```
     def initialize(str)
       parts = str.split('/')
       ip, netmask = parts[0], parts[1]?
@@ -129,43 +138,48 @@ module Subnet
     # if the object was created using the classful
     # mask.
     #
-    #   ip = Subnet.parse("172.16.100.4")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4")
     #
-    #   puts ip
-    #     #=> 172.16.100.4/16
+    # puts ip
+    #   #=> 172.16.100.4/16
     #
-    #   ip.prefix = 22
+    # ip.prefix = 22
     #
-    #   puts ip
-    #     #=> 172.16.100.4/22
-    #
+    # puts ip
+    #   #=> 172.16.100.4/22
+    # ```
     def prefix=(num)
       @prefix = Prefix32.new(num)
     end
 
     # Returns the prefix as a string in IP format
     #
-    #   ip = Subnet.parse("172.16.100.4/22")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4/22")
     #
-    #   ip.netmask
-    #     #=> "255.255.252.0"
+    # ip.netmask
+    #   #=> "255.255.252.0"
+    # ```
     def netmask
       @prefix.to_ip
     end
 
-    # Like IPv4#prefix=, this method allow you to
+    # Like `IPv4#prefix=`, this method allow you to
     # change the prefix / netmask of an IP address
     # object.
     #
-    #   ip = Subnet.parse("172.16.100.4")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.4")
     #
-    #   puts ip
-    #     #=> 172.16.100.4/16
+    # puts ip
+    #   #=> 172.16.100.4/16
     #
-    #   ip.netmask = "255.255.252.0"
+    # ip.netmask = "255.255.252.0"
     #
-    #   puts ip
-    #     #=> 172.16.100.4/22
+    # puts ip
+    #   #=> 172.16.100.4/22
+    # ```
     def netmask=(addr)
       @prefix = Prefix32.parse_netmask(addr)
     end
@@ -183,10 +197,12 @@ module Subnet
     # Returns the address portion in
     # hex
     #
-    #   ip = Subnet.parse("10.0.0.0")
+    # ```crystal
+    # ip = Subnet.parse("10.0.0.0")
     #
-    #   ip.to_h
-    #     #=> 0a000000
+    # ip.hexstring
+    #   #=> "0a000000"
+    # ```
     def hexstring
       data.to_slice.hexstring
     end
@@ -194,10 +210,12 @@ module Subnet
     # Returns the address portion of an IPv4 object
     # in a network byte order format.
     #
-    #   ip = Subnet.parse("172.16.10.1/24")
+    # ```crystal
+    # ip = Subnet.parse("172.16.10.1/24")
     #
-    #   ip.data
-    #     #=> Bytes[172, 16, 10, 1]
+    # ip.data
+    #   #=> Bytes[172, 16, 10, 1]
+    # ```
     #
     # It is usually used to include an IP address
     # in a data packet to be sent over a socket.
@@ -209,17 +227,18 @@ module Subnet
 
     # Returns the octet specified by index
     #
-    #   ip = Subnet.parse("172.16.100.50/24")
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.50/24")
     #
-    #   ip[0]
-    #     #=> 172
-    #   ip[1]
-    #     #=> 16
-    #   ip[2]
-    #     #=> 100
-    #   ip[3]
-    #     #=> 50
-    #
+    # ip[0]
+    #   #=> 172
+    # ip[1]
+    #   #=> 16
+    # ip[2]
+    #   #=> 100
+    # ip[3]
+    #   #=> 50
+    # ```
     def [](index)
       @octets[index]
     end
@@ -231,11 +250,13 @@ module Subnet
 
     # Updated the octet specified at index
     #
-    #   ip = Subnet.parse("172.16.100.50/24")
-    #   ip[2] = 200
+    # ```crystal
+    # ip = Subnet.parse("172.16.100.50/24")
+    # ip[2] = 200
     #
-    #   #=>  #<Subnet::IPv4:0x00000000000000 @address="172.16.200.1",
-    #   #=>       @prefix=32, @octets=[172, 16, 200, 1], @u32=2886780929>
+    # #=>  #<Subnet::IPv4:0x00000000000000 @address="172.16.200.1",
+    # #=>       @prefix=32, @octets=[172, 16, 200, 1], @u32=2886780929>
+    # ```
     def []=(index, value)
       @octets[index] = value.to_i
       new("#{@octets.join('.')}/#{prefix}")
@@ -244,20 +265,24 @@ module Subnet
     # Returns the address portion of an IP in binary format,
     # as a string containing a sequence of 0 and 1
     #
-    #   ip = Subnet.parse("127.0.0.1")
+    # ```crystal
+    # ip = Subnet.parse("127.0.0.1")
     #
-    #   ip.bits
-    #     #=> "01111111000000000000000000000001"
+    # ip.bits
+    #   #=> "01111111000000000000000000000001"
+    # ```
     def bits
       "%032.32b" % hexstring.to_i64(16)
     end
 
     # Returns the broadcast address for the given IP.
     #
-    #   ip = Subnet.parse("172.16.10.64/24")
+    # ```crystal
+    # ip = Subnet.parse("172.16.10.64/24")
     #
-    #   ip.broadcast.to_s
-    #     #=> "172.16.10.255"
+    # ip.broadcast.to_s
+    #   #=> "172.16.10.255"
+    # ```
     def broadcast
       case
       when prefix <= 30
@@ -271,15 +296,17 @@ module Subnet
 
     # Checks if the IP address is actually a network
     #
-    #   ip = Subnet.parse("172.16.10.64/24")
+    # ```crystal
+    # ip = Subnet.parse("172.16.10.64/24")
     #
-    #   ip.network?
-    #     #=> false
+    # ip.network?
+    #   #=> false
     #
-    #   ip = Subnet.parse("172.16.10.64/26")
+    # ip = Subnet.parse("172.16.10.64/26")
     #
-    #   ip.network?
-    #     #=> true
+    # ip.network?
+    #   #=> true
+    # ```
     def network?
       (@prefix < 32) && (@u32 | @prefix.to_u32 == @prefix.to_u32)
     end
@@ -287,10 +314,12 @@ module Subnet
     # Returns a new IPv4 object with the network number
     # for the given IP.
     #
-    #   ip = Subnet.parse("172.16.10.64/24")
+    # ```crystal
+    # ip = Subnet.parse("172.16.10.64/24")
     #
-    #   ip.network.to_s
-    #     #=> "172.16.10.0"
+    # ip.network.to_s
+    #   #=> "172.16.10.0"
+    # ```
     def network
       IPv4.parse_u32(network_u32, @prefix)
     end
@@ -301,18 +330,22 @@ module Subnet
     # Example: given the 192.168.100.0/24 network, the first
     # host IP address is 192.168.100.1.
     #
-    #   ip = Subnet.parse("192.168.100.0/24")
+    # ```crystal
+    # ip = Subnet.parse("192.168.100.0/24")
     #
-    #   ip.first.to_s
-    #     #=> "192.168.100.1"
+    # ip.first.to_s
+    #   #=> "192.168.100.1"
+    # ```
     #
     # The object IP doesn't need to be a network: the method
     # automatically gets the network number from it
     #
-    #   ip = Subnet.parse("192.168.100.50/24")
+    # ```crystal
+    # ip = Subnet.parse("192.168.100.50/24")
     #
-    #   ip.first.to_s
-    #     #=> "192.168.100.1"
+    # ip.first.to_s
+    #   #=> "192.168.100.1"
+    # ```
     def first
       case
       when prefix <= 30
@@ -331,10 +364,12 @@ module Subnet
     # Example: given the 192.168.100.0/24 network, the last
     # host IP address is 192.168.100.254
     #
-    #   ip = Subnet.parse("192.168.100.0/24")
+    # ```crystal
+    # ip = Subnet.parse("192.168.100.0/24")
     #
-    #   ip.last.to_s
-    #     #=> "192.168.100.254"
+    # ip.last.to_s
+    #   #=> "192.168.100.254"
+    # ```
     #
     # The object IP doesn't need to be a network: the method
     # automatically gets the network number from it
@@ -357,17 +392,19 @@ module Subnet
     # Iterates over all the hosts IP addresses for the given
     # network (or IP address).
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```crystal
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.each_host do |i|
-    #     p i.to_s
-    #   end
-    #     #=> "10.0.0.1"
-    #     #=> "10.0.0.2"
-    #     #=> "10.0.0.3"
-    #     #=> "10.0.0.4"
-    #     #=> "10.0.0.5"
-    #     #=> "10.0.0.6"
+    # ip.each_host do |i|
+    #   p i.to_s
+    # end
+    #   #=> "10.0.0.1"
+    #   #=> "10.0.0.2"
+    #   #=> "10.0.0.3"
+    #   #=> "10.0.0.4"
+    #   #=> "10.0.0.5"
+    #   #=> "10.0.0.6"
+    # ```
     def each_host
       ((network_u32 + 1)..(broadcast_u32 - 1)).each do |i|
         yield IPv4.parse_u32(i, @prefix)
@@ -380,19 +417,21 @@ module Subnet
     # The object yielded is a new IPv4 object created
     # from the iteration.
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```crystal
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.each do |i|
-    #     p i.address
-    #   end
-    #     #=> "10.0.0.0"
-    #     #=> "10.0.0.1"
-    #     #=> "10.0.0.2"
-    #     #=> "10.0.0.3"
-    #     #=> "10.0.0.4"
-    #     #=> "10.0.0.5"
-    #     #=> "10.0.0.6"
-    #     #=> "10.0.0.7"
+    # ip.each do |i|
+    #   p i.address
+    # end
+    #   #=> "10.0.0.0"
+    #   #=> "10.0.0.1"
+    #   #=> "10.0.0.2"
+    #   #=> "10.0.0.3"
+    #   #=> "10.0.0.4"
+    #   #=> "10.0.0.5"
+    #   #=> "10.0.0.6"
+    #   #=> "10.0.0.7"
+    # ```
     def each
       (network_u32..broadcast_u32).each do |i|
         yield IPv4.parse_u32(i, @prefix)
@@ -418,17 +457,19 @@ module Subnet
     #
     # Example:
     #
-    #   ip1 = Subnet.parse "10.100.100.1/8"
-    #   ip2 = Subnet.parse "172.16.0.1/16"
-    #   ip3 = Subnet.parse "10.100.100.1/16"
+    # ```crystal
+    # ip1 = Subnet.parse "10.100.100.1/8"
+    # ip2 = Subnet.parse "172.16.0.1/16"
+    # ip3 = Subnet.parse "10.100.100.1/16"
     #
-    #   ip1 < ip2
-    #     #=> true
-    #   ip1 > ip3
-    #     #=> false
+    # ip1 < ip2
+    #   #=> true
+    # ip1 > ip3
+    #   #=> false
     #
-    #   [ip1,ip2,ip3].sort.map{|i| i.to_s }
-    #     #=> ["10.100.100.1/8","10.100.100.1/16","172.16.0.1/16"]
+    # [ip1,ip2,ip3].sort.map{|i| i.to_s }
+    #   #=> ["10.100.100.1/8","10.100.100.1/16","172.16.0.1/16"]
+    # ```
     def <=>(oth)
       return nil unless oth.is_a?(IPv4)
       return prefix <=> oth.prefix if to_u32 == oth.to_u32
@@ -439,10 +480,12 @@ module Subnet
     # in the network. It also counts the network
     # address and the broadcast address.
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.size
-    #     #=> 8
+    # ip.size
+    #   #=> 8
+    # ```
     def size
       2 ** @prefix.host_prefix
     end
@@ -450,37 +493,41 @@ module Subnet
     # Returns an array with the IP addresses of
     # all the hosts in the network.
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.hosts.map {|i| i.address}
-    #     #=> ["10.0.0.1",
-    #     #=>  "10.0.0.2",
-    #     #=>  "10.0.0.3",
-    #     #=>  "10.0.0.4",
-    #     #=>  "10.0.0.5",
-    #     #=>  "10.0.0.6"]
-    #
+    # ip.hosts.map {|i| i.address}
+    #   #=> ["10.0.0.1",
+    #   #=>  "10.0.0.2",
+    #   #=>  "10.0.0.3",
+    #   #=>  "10.0.0.4",
+    #   #=>  "10.0.0.5",
+    #   #=>  "10.0.0.6"]
+    # ```
     def hosts
       to_a[1..-2]
     end
 
     # Returns the network number in Unsigned 32bits format
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.network_u32
-    #     #=> 167772160
+    # ip.network_u32
+    #   #=> 167772160
+    # ```
     def network_u32
       @u32 & @prefix.to_u32
     end
 
     # Returns the broadcast address in Unsigned 32bits format
     #
-    #   ip = Subnet.parse("10.0.0.1/29")
+    # ```
+    # ip = Subnet.parse("10.0.0.1/29")
     #
-    #   ip.broadcast_u32
-    #     #=> 167772167
-    #
+    # ip.broadcast_u32
+    #   #=> 167772167
+    # ```
     def broadcast_u32
       network_u32 + size - 1
     end
@@ -489,16 +536,17 @@ module Subnet
     #
     # Accepts an Subnet.parse::IPv4 object.
     #
-    #   ip = Subnet.parse("192.168.10.100/24")
+    # ```
+    # ip = Subnet.parse("192.168.10.100/24")
     #
-    #   addr = Subnet.parse("192.168.10.102/24")
+    # addr = Subnet.parse("192.168.10.102/24")
     #
-    #   ip.includes? addr
-    #     #=> true
+    # ip.includes? addr
+    #   #=> true
     #
-    #   ip.includes? Subnet.parse("172.16.0.48/16")
-    #     #=> false
-    #
+    # ip.includes? Subnet.parse("172.16.0.48/16")
+    #   #=> false
+    # ```
     def includes?(oth)
       @prefix <= oth.prefix && network_u32 == (oth.to_u32 & @prefix.to_u32)
     end
@@ -506,14 +554,15 @@ module Subnet
     # Checks whether a subnet includes all the
     # given IPv4 objects.
     #
-    #   ip = Subnet.parse("192.168.10.100/24")
+    # ```
+    # ip = Subnet.parse("192.168.10.100/24")
     #
-    #   addr1 = Subnet.parse("192.168.10.102/24")
-    #   addr2 = Subnet.parse("192.168.10.103/24")
+    # addr1 = Subnet.parse("192.168.10.102/24")
+    # addr2 = Subnet.parse("192.168.10.103/24")
     #
-    #   ip.includes_all?(addr1,addr2)
-    #     #=> true
-    #
+    # ip.includes_all?(addr1,addr2)
+    #   #=> true
+    # ```
     def includes_all?(*others)
       others.all? { |oth| includes?(oth) }
     end
@@ -523,10 +572,11 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse "10.1.1.1/24"
-    #   ip.private?
-    #     #=> true
-    #
+    # ```
+    # ip = Subnet.parse "10.1.1.1/24"
+    # ip.private?
+    #   #=> true
+    # ```
     def private?
       [IPv4.new("10.0.0.0/8"),
        IPv4.new("172.16.0.0/12"),
@@ -538,9 +588,11 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse "224.0.0.0/4"
-    #   ip.multicast?
-    #     #=> true
+    # ```
+    # ip = Subnet.parse "224.0.0.0/4"
+    # ip.multicast?
+    #   #=> true
+    # ```
     def multicast?
       [IPv4.new("224.0.0.0/4")].any? { |i| i.includes? self }
     end
@@ -550,9 +602,11 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse "127.0.0.1"
-    #   ip.loopback?
-    #     #=> true
+    # ```
+    # ip = Subnet.parse "127.0.0.1"
+    # ip.loopback?
+    #   #=> true
+    # ```
     def loopback?
       [IPv4.new("127.0.0.0/8")].any? { |i| i.includes? self }
     end
@@ -562,9 +616,11 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet "169.254.0.1"
-    #   ip.link_local?
-    #     #=> true
+    # ```
+    # ip = Subnet "169.254.0.1"
+    # ip.link_local?
+    #   #=> true
+    # ```
     def link_local?
       [IPv4.new("169.254.0.0/16")].any? { |i| i.includes? self }
     end
@@ -572,11 +628,12 @@ module Subnet
     # Returns the IP address in in-addr.arpa format
     # for DNS lookups
     #
-    #   ip = Subnet.parse("172.16.100.50/24")
+    # ```
+    # ip = Subnet.parse("172.16.100.50/24")
     #
-    #   ip.reverse
-    #     #=> "50.100.16.172.in-addr.arpa"
-    #
+    # ip.reverse
+    #   #=> "50.100.16.172.in-addr.arpa"
+    # ```
     def reverse
       @octets.reverse.join(".") + ".in-addr.arpa"
     end
@@ -589,15 +646,16 @@ module Subnet
     # Return a list of IP's between @address
     # and the supplied IP
     #
-    #   ip = Subnet..parse("172.16.100.51/32")
+    # ```
+    # ip = Subnet..parse("172.16.100.51/32")
     #
-    #   ip.to("172.16.100.100")
-    #     #=> ["172.16.100.51",
-    #     #=>  "172.16.100.52",
-    #     #=>  ...
-    #     #=>  "172.16.100.99",
-    #     #=>  "172.16.100.100"]
-    #
+    # ip.to("172.16.100.100")
+    #   #=> ["172.16.100.51",
+    #   #=>  "172.16.100.52",
+    #   #=>  ...
+    #   #=>  "172.16.100.99",
+    #   #=>  "172.16.100.100"]
+    # ```
     def to(e)
       unless e.is_a? Subnet::IPv4
         e = IPv4.new(e)
@@ -616,24 +674,28 @@ module Subnet
     # If `subnets` is an power of two number, the resulting
     # networks will be divided evenly from the supernet.
     #
-    #   network = Subnet.parse("172.16.10.0/24")
+    # ```
+    # network = Subnet.parse("172.16.10.0/24")
     #
-    #   network / 4   # implies map{|i| i.to_string}
-    #     #=> ["172.16.10.0/26",
-    #     #=>  "172.16.10.64/26",
-    #     #=>  "172.16.10.128/26",
-    #     #=>  "172.16.10.192/26"]
+    # network / 4   # implies map{|i| i.to_string}
+    #   #=> ["172.16.10.0/26",
+    #   #=>  "172.16.10.64/26",
+    #   #=>  "172.16.10.128/26",
+    #   #=>  "172.16.10.192/26"]
+    # ```
     #
     # If `num` is any other number, the supernet will be
     # divided into some networks with a even number of hosts and
     # other networks with the remaining addresses.
     #
-    #   network = Subnet.parse("172.16.10.0/24")
+    # ```
+    # network = Subnet.parse("172.16.10.0/24")
     #
-    #   network / 3   # implies map{|i| i.to_string}
-    #     #=> ["172.16.10.0/26",
-    #     #=>  "172.16.10.64/26",
-    #     #=>  "172.16.10.128/25"]
+    # network / 3   # implies map{|i| i.to_string}
+    #   #=> ["172.16.10.0/26",
+    #   #=>  "172.16.10.64/26",
+    #   #=>  "172.16.10.128/25"]
+    # ```
     #
     # Returns an array of IPv4 objects
     def split(subnets = 2)
@@ -660,18 +722,24 @@ module Subnet
     # smaller prefix (bigger host space). For example,
     # given the network
     #
-    #   ip = Subnet.parse("172.16.10.0/24")
+    # ```
+    # ip = Subnet.parse("172.16.10.0/24")
+    # ```
     #
     # you can supernet it with a new /23 prefix
     #
-    #   ip.supernet(23).to_string
-    #     #=> "172.16.10.0/23"
+    # ```
+    # ip.supernet(23).to_string
+    #   #=> "172.16.10.0/23"
+    # ```
     #
     # However if you supernet it with a /22 prefix, the
     # network address will change:
     #
-    #   ip.supernet(22).to_string
-    #     #=> "172.16.8.0/22"
+    # ```
+    # ip.supernet(22).to_string
+    #   #=> "172.16.8.0/22"
+    # ```
     #
     # If `new_prefix` is less than 1, returns 0.0.0.0/0
     def supernet(new_prefix)
@@ -690,13 +758,17 @@ module Subnet
     #
     # For example, given the following network:
     #
-    #   ip = Subnet.parse "172.16.10.0/24"
+    # ```
+    # ip = Subnet.parse "172.16.10.0/24"
+    # ```
     #
     # we can calculate the subnets with a /26 prefix
     #
-    #   ip.subnet(26).map{&:to_string)
-    #     #=> ["172.16.10.0/26", "172.16.10.64/26",
-    #          "172.16.10.128/26", "172.16.10.192/26"]
+    # ```
+    # ip.subnet(26).map{&:to_string)
+    #   #=> ["172.16.10.0/26", "172.16.10.64/26",
+    #        "172.16.10.128/26", "172.16.10.192/26"]
+    # ```
     #
     # The resulting number of subnets will of course always be
     # a power of two.
@@ -714,11 +786,13 @@ module Subnet
     #
     # Example:
     #
-    #   ip1 = Subnet.parse("172.16.10.0/24")
-    #   ip2 = Subnet.parse("172.16.11.0/24")
+    # ```
+    # ip1 = Subnet.parse("172.16.10.0/24")
+    # ip2 = Subnet.parse("172.16.11.0/24")
     #
-    #   puts ip1 - ip2
-    #     #=> 256
+    # puts ip1 - ip2
+    #   #=> 256
+    # ```
     def -(oth)
       return (to_u32 - oth.to_u32).abs
     end
@@ -729,21 +803,24 @@ module Subnet
     #
     # Example:
     #
-    #   ip1 = Subnet.parse("172.16.10.1/24")
-    #   ip2 = Subnet.parse("172.16.11.2/24")
+    # ```
+    # ip1 = Subnet.parse("172.16.10.1/24")
+    # ip2 = Subnet.parse("172.16.11.2/24")
     #
-    #   p (ip1 + ip2).map {|i| i.to_string}
-    #     #=> ["172.16.10.0/23"]
+    # p (ip1 + ip2).map {|i| i.to_string}
+    #   #=> ["172.16.10.0/23"]
+    # ```
     #
     # If the networks are not contiguous, returns
     # the two network numbers from the objects
     #
-    #   ip1 = Subnet.parse("10.0.0.1/24")
-    #   ip2 = Subnet.parse("10.0.2.1/24")
+    # ```
+    # ip1 = Subnet.parse("10.0.0.1/24")
+    # ip2 = Subnet.parse("10.0.2.1/24")
     #
-    #   p (ip1 + ip2).map {|i| i.to_string}
-    #     #=> ["10.0.0.0/24","10.0.2.0/24"]
-    #
+    # p (ip1 + ip2).map {|i| i.to_string}
+    #   #=> ["10.0.0.0/24","10.0.2.0/24"]
+    # ```
     def +(oth)
       tup = [self, oth].sort.map { |i| i.network }
       aggregate(tup[0], tup[1])
@@ -755,10 +832,12 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse("10.0.0.1/24")
+    # ```
+    # ip = Subnet.parse("10.0.0.1/24")
     #
-    #   ip.a?
-    #     #=> true
+    # ip.a?
+    #   #=> true
+    # ```
     def a?
       CLASSFUL.key(8) === bits
     end
@@ -769,10 +848,12 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse("172.16.10.1/24")
+    # ```
+    # ip = Subnet.parse("172.16.10.1/24")
     #
-    #   ip.b?
-    #     #=> true
+    # ip.b?
+    #   #=> true
+    # ```
     def b?
       CLASSFUL.key(16) === bits
     end
@@ -783,10 +864,12 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse("192.168.1.1/30")
+    # ```
+    # ip = Subnet.parse("192.168.1.1/30")
     #
-    #   ip.c?
-    #     #=> true
+    # ip.c?
+    #   #=> true
+    # ```
     def c?
       CLASSFUL.key(24) === bits
     end
@@ -796,30 +879,35 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet.parse("172.16.10.1/24")
+    # ```
+    # ip = Subnet.parse("172.16.10.1/24")
     #
-    #   ip.to_ipv6
-    #     #=> "ac10:0a01"
+    # ip.to_ipv6
+    #   #=> "ac10:0a01"
+    # ```
     def to_ipv6
-      # "%.4x:%.4x" % [to_u32].pack("N").unpack("nn")
+      raise "Not implemented"
     end
 
     # Creates a new IPv4 object from an
     # unsigned 32bits integer.
     #
-    #   ip = Subnet::IPv4.parse_u32(167772160)
+    # ```
+    # ip = Subnet::IPv4.parse_u32(167772160)
     #
-    #   ip.prefix = 8
-    #   ip.to_string
-    #     #=> "10.0.0.0/8"
+    # ip.prefix = 8
+    # ip.to_string
+    #   #=> "10.0.0.0/8"
+    # ```
     #
     # The `prefix` parameter is optional:
     #
-    #   ip = Subnet::IPv4.parse_u32(167772160, 8)
+    # ```
+    # ip = Subnet::IPv4.parse_u32(167772160, 8)
     #
-    #   ip.to_string
-    #     #=> "10.0.0.0/8"
-    #
+    # ip.to_string
+    #   #=> "10.0.0.0/8"
+    # ```
     def self.parse_u32(u32, prefix = 32)
       octets = uninitialized UInt8[4]
       IO::ByteFormat::BigEndian.encode(u32.to_u32, octets.to_slice)
@@ -830,15 +918,15 @@ module Subnet
     # like the one you get from a network stream.
     #
     # For example, on a network stream the IP 172.16.0.1
-    # is represented with the binary "\254\020\n\001".
+    # is represented with the binary `Bytes[172, 16, 10, 1]`.
     #
-    #   ip = Subnet::IPv4.parse_data "\254\020\n\001"
-    #   ip.prefix = 24
+    # ip = Subnet::IPv4.parse_data Bytes[172, 16, 10, 1]
+    # ip.prefix = 24
     #
-    #   ip.to_string
-    #     #=> "172.16.10.1/24"
-    def self.parse_data(str, prefix = 32)
-      # self.new(str.unpack("C4").join(".")+"/#{prefix}")
+    # ip.to_string
+    #   #=> "172.16.10.1/24"
+    def self.parse_data(bytes, prefix = 32)
+      new(bytes.join('.') + "/#{prefix}")
     end
 
     # Extract an IPv4 address from a string and
@@ -846,13 +934,16 @@ module Subnet
     #
     # Example:
     #
-    #   str = "foobar172.16.10.1barbaz"
-    #   ip = Subnet::IPv4.extract str
+    # ```
+    # str = "foobar172.16.10.1barbaz"
+    # ip = Subnet::IPv4.extract str
     #
-    #   ip.to_s
-    #     #=> "172.16.10.1"
+    # ip.to_s
+    #   #=> "172.16.10.1"
+    # ```
     def self.extract(str)
-      IPv4.new REGEXP.match(str).to_s
+      addr = REGEXP.match(str).try &.[0].to_s
+      IPv4.new addr if addr
     end
 
     # Summarization (or aggregation) is the process when two or more
@@ -873,14 +964,18 @@ module Subnet
     # A few examples will help clarify the above. Let's consider for
     # instance the following two networks:
     #
-    #   ip1 = Subnet.parse("172.16.10.0/24")
-    #   ip2 = Subnet.parse("172.16.11.0/24")
+    # ```
+    # ip1 = Subnet.parse("172.16.10.0/24")
+    # ip2 = Subnet.parse("172.16.11.0/24")
+    # ```
     #
     # These two networks can be expressed using only one IP address
     # network if we change the prefix. Let Ruby do the work:
     #
-    #   Subnet::IPv4.summarize(ip1,ip2).to_s
-    #     #=> "172.16.10.0/23"
+    # ```
+    # Subnet::IPv4.summarize(ip1,ip2).to_s
+    #   #=> "172.16.10.0/23"
+    # ```
     #
     # We note how the network "172.16.10.0/23" includes all the addresses
     # specified in the above networks, and (more important) includes
@@ -888,7 +983,9 @@ module Subnet
     #
     # If we summarized `ip1` and `ip2` with the following network:
     #
-    #   "172.16.0.0/16"
+    # ```
+    # "172.16.0.0/16"
+    # ```
     #
     # we would have satisfied rule #1 above, but not rule #2. So "172.16.0.0/16"
     # is not an aggregate network for `ip1` and `ip2`.
@@ -898,23 +995,27 @@ module Subnet
     # networks found. For example, the following four networks can be
     # aggregated in a single /22:
     #
-    #   ip1 = Subnet.parse("10.0.0.1/24")
-    #   ip2 = Subnet.parse("10.0.1.1/24")
-    #   ip3 = Subnet.parse("10.0.2.1/24")
-    #   ip4 = Subnet.parse("10.0.3.1/24")
+    # ```
+    # ip1 = Subnet.parse("10.0.0.1/24")
+    # ip2 = Subnet.parse("10.0.1.1/24")
+    # ip3 = Subnet.parse("10.0.2.1/24")
+    # ip4 = Subnet.parse("10.0.3.1/24")
     #
-    #   Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).to_string
-    #     #=> ["10.0.0.0/22"]
+    # Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).to_string
+    #   #=> ["10.0.0.0/22"]
+    # ```
     #
     # But the following networks can't be summarized in a single network:
     #
-    #   ip1 = Subnet.parse("10.0.1.1/24")
-    #   ip2 = Subnet.parse("10.0.2.1/24")
-    #   ip3 = Subnet.parse("10.0.3.1/24")
-    #   ip4 = Subnet.parse("10.0.4.1/24")
+    # ```
+    # ip1 = Subnet.parse("10.0.1.1/24")
+    # ip2 = Subnet.parse("10.0.2.1/24")
+    # ip3 = Subnet.parse("10.0.3.1/24")
+    # ip4 = Subnet.parse("10.0.4.1/24")
     #
-    #   Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).map{|i| i.to_string}
-    #     #=> ["10.0.1.0/24","10.0.2.0/23","10.0.4.0/24"]
+    # Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).map{|i| i.to_string}
+    #   #=> ["10.0.1.0/24","10.0.2.0/23","10.0.4.0/24"]
+    # ```
     def self.summarize(args)
       # one network? no need to summarize
       return [args.first.network] if args.size == 1
@@ -955,12 +1056,14 @@ module Subnet
     #
     # Example:
     #
-    #   ip = Subnet::IPv4.parse_classful "10.0.0.1"
+    # ```
+    # ip = Subnet::IPv4.parse_classful "10.0.0.1"
     #
-    #   ip.netmask
-    #     #=> "255.0.0.0"
-    #   ip.a?
-    #     #=> true
+    # ip.netmask
+    #   #=> "255.0.0.0"
+    # ip.a?
+    #   #=> true
+    # ```
     #
     # Note that classes C, D and E will all have a default
     # prefix of /24 or 255.255.255.0
@@ -982,14 +1085,15 @@ module Subnet
     #
     # Example:
     #
-    #    ip = Subnet.parse("10.0.0.0/24")
-    #    ip.allocate
-    #      #=> "10.0.0.1/24"
-    #    ip.allocate
-    #      #=> "10.0.0.2/24"
-    #    ip.allocate(2)
-    #      #=> "10.0.0.5/24"
-    #
+    # ```
+    # ip = Subnet.parse("10.0.0.0/24")
+    # ip.allocate
+    #   #=> "10.0.0.1/24"
+    # ip.allocate
+    #   #=> "10.0.0.2/24"
+    # ip.allocate(2)
+    #   #=> "10.0.0.5/24"
+    # ```
     #
     # Uses an internal @allocator which tracks the state of allocated
     # addresses.
@@ -1007,10 +1111,12 @@ module Subnet
     # Returns a string with the address portion of
     # the IPv4 object
     #
-    #   ip = Subnet.parse("172.16.100.4/22")
+    # ```
+    # ip = Subnet.parse("172.16.100.4/22")
     #
-    #   ip.to_s
-    #     #=> "172.16.100.4"
+    # ip.to_s
+    #   #=> "172.16.100.4"
+    # ```
     def to_s
       @address
     end
@@ -1018,11 +1124,12 @@ module Subnet
     # Returns a string with the IP address in canonical
     # form.
     #
-    #   ip = Subnet.parse("172.16.100.4/22")
+    # ```
+    # ip = Subnet.parse("172.16.100.4/22")
     #
-    #   ip.to_string
-    #     #=> "172.16.100.4/22"
-    #
+    # ip.to_string
+    #   #=> "172.16.100.4/22"
+    # ```
     def to_string
       "#{@address}/#{@prefix}"
     end

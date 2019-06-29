@@ -116,7 +116,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L5" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L5" target="_blank">
         subnet/ipv4.cr
       </a>
     
@@ -187,7 +187,7 @@ prefix of /24 or 255.255.255.0</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#parse_data%28str%2Cprefix%3D32%29-class-method" class="signature"><strong>.parse_data</strong>(str, prefix = <span class="n">32</span>)</a>
+        <a href="#parse_data%28bytes%2Cprefix%3D32%29-class-method" class="signature"><strong>.parse_data</strong>(bytes, prefix = <span class="n">32</span>)</a>
         
           <div class="summary"><p>Creates a new IPv4 object from binary data, like the one you get from a network stream.</p></div>
         
@@ -420,7 +420,7 @@ prefix of /24 or 255.255.255.0</p>
       <li class="entry-summary">
         <a href="#netmask%3D%28addr%29-instance-method" class="signature"><strong>#netmask=</strong>(addr)</a>
         
-          <div class="summary"><p>Like IPv4#prefix=, this method allow you to change the prefix / netmask of an IP address object.</p></div>
+          <div class="summary"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to change the prefix / netmask of an IP address object.</p></div>
         
       </li>
     
@@ -525,7 +525,7 @@ prefix of /24 or 255.255.255.0</p>
       <li class="entry-summary">
         <a href="#to_i-instance-method" class="signature"><strong>#to_i</strong></a>
         
-          <div class="summary"><p>Like IPv4#prefix=, this method allow you to change the prefix / netmask of an IP address object.</p></div>
+          <div class="summary"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to change the prefix / netmask of an IP address object.</p></div>
         
       </li>
     
@@ -553,7 +553,7 @@ prefix of /24 or 255.255.255.0</p>
       <li class="entry-summary">
         <a href="#to_u32-instance-method" class="signature"><strong>#to_u32</strong></a>
         
-          <div class="summary"><p>Like IPv4#prefix=, this method allow you to change the prefix / netmask of an IP address object.</p></div>
+          <div class="summary"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to change the prefix / netmask of an IP address object.</p></div>
         
       </li>
     
@@ -719,18 +719,18 @@ set as default 32, also known as the host prefix</li></ul>
 
 <p>Examples:</p>
 
-<p># These two are the same
-  ip = Subnet::IPv4.new("10.0.0.1/24")
-  ip = Subnet.parse("10.0.0.1/24")</p>
+<pre><code class="language-crystal"><span class="c"># These two are the same</span>
+ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/24&quot;</span>)
 
-<p># These two are the same
-  Subnet::IPv4.new "10.0.0.1/8"
-  Subnet::IPv4.new "10.0.0.1/255.0.0.0"</p></div>
+<span class="c"># These two are the same</span>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span> <span class="s">&quot;10.0.0.1/8&quot;</span>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span> <span class="s">&quot;10.0.0.1/255.0.0.0&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -753,17 +753,16 @@ returns a new object</p>
 
 <p>Example:</p>
 
-<p>str = "foobar172.16.10.1barbaz"
-  ip = Subnet::IPv4.extract str</p>
+<pre><code>str <span class="o">=</span> <span class="s">&quot;foobar172.16.10.1barbaz&quot;</span>
+ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.extract str
 
-<p>ip.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.1&quot;</span></code></pre></div>
+ip.to_s
+  <span class="c">#=&gt; &quot;172.16.10.1&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L854" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L944" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -786,15 +785,12 @@ class they belong to:</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet::IPv4.parse_classful "10.0.0.1"</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.parse_classful <span class="s">&quot;10.0.0.1&quot;</span>
 
-<p>ip.netmask</p>
-
-<pre><code><span class="c">#=&gt; &quot;255.0.0.0&quot;</span></code></pre>
-
-<p>ip.a?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre>
+ip.netmask
+  <span class="c">#=&gt; &quot;255.0.0.0&quot;</span>
+ip.a?
+  <span class="c">#=&gt; true</span></code></pre>
 
 <p>Note that classes C, D and E will all have a default
 prefix of /24 or 255.255.255.0</p></div>
@@ -802,36 +798,35 @@ prefix of /24 or 255.255.255.0</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L968" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1071" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="parse_data(str,prefix=32)-class-method">
+    <div class="entry-detail" id="parse_data(bytes,prefix=32)-class-method">
       <div class="signature">
         
-        def self.<strong>parse_data</strong>(str, prefix = <span class="n">32</span>)
+        def self.<strong>parse_data</strong>(bytes, prefix = <span class="n">32</span>)
 
-        <a class="method-permalink" href="#parse_data%28str%2Cprefix%3D32%29-class-method">#</a>
+        <a class="method-permalink" href="#parse_data%28bytes%2Cprefix%3D32%29-class-method">#</a>
       </div>
       
         <div class="doc"><p>Creates a new IPv4 object from binary data,
 like the one you get from a network stream.</p>
 
 <p>For example, on a network stream the IP 172.16.0.1
-is represented with the binary "\254\020\n\001".</p>
+is represented with the binary <code>Bytes[172, 16, 10, 1]</code>.</p>
 
-<p>ip = Subnet::IPv4.parse_data "\254\020\n\001"
-  ip.prefix = 24</p>
+<p>ip = Subnet::IPv4.parse_data Bytes[172, 16, 10, 1]
+ip.prefix = 24</p>
 
-<p>ip.to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.1/24&quot;</span></code></pre></div>
+<p>ip.to_string
+  #=> "172.16.10.1/24"</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L840" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L928" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -847,25 +842,23 @@ is represented with the binary "\254\020\n\001".</p>
         <div class="doc"><p>Creates a new IPv4 object from an
 unsigned 32bits integer.</p>
 
-<p>ip = Subnet::IPv4.parse_u32(167772160)</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.parse_u32(<span class="n">167772160</span>)
 
-<p>ip.prefix = 8
-  ip.to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;10.0.0.0/8&quot;</span></code></pre>
+ip.prefix <span class="o">=</span> <span class="n">8</span>
+ip.to_string
+  <span class="c">#=&gt; &quot;10.0.0.0/8&quot;</span></code></pre>
 
 <p>The <code><a href="../Subnet/IPv4.html#prefix%3APrefix32-instance-method">#prefix</a></code> parameter is optional:</p>
 
-<p>ip = Subnet::IPv4.parse_u32(167772160, 8)</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.parse_u32(<span class="n">167772160</span>, <span class="n">8</span>)
 
-<p>ip.to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;10.0.0.0/8&quot;</span></code></pre></div>
+ip.to_string
+  <span class="c">#=&gt; &quot;10.0.0.0/8&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L823" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L911" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -896,15 +889,14 @@ of the supernet. So the two rules are:</p>
 <p>A few examples will help clarify the above. Let's consider for
 instance the following two networks:</p>
 
-<p>ip1 = Subnet.parse("172.16.10.0/24")
-  ip2 = Subnet.parse("172.16.11.0/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.11.0/24&quot;</span>)</code></pre>
 
 <p>These two networks can be expressed using only one IP address
 network if we change the prefix. Let Ruby do the work:</p>
 
-<p>Subnet::IPv4.summarize(ip1,ip2).to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
+<pre><code><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2).to_s
+  <span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
 
 <p>We note how the network "172.16.10.0/23" includes all the addresses
 specified in the above networks, and (more important) includes
@@ -912,7 +904,7 @@ ONLY those addresses.</p>
 
 <p>If we summarized <code>ip1</code> and <code>ip2</code> with the following network:</p>
 
-<p>"172.16.0.0/16"</p>
+<pre><code><span class="s">&quot;172.16.0.0/16&quot;</span></code></pre>
 
 <p>we would have satisfied rule #1 above, but not rule #2. So "172.16.0.0/16"
 is not an aggregate network for <code>ip1</code> and <code>ip2</code>.</p>
@@ -922,30 +914,28 @@ original networks, the method returns an array with all the aggregate
 networks found. For example, the following four networks can be
 aggregated in a single /22:</p>
 
-<p>ip1 = Subnet.parse("10.0.0.1/24")
-  ip2 = Subnet.parse("10.0.1.1/24")
-  ip3 = Subnet.parse("10.0.2.1/24")
-  ip4 = Subnet.parse("10.0.3.1/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.3.1/24&quot;</span>)
 
-<p>Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).to_string</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.0.0/22&quot;]</span></code></pre>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2,ip3,ip4).to_string
+  <span class="c">#=&gt; [&quot;10.0.0.0/22&quot;]</span></code></pre>
 
 <p>But the following networks can't be summarized in a single network:</p>
 
-<p>ip1 = Subnet.parse("10.0.1.1/24")
-  ip2 = Subnet.parse("10.0.2.1/24")
-  ip3 = Subnet.parse("10.0.3.1/24")
-  ip4 = Subnet.parse("10.0.4.1/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.3.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.4.1/24&quot;</span>)
 
-<p>Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.1.0/24&quot;,&quot;10.0.2.0/23&quot;,&quot;10.0.4.0/24&quot;]</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2,ip3,ip4).map{<span class="o">|</span>i<span class="o">|</span> i.to_string}
+  <span class="c">#=&gt; [&quot;10.0.1.0/24&quot;,&quot;10.0.2.0/23&quot;,&quot;10.0.4.0/24&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L918" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1019" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -976,15 +966,14 @@ of the supernet. So the two rules are:</p>
 <p>A few examples will help clarify the above. Let's consider for
 instance the following two networks:</p>
 
-<p>ip1 = Subnet.parse("172.16.10.0/24")
-  ip2 = Subnet.parse("172.16.11.0/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.11.0/24&quot;</span>)</code></pre>
 
 <p>These two networks can be expressed using only one IP address
 network if we change the prefix. Let Ruby do the work:</p>
 
-<p>Subnet::IPv4.summarize(ip1,ip2).to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
+<pre><code><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2).to_s
+  <span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
 
 <p>We note how the network "172.16.10.0/23" includes all the addresses
 specified in the above networks, and (more important) includes
@@ -992,7 +981,7 @@ ONLY those addresses.</p>
 
 <p>If we summarized <code>ip1</code> and <code>ip2</code> with the following network:</p>
 
-<p>"172.16.0.0/16"</p>
+<pre><code><span class="s">&quot;172.16.0.0/16&quot;</span></code></pre>
 
 <p>we would have satisfied rule #1 above, but not rule #2. So "172.16.0.0/16"
 is not an aggregate network for <code>ip1</code> and <code>ip2</code>.</p>
@@ -1002,30 +991,28 @@ original networks, the method returns an array with all the aggregate
 networks found. For example, the following four networks can be
 aggregated in a single /22:</p>
 
-<p>ip1 = Subnet.parse("10.0.0.1/24")
-  ip2 = Subnet.parse("10.0.1.1/24")
-  ip3 = Subnet.parse("10.0.2.1/24")
-  ip4 = Subnet.parse("10.0.3.1/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.3.1/24&quot;</span>)
 
-<p>Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).to_string</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.0.0/22&quot;]</span></code></pre>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2,ip3,ip4).to_string
+  <span class="c">#=&gt; [&quot;10.0.0.0/22&quot;]</span></code></pre>
 
 <p>But the following networks can't be summarized in a single network:</p>
 
-<p>ip1 = Subnet.parse("10.0.1.1/24")
-  ip2 = Subnet.parse("10.0.2.1/24")
-  ip3 = Subnet.parse("10.0.3.1/24")
-  ip4 = Subnet.parse("10.0.4.1/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.3.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.4.1/24&quot;</span>)
 
-<p>Subnet::IPv4.summarize(ip1,ip2,ip3,ip4).map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.1.0/24&quot;,&quot;10.0.2.0/23&quot;,&quot;10.0.4.0/24&quot;]</span></code></pre></div>
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.summarize(ip1,ip2,ip3,ip4).map{<span class="o">|</span>i<span class="o">|</span> i.to_string}
+  <span class="c">#=&gt; [&quot;10.0.1.0/24&quot;,&quot;10.0.2.0/23&quot;,&quot;10.0.4.0/24&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L942" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1043" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1049,27 +1036,25 @@ objects</p>
 
 <p>Example:</p>
 
-<p>ip1 = Subnet.parse("172.16.10.1/24")
-  ip2 = Subnet.parse("172.16.11.2/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.11.2/24&quot;</span>)
 
-<p>p (ip1 + ip2).map {|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/23&quot;]</span></code></pre>
+p (ip1 <span class="o">+</span> ip2).map {<span class="o">|</span>i<span class="o">|</span> i.to_string}
+  <span class="c">#=&gt; [&quot;172.16.10.0/23&quot;]</span></code></pre>
 
 <p>If the networks are not contiguous, returns
 the two network numbers from the objects</p>
 
-<p>ip1 = Subnet.parse("10.0.0.1/24")
-  ip2 = Subnet.parse("10.0.2.1/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.2.1/24&quot;</span>)
 
-<p>p (ip1 + ip2).map {|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.0.0/24&quot;,&quot;10.0.2.0/24&quot;]</span></code></pre></div>
+p (ip1 <span class="o">+</span> ip2).map {<span class="o">|</span>i<span class="o">|</span> i.to_string}
+  <span class="c">#=&gt; [&quot;10.0.0.0/24&quot;,&quot;10.0.2.0/24&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L747" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L824" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1087,17 +1072,16 @@ in unsigned int 32 bits format</p>
 
 <p>Example:</p>
 
-<p>ip1 = Subnet.parse("172.16.10.0/24")
-  ip2 = Subnet.parse("172.16.11.0/24")</p>
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.11.0/24&quot;</span>)
 
-<p>puts ip1 - ip2</p>
-
-<pre><code><span class="c">#=&gt; 256</span></code></pre></div>
+puts ip1 <span class="o">-</span> ip2
+  <span class="c">#=&gt; 256</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L722" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L796" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1120,33 +1104,31 @@ subnet it.</p>
 <p>If <code>subnets</code> is an power of two number, the resulting
 networks will be divided evenly from the supernet.</p>
 
-<p>network = Subnet.parse("172.16.10.0/24")</p>
+<pre><code>network <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
 
-<p>network / 4   # implies map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.128/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.192/26&quot;]</span></code></pre>
+network <span class="o">/</span> <span class="n">4</span>   <span class="c"># implies map{|i| i.to_string}</span>
+  <span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.128/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.192/26&quot;]</span></code></pre>
 
 <p>If <code>num</code> is any other number, the supernet will be
 divided into some networks with a even number of hosts and
 other networks with the remaining addresses.</p>
 
-<p>network = Subnet.parse("172.16.10.0/24")</p>
+<pre><code>network <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
 
-<p>network / 3   # implies map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.128/25&quot;]</span></code></pre>
+network <span class="o">/</span> <span class="n">3</span>   <span class="c"># implies map{|i| i.to_string}</span>
+  <span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.128/25&quot;]</span></code></pre>
 
 <p>Returns an array of IPv4 objects</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L651" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L713" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1179,26 +1161,22 @@ prefix. This is because we expect to see</p>
 
 <p>Example:</p>
 
-<p>ip1 = Subnet.parse "10.100.100.1/8"
-  ip2 = Subnet.parse "172.16.0.1/16"
-  ip3 = Subnet.parse "10.100.100.1/16"</p>
+<pre><code class="language-crystal">ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;10.100.100.1/8&quot;</span>
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;172.16.0.1/16&quot;</span>
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;10.100.100.1/16&quot;</span>
 
-<p>ip1 &lt; ip2</p>
+ip1 <span class="o">&lt;</span> ip2
+  <span class="c">#=&gt; true</span>
+ip1 <span class="o">&gt;</span> ip3
+  <span class="c">#=&gt; false</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>ip1 > ip3</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre>
-
-<p>[ip1,ip2,ip3].sort.map{|i| i.to_s }</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.100.100.1/8&quot;,&quot;10.100.100.1/16&quot;,&quot;172.16.0.1/16&quot;]</span></code></pre></div>
+[ip1,ip2,ip3].sort.map{<span class="o">|</span>i<span class="o">|</span> i.to_s }
+  <span class="c">#=&gt; [&quot;10.100.100.1/8&quot;,&quot;10.100.100.1/16&quot;,&quot;172.16.0.1/16&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L432" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L473" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,28 +1191,21 @@ prefix. This is because we expect to see</p>
       
         <div class="doc"><p>Returns the octet specified by index</p>
 
-<p>ip = Subnet.parse("172.16.100.50/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.50/24&quot;</span>)
 
-<p>ip[0]</p>
-
-<pre><code><span class="c">#=&gt; 172</span></code></pre>
-
-<p>ip[1]</p>
-
-<pre><code><span class="c">#=&gt; 16</span></code></pre>
-
-<p>ip[2]</p>
-
-<pre><code><span class="c">#=&gt; 100</span></code></pre>
-
-<p>ip[3]</p>
-
-<pre><code><span class="c">#=&gt; 50</span></code></pre></div>
+ip[<span class="n">0</span>]
+  <span class="c">#=&gt; 172</span>
+ip[<span class="n">1</span>]
+  <span class="c">#=&gt; 16</span>
+ip[<span class="n">2</span>]
+  <span class="c">#=&gt; 100</span>
+ip[<span class="n">3</span>]
+  <span class="c">#=&gt; 50</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L242" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1249,16 +1220,16 @@ prefix. This is because we expect to see</p>
       
         <div class="doc"><p>Updated the octet specified at index</p>
 
-<p>ip = Subnet.parse("172.16.100.50/24")
-  ip[2] = 200</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.50/24&quot;</span>)
+ip[<span class="n">2</span>] <span class="o">=</span> <span class="n">200</span>
 
-<p>#=>  #&lt;Subnet::IPv4:0x00000000000000 @address="172.16.200.1",
-  #=>       @prefix=32, @octets=[172, 16, 200, 1], @u32=2886780929></p></div>
+<span class="c">#=&gt;  #&lt;Subnet::IPv4:0x00000000000000 @address=&quot;172.16.200.1&quot;,</span>
+<span class="c">#=&gt;       @prefix=32, @octets=[172, 16, 200, 1], @u32=2886780929&gt;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L260" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1277,16 +1248,15 @@ what the subnet mask is.</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse("10.0.0.1/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/24&quot;</span>)
 
-<p>ip.a?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+ip.a?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L762" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L841" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1302,16 +1272,15 @@ what the subnet mask is.</p>
         <div class="doc"><p>Returns the address portion of the IPv4 object
 as a string.</p>
 
-<p>ip = Subnet.parse("172.16.100.4/22")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4/22&quot;</span>)
 
-<p>ip.address</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.100.4&quot;</span></code></pre></div>
+ip.address
+  <span class="c">#=&gt; &quot;172.16.100.4&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1331,18 +1300,13 @@ can be used to skip addresses.</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse("10.0.0.0/24")
-   ip.allocate</p>
-
-<pre><code> <span class="c">#=&gt; &quot;10.0.0.1/24&quot;</span></code></pre>
-
-<p>ip.allocate</p>
-
-<pre><code> <span class="c">#=&gt; &quot;10.0.0.2/24&quot;</span></code></pre>
-
-<p>ip.allocate(2)</p>
-
-<pre><code> <span class="c">#=&gt; &quot;10.0.0.5/24&quot;</span></code></pre>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.0/24&quot;</span>)
+ip.allocate
+  <span class="c">#=&gt; &quot;10.0.0.1/24&quot;</span>
+ip.allocate
+  <span class="c">#=&gt; &quot;10.0.0.2/24&quot;</span>
+ip.allocate(<span class="n">2</span>)
+  <span class="c">#=&gt; &quot;10.0.0.5/24&quot;</span></code></pre>
 
 <p>Uses an internal @allocator which tracks the state of allocated
 addresses.</p></div>
@@ -1350,7 +1314,7 @@ addresses.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L997" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1366,16 +1330,15 @@ addresses.</p></div>
         <div class="doc"><p>Returns the IP address in in-addr.arpa format
 for DNS lookups</p>
 
-<p>ip = Subnet.parse("172.16.100.50/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.50/24&quot;</span>)
 
-<p>ip.reverse</p>
-
-<pre><code><span class="c">#=&gt; &quot;50.100.16.172.in-addr.arpa&quot;</span></code></pre></div>
+ip.reverse
+  <span class="c">#=&gt; &quot;50.100.16.172.in-addr.arpa&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L585" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L642" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1394,16 +1357,15 @@ what the subnet mask is.</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse("172.16.10.1/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)
 
-<p>ip.b?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+ip.b?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L776" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L857" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1419,16 +1381,15 @@ what the subnet mask is.</p>
         <div class="doc"><p>Returns the address portion of an IP in binary format,
 as a string containing a sequence of 0 and 1</p>
 
-<p>ip = Subnet.parse("127.0.0.1")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;127.0.0.1&quot;</span>)
 
-<p>ip.bits</p>
-
-<pre><code><span class="c">#=&gt; &quot;01111111000000000000000000000001&quot;</span></code></pre></div>
+ip.bits
+  <span class="c">#=&gt; &quot;01111111000000000000000000000001&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L251" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L274" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1443,16 +1404,15 @@ as a string containing a sequence of 0 and 1</p>
       
         <div class="doc"><p>Returns the broadcast address for the given IP.</p>
 
-<p>ip = Subnet.parse("172.16.10.64/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.64/24&quot;</span>)
 
-<p>ip.broadcast.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.255&quot;</span></code></pre></div>
+ip.broadcast.to_s
+  <span class="c">#=&gt; &quot;172.16.10.255&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L261" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L286" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1467,16 +1427,15 @@ as a string containing a sequence of 0 and 1</p>
       
         <div class="doc"><p>Returns the broadcast address in Unsigned 32bits format</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.broadcast_u32</p>
-
-<pre><code><span class="c">#=&gt; 167772167</span></code></pre></div>
+ip.broadcast_u32
+  <span class="c">#=&gt; 167772167</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L484" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L531" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1495,16 +1454,15 @@ what the subnet mask is.</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse("192.168.1.1/30")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.1.1/30&quot;</span>)
 
-<p>ip.c?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+ip.c?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L790" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L873" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1520,11 +1478,10 @@ what the subnet mask is.</p>
         <div class="doc"><p>Returns the address portion of an IPv4 object
 in a network byte order format.</p>
 
-<p>ip = Subnet.parse("172.16.10.1/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)
 
-<p>ip.data</p>
-
-<pre><code><span class="c">#=&gt; Bytes[172, 16, 10, 1]</span></code></pre>
+ip.data
+  <span class="c">#=&gt; Bytes[172, 16, 10, 1]</span></code></pre>
 
 <p>It is usually used to include an IP address
 in a data packet to be sent over a socket.</p></div>
@@ -1532,7 +1489,7 @@ in a data packet to be sent over a socket.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L204" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1551,27 +1508,24 @@ network (or IP address).</p>
 <p>The object yielded is a new IPv4 object created
 from the iteration.</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.each do |i|</p>
-
-<pre><code>p i.address</code></pre>
-
-<p>end</p>
-
-<pre><code><span class="c">#=&gt; &quot;10.0.0.0&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.1&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.2&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.3&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.4&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.5&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.6&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.7&quot;</span></code></pre></div>
+ip.each <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+  p i.address
+<span class="k">end</span>
+  <span class="c">#=&gt; &quot;10.0.0.0&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.1&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.2&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.3&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.4&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.5&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.6&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.7&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L396" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L435" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1587,25 +1541,22 @@ from the iteration.</p>
         <div class="doc"><p>Iterates over all the hosts IP addresses for the given
 network (or IP address).</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.each_host do |i|</p>
-
-<pre><code>p i.to_s</code></pre>
-
-<p>end</p>
-
-<pre><code><span class="c">#=&gt; &quot;10.0.0.1&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.2&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.3&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.4&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.5&quot;</span>
-<span class="c">#=&gt; &quot;10.0.0.6&quot;</span></code></pre></div>
+ip.each_host <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+  p i.to_s
+<span class="k">end</span>
+  <span class="c">#=&gt; &quot;10.0.0.1&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.2&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.3&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.4&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.5&quot;</span>
+  <span class="c">#=&gt; &quot;10.0.0.6&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L371" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L408" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1624,25 +1575,23 @@ first host IP address in the range.</p>
 <p>Example: given the 192.168.100.0/24 network, the first
 host IP address is 192.168.100.1.</p>
 
-<p>ip = Subnet.parse("192.168.100.0/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.100.0/24&quot;</span>)
 
-<p>ip.first.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;192.168.100.1&quot;</span></code></pre>
+ip.first.to_s
+  <span class="c">#=&gt; &quot;192.168.100.1&quot;</span></code></pre>
 
 <p>The object IP doesn't need to be a network: the method
 automatically gets the network number from it</p>
 
-<p>ip = Subnet.parse("192.168.100.50/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.100.50/24&quot;</span>)
 
-<p>ip.first.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;192.168.100.1&quot;</span></code></pre></div>
+ip.first.to_s
+  <span class="c">#=&gt; &quot;192.168.100.1&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L316" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L349" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1658,16 +1607,15 @@ automatically gets the network number from it</p>
         <div class="doc"><p>Returns the address portion in
 hex</p>
 
-<p>ip = Subnet.parse("10.0.0.0")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.0&quot;</span>)
 
-<p>ip.to_h</p>
-
-<pre><code><span class="c">#=&gt; 0a000000</span></code></pre></div>
+ip.hexstring
+  <span class="c">#=&gt; &quot;0a000000&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L190" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1683,21 +1631,20 @@ hex</p>
         <div class="doc"><p>Returns an array with the IP addresses of
 all the hosts in the network.</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.hosts.map {|i| i.address}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;10.0.0.1&quot;,</span>
-<span class="c">#=&gt;  &quot;10.0.0.2&quot;,</span>
-<span class="c">#=&gt;  &quot;10.0.0.3&quot;,</span>
-<span class="c">#=&gt;  &quot;10.0.0.4&quot;,</span>
-<span class="c">#=&gt;  &quot;10.0.0.5&quot;,</span>
-<span class="c">#=&gt;  &quot;10.0.0.6&quot;]</span></code></pre></div>
+ip.hosts.map {<span class="o">|</span>i<span class="o">|</span> i.address}
+  <span class="c">#=&gt; [&quot;10.0.0.1&quot;,</span>
+  <span class="c">#=&gt;  &quot;10.0.0.2&quot;,</span>
+  <span class="c">#=&gt;  &quot;10.0.0.3&quot;,</span>
+  <span class="c">#=&gt;  &quot;10.0.0.4&quot;,</span>
+  <span class="c">#=&gt;  &quot;10.0.0.5&quot;,</span>
+  <span class="c">#=&gt;  &quot;10.0.0.6&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L463" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L507" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1714,22 +1661,20 @@ all the hosts in the network.</p>
 
 <p>Accepts an Subnet.parse::IPv4 object.</p>
 
-<p>ip = Subnet.parse("192.168.10.100/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.100/24&quot;</span>)
 
-<p>addr = Subnet.parse("192.168.10.102/24")</p>
+addr <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.102/24&quot;</span>)
 
-<p>ip.includes? addr</p>
+ip.includes? addr
+  <span class="c">#=&gt; true</span>
 
-<pre><code><span class="c">#=&gt; true</span></code></pre>
-
-<p>ip.includes? Subnet.parse("172.16.0.48/16")</p>
-
-<pre><code><span class="c">#=&gt; false</span></code></pre></div>
+ip.includes? <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.0.48/16&quot;</span>)
+  <span class="c">#=&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L502" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L550" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1745,19 +1690,18 @@ all the hosts in the network.</p>
         <div class="doc"><p>Checks whether a subnet includes all the
 given IPv4 objects.</p>
 
-<p>ip = Subnet.parse("192.168.10.100/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.100/24&quot;</span>)
 
-<p>addr1 = Subnet.parse("192.168.10.102/24")
-  addr2 = Subnet.parse("192.168.10.103/24")</p>
+addr1 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.102/24&quot;</span>)
+addr2 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.10.103/24&quot;</span>)
 
-<p>ip.includes_all?(addr1,addr2)</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+ip.includes_all?(addr1,addr2)
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L517" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L566" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1777,11 +1721,10 @@ last host IP address in the range.</p>
 <p>Example: given the 192.168.100.0/24 network, the last
 host IP address is 192.168.100.254</p>
 
-<p>ip = Subnet.parse("192.168.100.0/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.100.0/24&quot;</span>)
 
-<p>ip.last.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;192.168.100.254&quot;</span></code></pre>
+ip.last.to_s
+  <span class="c">#=&gt; &quot;192.168.100.254&quot;</span></code></pre>
 
 <p>The object IP doesn't need to be a network: the method
 automatically gets the network number from it</p>
@@ -1795,7 +1738,7 @@ automatically gets the network number from it</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L346" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L381" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1813,15 +1756,14 @@ to a link-local network RFC3927</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet "169.254.0.1"
-  ip.link_local?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span> <span class="s">&quot;169.254.0.1&quot;</span>
+ip.link_local?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L568" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L624" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1839,15 +1781,14 @@ to a loopback network RFC1122</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse "127.0.0.1"
-  ip.loopback?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;127.0.0.1&quot;</span>
+ip.loopback?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L556" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L610" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1865,15 +1806,14 @@ to a multicast network RFC3171</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse "224.0.0.0/4"
-  ip.multicast?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;224.0.0.0/4&quot;</span>
+ip.multicast?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L544" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L596" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1888,16 +1828,15 @@ to a multicast network RFC3171</p>
       
         <div class="doc"><p>Returns the prefix as a string in IP format</p>
 
-<p>ip = Subnet.parse("172.16.100.4/22")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4/22&quot;</span>)
 
-<p>ip.netmask</p>
-
-<pre><code><span class="c">#=&gt; &quot;255.255.252.0&quot;</span></code></pre></div>
+ip.netmask
+  <span class="c">#=&gt; &quot;255.255.252.0&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1910,26 +1849,24 @@ to a multicast network RFC3171</p>
         <a class="method-permalink" href="#netmask%3D%28addr%29-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Like IPv4#prefix=, this method allow you to
+        <div class="doc"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to
 change the prefix / netmask of an IP address
 object.</p>
 
-<p>ip = Subnet.parse("172.16.100.4")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4&quot;</span>)
 
-<p>puts ip</p>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/16</span>
 
-<pre><code><span class="c">#=&gt; 172.16.100.4/16</span></code></pre>
+ip.netmask <span class="o">=</span> <span class="s">&quot;255.255.252.0&quot;</span>
 
-<p>ip.netmask = "255.255.252.0"</p>
-
-<p>puts ip</p>
-
-<pre><code><span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L169" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1945,16 +1882,15 @@ object.</p>
         <div class="doc"><p>Returns a new IPv4 object with the network number
 for the given IP.</p>
 
-<p>ip = Subnet.parse("172.16.10.64/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.64/24&quot;</span>)
 
-<p>ip.network.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.0&quot;</span></code></pre></div>
+ip.network.to_s
+  <span class="c">#=&gt; &quot;172.16.10.0&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L294" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L323" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1969,22 +1905,20 @@ for the given IP.</p>
       
         <div class="doc"><p>Checks if the IP address is actually a network</p>
 
-<p>ip = Subnet.parse("172.16.10.64/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.64/24&quot;</span>)
 
-<p>ip.network?</p>
+ip.network?
+  <span class="c">#=&gt; false</span>
 
-<pre><code><span class="c">#=&gt; false</span></code></pre>
+ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.64/26&quot;</span>)
 
-<p>ip = Subnet.parse("172.16.10.64/26")</p>
-
-<p>ip.network?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+ip.network?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L283" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L310" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1999,16 +1933,15 @@ for the given IP.</p>
       
         <div class="doc"><p>Returns the network number in Unsigned 32bits format</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.network_u32</p>
-
-<pre><code><span class="c">#=&gt; 167772160</span></code></pre></div>
+ip.network_u32
+  <span class="c">#=&gt; 167772160</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L473" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L519" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2023,28 +1956,21 @@ for the given IP.</p>
       
         <div class="doc"><p>Returns the octet specified by index</p>
 
-<p>ip = Subnet.parse("172.16.100.50/24")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.50/24&quot;</span>)
 
-<p>ip[0]</p>
-
-<pre><code><span class="c">#=&gt; 172</span></code></pre>
-
-<p>ip[1]</p>
-
-<pre><code><span class="c">#=&gt; 16</span></code></pre>
-
-<p>ip[2]</p>
-
-<pre><code><span class="c">#=&gt; 100</span></code></pre>
-
-<p>ip[3]</p>
-
-<pre><code><span class="c">#=&gt; 50</span></code></pre></div>
+ip[<span class="n">0</span>]
+  <span class="c">#=&gt; 172</span>
+ip[<span class="n">1</span>]
+  <span class="c">#=&gt; 16</span>
+ip[<span class="n">2</span>]
+  <span class="c">#=&gt; 100</span>
+ip[<span class="n">3</span>]
+  <span class="c">#=&gt; 50</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L228" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L247" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2059,16 +1985,15 @@ for the given IP.</p>
       
         <div class="doc"><p>Returns the address as an array of decimal values</p>
 
-<p>ip = Subnet.parse("172.16.100.4")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4&quot;</span>)
 
-<p>ip.octets</p>
-
-<pre><code><span class="c">#=&gt; [172, 16, 100, 4]</span></code></pre></div>
+ip.octets
+  <span class="c">#=&gt; [172, 16, 100, 4]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2084,20 +2009,18 @@ for the given IP.</p>
         <div class="doc"><p>Returns the prefix portion of the IPv4 object
 as a Subnet::Prefix32 object</p>
 
-<p>ip = Subnet.parse("172.16.100.4/22")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4/22&quot;</span>)
 
-<p>ip.prefix</p>
+ip.prefix
+  <span class="c">#=&gt; 22</span>
 
-<pre><code><span class="c">#=&gt; 22</span></code></pre>
-
-<p>ip.prefix.class</p>
-
-<pre><code><span class="c">#=&gt; Subnet::Prefix32</span></code></pre></div>
+ip.prefix.<span class="k">class</span>
+  <span class="c">#=&gt; Subnet::Prefix32</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2117,22 +2040,20 @@ to an object created with IPv4.parse_u32 or
 if the object was created using the classful
 mask.</p>
 
-<p>ip = Subnet.parse("172.16.100.4")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4&quot;</span>)
 
-<p>puts ip</p>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/16</span>
 
-<pre><code><span class="c">#=&gt; 172.16.100.4/16</span></code></pre>
+ip.prefix <span class="o">=</span> <span class="n">22</span>
 
-<p>ip.prefix = 22</p>
-
-<p>puts ip</p>
-
-<pre><code><span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L142" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2150,15 +2071,14 @@ to a private network RFC1918</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse "10.1.1.1/24"
-  ip.private?</p>
-
-<pre><code><span class="c">#=&gt; true</span></code></pre></div>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;10.1.1.1/24&quot;</span>
+ip.private?
+  <span class="c">#=&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L530" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L580" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2174,16 +2094,15 @@ to a private network RFC1918</p>
         <div class="doc"><p>Returns the IP address in in-addr.arpa format
 for DNS lookups</p>
 
-<p>ip = Subnet.parse("172.16.100.50/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.50/24&quot;</span>)
 
-<p>ip.reverse</p>
-
-<pre><code><span class="c">#=&gt; &quot;50.100.16.172.in-addr.arpa&quot;</span></code></pre></div>
+ip.reverse
+  <span class="c">#=&gt; &quot;50.100.16.172.in-addr.arpa&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L580" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L637" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2200,16 +2119,15 @@ for DNS lookups</p>
 in the network. It also counts the network
 address and the broadcast address.</p>
 
-<p>ip = Subnet.parse("10.0.0.1/29")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.1/29&quot;</span>)
 
-<p>ip.size</p>
-
-<pre><code><span class="c">#=&gt; 8</span></code></pre></div>
+ip.size
+  <span class="c">#=&gt; 8</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L446" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L489" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2232,33 +2150,31 @@ subnet it.</p>
 <p>If <code>subnets</code> is an power of two number, the resulting
 networks will be divided evenly from the supernet.</p>
 
-<p>network = Subnet.parse("172.16.10.0/24")</p>
+<pre><code>network <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
 
-<p>network / 4   # implies map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.128/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.192/26&quot;]</span></code></pre>
+network <span class="o">/</span> <span class="n">4</span>   <span class="c"># implies map{|i| i.to_string}</span>
+  <span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.128/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.192/26&quot;]</span></code></pre>
 
 <p>If <code>num</code> is any other number, the supernet will be
 divided into some networks with a even number of hosts and
 other networks with the remaining addresses.</p>
 
-<p>network = Subnet.parse("172.16.10.0/24")</p>
+<pre><code>network <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)
 
-<p>network / 3   # implies map{|i| i.to_string}</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.10.128/25&quot;]</span></code></pre>
+network <span class="o">/</span> <span class="n">3</span>   <span class="c"># implies map{|i| i.to_string}</span>
+  <span class="c">#=&gt; [&quot;172.16.10.0/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.64/26&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.10.128/25&quot;]</span></code></pre>
 
 <p>Returns an array of IPv4 objects</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L639" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L701" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2281,14 +2197,13 @@ prefix.</p>
 
 <p>For example, given the following network:</p>
 
-<p>ip = Subnet.parse "172.16.10.0/24"</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;172.16.10.0/24&quot;</span></code></pre>
 
 <p>we can calculate the subnets with a /26 prefix</p>
 
-<p>ip.subnet(26).map{&:to_string)</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.10.0/26&quot;, &quot;172.16.10.64/26&quot;,</span>
-     <span class="s">&quot;172.16.10.128/26&quot;</span>, <span class="s">&quot;172.16.10.192/26&quot;</span>]</code></pre>
+<pre><code>ip.subnet(<span class="n">26</span>).map{<span class="o">&amp;</span><span class="n">:to_string</span>)
+  <span class="c">#=&gt; [&quot;172.16.10.0/26&quot;, &quot;172.16.10.64/26&quot;,</span>
+       <span class="s">&quot;172.16.10.128/26&quot;</span>, <span class="s">&quot;172.16.10.192/26&quot;</span>]</code></pre>
 
 <p>The resulting number of subnets will of course always be
 a power of two.</p></div>
@@ -2296,7 +2211,7 @@ a power of two.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L703" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L775" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2317,27 +2232,25 @@ that you getting as a result a network with a
 smaller prefix (bigger host space). For example,
 given the network</p>
 
-<p>ip = Subnet.parse("172.16.10.0/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)</code></pre>
 
 <p>you can supernet it with a new /23 prefix</p>
 
-<p>ip.supernet(23).to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
+<pre><code>ip.supernet(<span class="n">23</span>).to_string
+  <span class="c">#=&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
 
 <p>However if you supernet it with a /22 prefix, the
 network address will change:</p>
 
-<p>ip.supernet(22).to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.8.0/22&quot;</span></code></pre>
+<pre><code>ip.supernet(<span class="n">22</span>).to_string
+  <span class="c">#=&gt; &quot;172.16.8.0/22&quot;</span></code></pre>
 
 <p>If <code>new_prefix</code> is less than 1, returns 0.0.0.0/0</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L677" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L745" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2353,20 +2266,19 @@ network address will change:</p>
         <div class="doc"><p>Return a list of IP's between @address
 and the supplied IP</p>
 
-<p>ip = Subnet..parse("172.16.100.51/32")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>..parse(<span class="s">&quot;172.16.100.51/32&quot;</span>)
 
-<p>ip.to("172.16.100.100")</p>
-
-<pre><code><span class="c">#=&gt; [&quot;172.16.100.51&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.100.52&quot;,</span>
-<span class="c">#=&gt;  ...</span>
-<span class="c">#=&gt;  &quot;172.16.100.99&quot;,</span>
-<span class="c">#=&gt;  &quot;172.16.100.100&quot;]</span></code></pre></div>
+ip.to(<span class="s">&quot;172.16.100.100&quot;</span>)
+  <span class="c">#=&gt; [&quot;172.16.100.51&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.100.52&quot;,</span>
+  <span class="c">#=&gt;  ...</span>
+  <span class="c">#=&gt;  &quot;172.16.100.99&quot;,</span>
+  <span class="c">#=&gt;  &quot;172.16.100.100&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L601" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L659" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2379,26 +2291,24 @@ and the supplied IP</p>
         <a class="method-permalink" href="#to_i-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Like IPv4#prefix=, this method allow you to
+        <div class="doc"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to
 change the prefix / netmask of an IP address
 object.</p>
 
-<p>ip = Subnet.parse("172.16.100.4")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4&quot;</span>)
 
-<p>puts ip</p>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/16</span>
 
-<pre><code><span class="c">#=&gt; 172.16.100.4/16</span></code></pre>
+ip.netmask <span class="o">=</span> <span class="s">&quot;255.255.252.0&quot;</span>
 
-<p>ip.netmask = "255.255.252.0"</p>
-
-<p>puts ip</p>
-
-<pre><code><span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2416,16 +2326,15 @@ with the IPv6 Mapped IPv4 addresses</p>
 
 <p>Example:</p>
 
-<p>ip = Subnet.parse("172.16.10.1/24")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)
 
-<p>ip.to_ipv6</p>
-
-<pre><code><span class="c">#=&gt; &quot;ac10:0a01&quot;</span></code></pre></div>
+ip.to_ipv6
+  <span class="c">#=&gt; &quot;ac10:0a01&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L803" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L888" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2441,16 +2350,15 @@ with the IPv6 Mapped IPv4 addresses</p>
         <div class="doc"><p>Returns a string with the address portion of
 the IPv4 object</p>
 
-<p>ip = Subnet.parse("172.16.100.4/22")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4/22&quot;</span>)
 
-<p>ip.to_s</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.100.4&quot;</span></code></pre></div>
+ip.to_s
+  <span class="c">#=&gt; &quot;172.16.100.4&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L1014" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2466,16 +2374,15 @@ the IPv4 object</p>
         <div class="doc"><p>Returns a string with the IP address in canonical
 form.</p>
 
-<p>ip = Subnet.parse("172.16.100.4/22")</p>
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4/22&quot;</span>)
 
-<p>ip.to_string</p>
-
-<pre><code><span class="c">#=&gt; &quot;172.16.100.4/22&quot;</span></code></pre></div>
+ip.to_string
+  <span class="c">#=&gt; &quot;172.16.100.4/22&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L1026" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L1133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2488,26 +2395,24 @@ form.</p>
         <a class="method-permalink" href="#to_u32-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Like IPv4#prefix=, this method allow you to
+        <div class="doc"><p>Like <code><a href="../Subnet/IPv4.html#prefix%3D%28num%29-instance-method">IPv4#prefix=</a></code>, this method allow you to
 change the prefix / netmask of an IP address
 object.</p>
 
-<p>ip = Subnet.parse("172.16.100.4")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.100.4&quot;</span>)
 
-<p>puts ip</p>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/16</span>
 
-<pre><code><span class="c">#=&gt; 172.16.100.4/16</span></code></pre>
+ip.netmask <span class="o">=</span> <span class="s">&quot;255.255.252.0&quot;</span>
 
-<p>ip.netmask = "255.255.252.0"</p>
-
-<p>puts ip</p>
-
-<pre><code><span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
+puts ip
+  <span class="c">#=&gt; 172.16.100.4/22</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L179" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2527,16 +2432,15 @@ object.</p>
 inet_pton to create a 32 bits address family
 structure.</p>
 
-<p>ip = Subnet.parse("10.0.0.0/8")</p>
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;10.0.0.0/8&quot;</span>)
 
-<p>ip.to_i</p>
-
-<pre><code><span class="c">#=&gt; 167772160</span></code></pre></div>
+ip.to_i
+  <span class="c">#=&gt; 167772160</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/8a613539c8ee0f9abfeb9dcc586ccb4e1419eb51/src/subnet/ipv4.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/e65f78731e6d4a80246517999567be863a99fe65/src/subnet/ipv4.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
