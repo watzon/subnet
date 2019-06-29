@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.29.0">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/watzon/subnet">
+  <title>Subnet::Prefix32 - github.com/watzon/subnet</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/watzon/subnet/Subnet" data-name="subnet">
+      <a href="../Subnet.html">Subnet</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv4" data-name="subnet::ipv4">
+      <a href="../Subnet/IPv4.html">IPv4</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix" data-name="subnet::prefix">
+      <a href="../Subnet/Prefix.html">Prefix</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix128" data-name="subnet::prefix128">
+      <a href="../Subnet/Prefix128.html">Prefix128</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/watzon/subnet/Subnet/Prefix32" data-name="subnet::prefix32">
+      <a href="../Subnet/Prefix32.html">Prefix32</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Subnet::Prefix32
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Subnet/Prefix32.html">Subnet::Prefix32</a></li><li class="superclass"><a href="../Subnet/Prefix.html">Subnet::Prefix</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L50" target="_blank">
+        subnet/prefix.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="IN4MASK">
+        <strong>IN4MASK</strong> = <code><span class="n">4294967295_i64</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28num%29-class-method" class="signature"><strong>.new</strong>(num)</a>
+        
+          <div class="summary"><p>Creates a new Prefix for 32 bit IPv4 Addresses.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#parse_netmask%28netmask%29-class-method" class="signature"><strong>.parse_netmask</strong>(netmask)</a>
+        
+          <div class="summary"><p>Creates a new prefix by parsing a netmask in dotted decimal form.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28index%29-instance-method" class="signature"><strong>#[]</strong>(index)</a>
+        
+          <div class="summary"><p>Shortcut for the octets in dotted decimal representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits-instance-method" class="signature"><strong>#bits</strong></a>
+        
+          <div class="summary"><p>Transforms the prefix into a string of bits representing the netmask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host_prefix-instance-method" class="signature"><strong>#host_prefix</strong></a>
+        
+          <div class="summary"><p>Returns the length of the host portion of a netmask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hostmask-instance-method" class="signature"><strong>#hostmask</strong></a>
+        
+          <div class="summary"><p>The hostmask is the contrary of the subnet mask, as it shows the bits that can change within the hosts</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hostmask_octets-instance-method" class="signature"><strong>#hostmask_octets</strong></a>
+        
+          <div class="summary"><p>Array of octets representing the hostmask</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#octets-instance-method" class="signature"><strong>#octets</strong></a>
+        
+          <div class="summary"><p>An array of octets of the IPv4 dotted decimal format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_ip-instance-method" class="signature"><strong>#to_ip</strong></a>
+        
+          <div class="summary"><p>Gives the prefix in IPv4 dotted decimal format, i.e.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32-instance-method" class="signature"><strong>#to_u32</strong></a>
+        
+          <div class="summary"><p>Unsigned 32 bit number representing the prefix.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Subnet/Prefix.html">Subnet::Prefix</a></code></h3>
+  
+  
+    <a href="../Subnet/Prefix.html#%2B%28other%29-instance-method" class="tooltip">
+      <span>+(other)</span>
+    +</a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#-%28other%29-instance-method" class="tooltip">
+      <span>-(other)</span>
+    -</a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#%28other%29-instance-method" class="tooltip">
+      <span><=>(other)</span>
+    <=></a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#prefix%3AInt32-instance-method" class="tooltip">
+      <span>prefix : Int32</span>
+    prefix</a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#prefix%3D%28prefix%3AInt32%29-instance-method" class="tooltip">
+      <span>prefix=(prefix : Int32)</span>
+    prefix=</a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#to_i%3AInt32-instance-method" class="tooltip">
+      <span>to_i : Int32</span>
+    to_i</a>, 
+    
+  
+    <a href="../Subnet/Prefix.html#to_s%28io%29-instance-method" class="tooltip">
+      <span>to_s(io)</span>
+    to_s</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../Subnet/Prefix.html">Subnet::Prefix</a></code></h3>
+  
+  
+    <a href="../Subnet/Prefix.html#new%28num%29-class-method" class="tooltip">
+      <span>new(num)</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(num)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(num)
+
+        <a class="method-permalink" href="#new%28num%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new Prefix for 32 bit IPv4 Addresses.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L55" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="parse_netmask(netmask)-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_netmask</strong>(netmask)
+
+        <a class="method-permalink" href="#parse_netmask%28netmask%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new prefix by parsing a netmask in
+dotted decimal form.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="[](index)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(index)
+
+        <a class="method-permalink" href="#%5B%5D%28index%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Shortcut for the octets in dotted decimal
+representation.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L98" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits-instance-method">
+      <div class="signature">
+        
+        def <strong>bits</strong>
+
+        <a class="method-permalink" href="#bits-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Transforms the prefix into a string of bits
+representing the netmask.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host_prefix-instance-method">
+      <div class="signature">
+        
+        def <strong>host_prefix</strong>
+
+        <a class="method-permalink" href="#host_prefix-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the length of the host portion of a
+netmask.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L65" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hostmask-instance-method">
+      <div class="signature">
+        
+        def <strong>hostmask</strong>
+
+        <a class="method-permalink" href="#hostmask-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>The hostmask is the contrary of the subnet mask,
+as it shows the bits that can change within the
+hosts</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hostmask_octets-instance-method">
+      <div class="signature">
+        
+        def <strong>hostmask_octets</strong>
+
+        <a class="method-permalink" href="#hostmask_octets-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Array of octets representing the hostmask</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L110" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="octets-instance-method">
+      <div class="signature">
+        
+        def <strong>octets</strong>
+
+        <a class="method-permalink" href="#octets-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>An array of octets of the IPv4 dotted decimal format.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L82" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_ip-instance-method">
+      <div class="signature">
+        
+        def <strong>to_ip</strong>
+
+        <a class="method-permalink" href="#to_ip-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Gives the prefix in IPv4 dotted decimal format,
+i.e. the cannonical netmask we're all used to.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32</strong>
+
+        <a class="method-permalink" href="#to_u32-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Unsigned 32 bit number representing the prefix.</p>
+
+<p>prefix = Subnet::Prefix32.new 24</p>
+
+<p>prefix.to_u32</p>
+
+<pre><code><span class="c">#=&gt; 4294967040</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/c457cfc88d78f04442128749d9f4bb7ffa2d6092/src/subnet/prefix.cr#L92" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
