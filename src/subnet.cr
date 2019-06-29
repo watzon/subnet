@@ -56,7 +56,7 @@ module Subnet
       raise ArgumentError.new("not a long integer: #{uint.inspect}")
     end
 
-    ret = [] of UInt8
+    ret = [] of UInt8 | UInt16 | UInt32 | UInt64 | Int32 | Int64
     4.times do
       ret.unshift(uint & 0xff)
       uint >>= 8
@@ -86,7 +86,7 @@ module Subnet
   #   # => false
   # ```
   def ipv6?
-    self.kind_of? Subnet::IPv6
+    self.is_a? Subnet::IPv6
   end
 
   # Checks if the given string is either a valid IP, either a valid IPv4 subnet

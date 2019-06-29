@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.29.0">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/watzon/subnet">
+  <title>Subnet::IPv6 - github.com/watzon/subnet</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/watzon/subnet/Subnet" data-name="subnet">
+      <a href="../Subnet.html">Subnet</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv4" data-name="subnet::ipv4">
+      <a href="../Subnet/IPv4.html">IPv4</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
+      <a href="../Subnet/IPv6.html">IPv6</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix" data-name="subnet::prefix">
+      <a href="../Subnet/Prefix.html">Prefix</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix128" data-name="subnet::prefix128">
+      <a href="../Subnet/Prefix128.html">Prefix128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix32" data-name="subnet::prefix32">
+      <a href="../Subnet/Prefix32.html">Prefix32</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Subnet::IPv6
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Subnet/IPv6.html">Subnet::IPv6</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+  <h2>Included Modules</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../Subnet.html">Subnet</a></li>
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv6.cr#L2" target="_blank">
+        subnet/ipv6.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Subnet.html">Subnet</a></code></h3>
+  
+  
+    <a href="../Subnet.html#ipv4%3F-instance-method" class="tooltip">
+      <span>ipv4?</span>
+    ipv4?</a>, 
+    
+  
+    <a href="../Subnet.html#ipv6%3F-instance-method" class="tooltip">
+      <span>ipv6?</span>
+    ipv6?</a>
+    
+  
+
+
+    
+
+
+    
+
+  <h3>Class methods inherited from module <code><a href="../Subnet.html">Subnet</a></code></h3>
+  
+  
+    <a href="../Subnet.html#deprecate%28message%3Dnil%29-class-method" class="tooltip">
+      <span>deprecate(message = <span class="n">nil</span>)</span>
+    deprecate</a>, 
+    
+  
+    <a href="../Subnet.html#ntoa%28uint%29-class-method" class="tooltip">
+      <span>ntoa(uint)</span>
+    ntoa</a>, 
+    
+  
+    <a href="../Subnet.html#parse%28str%29-class-method" class="tooltip">
+      <span>parse(str)</span>
+    parse</a>, 
+    
+  
+    <a href="../Subnet.html#valid%3F%28addr%29-class-method" class="tooltip">
+      <span>valid?(addr)</span>
+    valid?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ip%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ip?(addr)</span>
+    valid_ip?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ipv4%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4?(addr)</span>
+    valid_ipv4?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ipv4_netmask%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4_netmask?(addr)</span>
+    valid_ipv4_netmask?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ipv4_subnet%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4_subnet?(addr)</span>
+    valid_ipv4_subnet?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ipv6%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv6?(addr)</span>
+    valid_ipv6?</a>, 
+    
+  
+    <a href="../Subnet.html#valid_ipv6_subnet%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv6_subnet?(addr)</span>
+    valid_ipv6_subnet?</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

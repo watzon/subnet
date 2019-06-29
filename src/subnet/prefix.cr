@@ -51,7 +51,12 @@ module Subnet
 
     IN4MASK = 0xffffffff
 
-    # Creates a new Prefix for 32 bit IPv4 Addresses.
+    # Creates a new prefix object for 32 bits IPv4 addresses
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #   #=> 24
+    # ```
     def initialize(num)
       num = num.to_i
       unless (0..32).includes?(num)
@@ -60,25 +65,54 @@ module Subnet
       super(num)
     end
 
-    # Returns the length of the host portion of a
-    # netmask.
+    # Returns the length of the host portion
+    # of a netmask.
+    #
+    # ```
+    # prefix = Prefix32.new 24
+    #
+    # prefix.host_prefix
+    #   #=> 8
+    # ```
     def host_prefix
       32 - @prefix
     end
 
     # Transforms the prefix into a string of bits
-    # representing the netmask.
+    # representing the netmask
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix.bits
+    #   #=> "11111111111111111111111100000000"
+    # ```
     def bits
       "%.32b" % to_u32
     end
 
     # Gives the prefix in IPv4 dotted decimal format,
-    # i.e. the cannonical netmask we're all used to.
+    # i.e. the canonical netmask we're all used to
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix.to_ip
+    #   #=> "255.255.255.0"
+    # ```
     def to_ip
       octets.join('.')
     end
 
-    # An array of octets of the IPv4 dotted decimal format.
+    # An array of octets of the IPv4 dotted decimal
+    # format
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix.octets
+    #   #=> [255, 255, 255, 0]
+    # ```
     def octets
       ("%08.64x" % bits.to_i64(2)).hexbytes
     end
@@ -93,8 +127,15 @@ module Subnet
       (IN4MASK >> host_prefix) << host_prefix
     end
 
-    # Shortcut for the octets in dotted decimal
-    # representation.
+    # Shortcut for the octecs in the dotted decimal
+    # representation
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix[2]
+    #   #=> 255
+    # ```
     def [](index)
       octets[index]
     end
@@ -102,11 +143,25 @@ module Subnet
     # The hostmask is the contrary of the subnet mask,
     # as it shows the bits that can change within the
     # hosts
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix.hostmask
+    #   #=> "0.0.0.255"
+    # ```
     def hostmask
       hostmask_octets.join('.')
     end
 
-    # Array of octets representing the hostmask
+    # Returns an array of octets representing the hostmask
+    #
+    # ```
+    # prefix = Subnet::Prefix32.new 24
+    #
+    # prefix.hostmask_octets
+    #   # => StaticArray["0", "0", "0", "255"]
+    # ```
     def hostmask_octets
       octets = uninitialized UInt8[4]
       IO::ByteFormat::BigEndian.encode(~to_u32.to_u32, octets.to_slice)
@@ -114,7 +169,12 @@ module Subnet
     end
 
     # Creates a new prefix by parsing a netmask in
-    # dotted decimal form.
+    # dotted decimal form
+    #
+    # ```
+    # prefix = Subnet::Prefix32::parse_netmask "255.255.255.0"
+    #   #=> 24
+    # ```
     def self.parse_netmask(netmask)
       octets = netmask.is_a?(Indexable) ? netmask : netmask.split('.')
       raise "netmask must contain 4 octets" unless octets.size == 4

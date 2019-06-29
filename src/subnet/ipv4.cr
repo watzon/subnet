@@ -4,7 +4,7 @@ module Subnet
   # Represents a IPv4 style IP address.
   class IPv4
     include Subnet
-    include Enumerable(UInt8)
+    include Enumerable(IPv4)
     include Comparable(IPv4)
 
     # This Hash contains the prefix values for Classful networks
@@ -18,7 +18,7 @@ module Subnet
     }
 
     # Regular expression to match an IPv4 address
-    REGEXP = Regexp.new(/((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)/)
+    IPV4REGEX = /((25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)/
 
     # Returns the address portion of the IPv4 object
     # as a string.
@@ -97,7 +97,7 @@ module Subnet
     # Subnet::IPv4.new "10.0.0.1/8"
     # Subnet::IPv4.new "10.0.0.1/255.0.0.0"
     # ```
-    def initialize(str)
+    def initialize(str : String)
       parts = str.split('/')
       ip, netmask = parts[0], parts[1]?
 
@@ -259,7 +259,7 @@ module Subnet
     # ```
     def []=(index, value)
       @octets[index] = value.to_i
-      new("#{@octets.join('.')}/#{prefix}")
+      initialize("#{@octets.join('.')}/#{prefix}")
     end
 
     # Returns the address portion of an IP in binary format,
@@ -563,8 +563,13 @@ module Subnet
     # ip.includes_all?(addr1,addr2)
     #   #=> true
     # ```
-    def includes_all?(*others)
+    def includes_all?(others)
       others.all? { |oth| includes?(oth) }
+    end
+
+    # ditto
+    def includes_all?(*others)
+      includes_all?(others)
     end
 
     # Checks if an IPv4 address objects belongs
@@ -766,17 +771,19 @@ module Subnet
     #
     # ```
     # ip.subnet(26).map{&:to_string)
-    #   #=> ["172.16.10.0/26", "172.16.10.64/26",
-    #        "172.16.10.128/26", "172.16.10.192/26"]
+    #   #=> ["172.16.10.0/26", "172.16.10.64/26", "172.16.10.128/26", "172.16.10.192/26"]
     # ```
     #
     # The resulting number of subnets will of course always be
     # a power of two.
     def subnet(subprefix)
+      subprefix = subprefix.to_i
+
       unless ((@prefix.to_i)..32).includes? subprefix
         raise ArgumentError.new("New prefix must be between #@prefix and 32")
       end
-      Array.new(2**(subprefix - @prefix.to_i)) do |i|
+
+      Array(IPv4).new(2 ** (subprefix - @prefix.to_i)) do |i|
         IPv4.parse_u32(network_u32 + (i*(2**(32 - subprefix))), subprefix)
       end
     end
@@ -839,7 +846,7 @@ module Subnet
     #   #=> true
     # ```
     def a?
-      CLASSFUL.key(8) === bits
+      CLASSFUL.key_for(8) === bits
     end
 
     # Checks whether the ip address belongs to a
@@ -855,7 +862,7 @@ module Subnet
     #   #=> true
     # ```
     def b?
-      CLASSFUL.key(16) === bits
+      CLASSFUL.key_for(16) === bits
     end
 
     # Checks whether the ip address belongs to a
@@ -871,7 +878,7 @@ module Subnet
     #   #=> true
     # ```
     def c?
-      CLASSFUL.key(24) === bits
+      CLASSFUL.key_for(24) === bits
     end
 
     # Return the ip address in a format compatible
@@ -920,11 +927,13 @@ module Subnet
     # For example, on a network stream the IP 172.16.0.1
     # is represented with the binary `Bytes[172, 16, 10, 1]`.
     #
+    # ```
     # ip = Subnet::IPv4.parse_data Bytes[172, 16, 10, 1]
     # ip.prefix = 24
     #
     # ip.to_string
     #   #=> "172.16.10.1/24"
+    # ```
     def self.parse_data(bytes, prefix = 32)
       new(bytes.join('.') + "/#{prefix}")
     end
@@ -942,7 +951,7 @@ module Subnet
     #   #=> "172.16.10.1"
     # ```
     def self.extract(str)
-      addr = REGEXP.match(str).try &.[0].to_s
+      addr = IPV4REGEX.match(str).try &.[0].to_s
       IPv4.new addr if addr
     end
 
@@ -1017,8 +1026,10 @@ module Subnet
     #   #=> ["10.0.1.0/24","10.0.2.0/23","10.0.4.0/24"]
     # ```
     def self.summarize(args)
+      raise "Can't summarize an empty network" if args.size < 1
+
       # one network? no need to summarize
-      return [args.first.network] if args.size == 1
+      return [args.first.not_nil!.network] if args.size == 1
 
       i = 0
       args = args.to_a
@@ -1069,19 +1080,16 @@ module Subnet
     # prefix of /24 or 255.255.255.0
     #
     def self.parse_classful(ip)
-      if Subnet.valid_ipv4?(ip)
-        address = ip.strip
-      else
-        raise ArgumentError.new("Invalid IP #{ip.inspect}")
-      end
-      prefix = CLASSFUL.find { |h, k| h === ("%.8b" % address.to_i) }.last
-      self.new "#{address}/#{prefix}"
+      raise ArgumentError.new("Invalid IP #{ip.inspect}") unless Subnet.valid_ipv4?(ip)
+      address = ip.strip
+      prefix = CLASSFUL.find { |h, k| h === ("%08b" % address.split('.').first.to_i) }.try &.last
+      new("#{address}/#{prefix}")
     end
 
     # Allocates a new ip from the current subnet. Optional skip parameter
     # can be used to skip addresses.
     #
-    # Will raise `Iterator::Stop` exception when all addresses have been allocated
+    # Will return `nil` exception when all addresses have been allocated
     #
     # Example:
     #
@@ -1103,8 +1111,9 @@ module Subnet
 
       next_ip = network_u32 + @allocator
       if next_ip > broadcast_u32 + 1
-        return Iterator::Stop::INSTANCE
+        return nil
       end
+
       IPv4.parse_u32(network_u32 + @allocator, @prefix)
     end
 
