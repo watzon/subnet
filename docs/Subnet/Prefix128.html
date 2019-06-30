@@ -46,8 +46,23 @@
       
     </li>
   
-  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
+  <li class="parent " data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
       <a href="../Subnet/IPv6.html">IPv6</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Mapped" data-name="subnet::ipv6::mapped">
+      <a href="../Subnet/IPv6/Mapped.html">Mapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Unspecified" data-name="subnet::ipv6::unspecified">
+      <a href="../Subnet/IPv6/Unspecified.html">Unspecified</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -106,7 +121,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/prefix.cr#L188" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L188" target="_blank">
         subnet/prefix.cr
       </a>
     
@@ -123,7 +138,7 @@
       <li class="entry-summary">
         <a href="#new%28num%3D128%29-class-method" class="signature"><strong>.new</strong>(num = <span class="n">128</span>)</a>
         
-          <div class="summary"><p>Creates a new prefix object for 128 bit IPv6 addresses.</p></div>
+          <div class="summary"><p>Creates a new prefix object for 128 bits IPv6 addresses</p></div>
         
       </li>
     
@@ -146,12 +161,14 @@
       <li class="entry-summary">
         <a href="#host_prefix-instance-method" class="signature"><strong>#host_prefix</strong></a>
         
+          <div class="summary"><p>Returns the length of the host portion of a netmask.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_u128-instance-method" class="signature"><strong>#to_u128</strong></a>
         
-          <div class="summary"><p>Unsigned 128 bit decimal number representing the prefix.</p></div>
+          <div class="summary"><p>Unsigned 128 bits decimal number representing the prefix</p></div>
         
       </li>
     
@@ -264,12 +281,15 @@
         <a class="method-permalink" href="#new%28num%3D128%29-class-method">#</a>
       </div>
       
-        <div class="doc"><p>Creates a new prefix object for 128 bit IPv6 addresses.</p></div>
+        <div class="doc"><p>Creates a new prefix object for 128 bits IPv6 addresses</p>
+
+<pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix128</span>.<span class="k">new</span> <span class="n">64</span>
+  <span class="c">#=&gt; 64</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/prefix.cr#L191" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L196" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -290,12 +310,18 @@
       </div>
       
         <div class="doc"><p>Transforms the prefix into a string of bits
-representing the netmask</p></div>
+representing the netmask</p>
+
+<pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix128</span>.<span class="k">new</span> <span class="n">64</span>
+
+prefix.bits
+  <span class="c">#=&gt; &quot;1111111111111111111111111111111111111111111111111111111111111111 \</span>
+  <span class="c">#=&gt;   0000000000000000000000000000000000000000000000000000000000000000&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/prefix.cr#L201" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L214" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -308,10 +334,18 @@ representing the netmask</p></div>
         <a class="method-permalink" href="#host_prefix-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>Returns the length of the host portion
+of a netmask.</p>
+
+<pre><code>prefix <span class="o">=</span> <span class="t">Prefix128</span>.<span class="k">new</span> <span class="n">96</span>
+
+prefix.host_prefix
+  <span class="c">#=&gt; 32</span></code></pre></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/prefix.cr#L213" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L242" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -324,13 +358,18 @@ representing the netmask</p></div>
         <a class="method-permalink" href="#to_u128-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Unsigned 128 bit decimal number representing
-the prefix.</p></div>
+        <div class="doc"><p>Unsigned 128 bits decimal number representing
+the prefix</p>
+
+<pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix128</span>.<span class="k">new</span> <span class="n">64</span>
+
+prefix.to_u128
+  <span class="c">#=&gt; 340282366920938463444927863358058659840</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/prefix.cr#L207" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -187,7 +187,12 @@ module Subnet
 
   class Prefix128 < Prefix
 
-    # Creates a new prefix object for 128 bit IPv6 addresses.
+    # Creates a new prefix object for 128 bits IPv6 addresses
+    #
+    # ```
+    # prefix = Subnet::Prefix128.new 64
+    #   #=> 64
+    # ```
     def initialize(num = 128)
       num = num.to_i
       unless (0..128).includes?(num)
@@ -198,18 +203,42 @@ module Subnet
 
     # Transforms the prefix into a string of bits
     # representing the netmask
+    #
+    # ```
+    # prefix = Subnet::Prefix128.new 64
+    #
+    # prefix.bits
+    #   #=> "1111111111111111111111111111111111111111111111111111111111111111 \
+    #   #=>   0000000000000000000000000000000000000000000000000000000000000000"
+    # ```
     def bits
       "1" * @prefix + "0" * (128 - @prefix)
     end
 
-    # Unsigned 128 bit decimal number representing
-    # the prefix.
+    # Unsigned 128 bits decimal number representing
+    # the prefix
+    #
+    # ```
+    # prefix = Subnet::Prefix128.new 64
+    #
+    # prefix.to_u128
+    #   #=> 340282366920938463444927863358058659840
+    # ```
     def to_u128
       # TODO: Update this to use `UInt128` once support
       # for it is finished.
       bits.to_big_i(2)
     end
 
+    # Returns the length of the host portion
+    # of a netmask.
+    #
+    # ```
+    # prefix = Prefix128.new 96
+    #
+    # prefix.host_prefix
+    #   #=> 32
+    # ```
     def host_prefix
       128 - @prefix
     end

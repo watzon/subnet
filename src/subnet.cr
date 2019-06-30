@@ -34,12 +34,12 @@ module Subnet
     end
 
     case str
-    # when /:.+\./
-    #   Subnet::IPv6::Mapped.new(str)
+    when /:.+\./
+      Subnet::IPv6::Mapped.new(str)
     when /\./
       Subnet::IPv4.new(str)
-    # when /:/
-      # Subnet::IPv6.new(str)
+    when /:/
+      Subnet::IPv6.new(str)
     else
       raise ArgumentError.new("Unknown IP Address #{str}")
     end

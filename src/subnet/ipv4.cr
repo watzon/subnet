@@ -1,7 +1,7 @@
 require "./prefix"
 
 module Subnet
-  # Represents a IPv4 style IP address.
+  # Class `Subnet::IPv4` is used to handle IPv4 type addresses.
   class IPv4
     include Subnet
     include Enumerable(IPv4)
@@ -204,7 +204,7 @@ module Subnet
     #   #=> "0a000000"
     # ```
     def hexstring
-      data.to_slice.hexstring
+      "%08x" % to_u32
     end
 
     # Returns the address portion of an IPv4 object
@@ -214,15 +214,13 @@ module Subnet
     # ip = Subnet.parse("172.16.10.1/24")
     #
     # ip.data
-    #   #=> Bytes[172, 16, 10, 1]
+    #   #=> "\254\020\n" + "\001"
     # ```
     #
     # It is usually used to include an IP address
     # in a data packet to be sent over a socket.
     def data
-      raw = uninitialized UInt8[4]
-      IO::ByteFormat::BigEndian.encode(@u32.to_u32, raw.to_slice)
-      raw
+      String.new(hexstring.hexbytes)
     end
 
     # Returns the octet specified by index
@@ -381,9 +379,9 @@ module Subnet
     def last
       case
       when prefix <= 30
-        IPv4.parse_u32(broadcast_u32 - 1, @prefix)
+        self.class.parse_u32(broadcast_u32 - 1, @prefix)
       when prefix == 31
-        IPv4.parse_u32(broadcast_u32, @prefix)
+        self.class.parse_u32(broadcast_u32, @prefix)
       when prefix == 32
         return self
       end
@@ -407,7 +405,7 @@ module Subnet
     # ```
     def each_host
       ((network_u32 + 1)..(broadcast_u32 - 1)).each do |i|
-        yield IPv4.parse_u32(i, @prefix)
+        yield self.class.parse_u32(i, @prefix)
       end
     end
 
@@ -434,7 +432,7 @@ module Subnet
     # ```
     def each
       (network_u32..broadcast_u32).each do |i|
-        yield IPv4.parse_u32(i, @prefix)
+        yield self.class.parse_u32(i, @prefix)
       end
     end
 
@@ -547,7 +545,7 @@ module Subnet
     # ip.includes? Subnet.parse("172.16.0.48/16")
     #   #=> false
     # ```
-    def includes?(oth)
+    def includes?(oth : IPv4)
       @prefix <= oth.prefix && network_u32 == (oth.to_u32 & @prefix.to_u32)
     end
 
@@ -583,9 +581,9 @@ module Subnet
     #   #=> true
     # ```
     def private?
-      [IPv4.new("10.0.0.0/8"),
-       IPv4.new("172.16.0.0/12"),
-       IPv4.new("192.168.0.0/16")].any? { |i| i.includes? self }
+      [self.class.new("10.0.0.0/8"),
+       self.class.new("172.16.0.0/12"),
+       self.class.new("192.168.0.0/16")].any? { |i| i.includes? self }
     end
 
     # Checks if an IPv4 address objects belongs
@@ -599,7 +597,7 @@ module Subnet
     #   #=> true
     # ```
     def multicast?
-      [IPv4.new("224.0.0.0/4")].any? { |i| i.includes? self }
+      [self.class.new("224.0.0.0/4")].any? { |i| i.includes? self }
     end
 
     # Checks if an IPv4 address objects belongs
@@ -613,7 +611,7 @@ module Subnet
     #   #=> true
     # ```
     def loopback?
-      [IPv4.new("127.0.0.0/8")].any? { |i| i.includes? self }
+      [self.class.new("127.0.0.0/8")].any? { |i| i.includes? self }
     end
 
     # Checks if an IPv4 address objects belongs
@@ -627,7 +625,7 @@ module Subnet
     #   #=> true
     # ```
     def link_local?
-      [IPv4.new("169.254.0.0/16")].any? { |i| i.includes? self }
+      [self.class.new("169.254.0.0/16")].any? { |i| i.includes? self }
     end
 
     # Returns the IP address in in-addr.arpa format
@@ -663,7 +661,7 @@ module Subnet
     # ```
     def to(e)
       unless e.is_a? Subnet::IPv4
-        e = IPv4.new(e)
+        e = self.class.new(e)
       end
 
       Range.new(@u32, e.to_u32).map { |i| Subnet.ntoa(i) }
@@ -749,8 +747,8 @@ module Subnet
     # If `new_prefix` is less than 1, returns 0.0.0.0/0
     def supernet(new_prefix)
       raise ArgumentError.new("New prefix must be smaller than existing prefix") if new_prefix >= @prefix.to_i
-      return IPv4.new("0.0.0.0/0") if new_prefix < 1
-      return IPv4.new(@address + "/#{new_prefix}").network
+      return self.class.new("0.0.0.0/0") if new_prefix < 1
+      return self.class.new(@address + "/#{new_prefix}").network
     end
 
     # This method implements the subnetting function
@@ -784,7 +782,7 @@ module Subnet
       end
 
       Array(IPv4).new(2 ** (subprefix - @prefix.to_i)) do |i|
-        IPv4.parse_u32(network_u32 + (i*(2**(32 - subprefix))), subprefix)
+        self.class.parse_u32(network_u32 + (i*(2**(32 - subprefix))), subprefix)
       end
     end
 
@@ -893,7 +891,8 @@ module Subnet
     #   #=> "ac10:0a01"
     # ```
     def to_ipv6
-      raise "Not implemented"
+      # TODO: Refactor
+      hexstring.scan(/..../).map(&.[0]).join(":")
     end
 
     # Creates a new IPv4 object from an
@@ -952,7 +951,8 @@ module Subnet
     # ```
     def self.extract(str)
       addr = IPV4REGEX.match(str).try &.[0].to_s
-      IPv4.new addr if addr
+      raise "Couldn't extract an address" unless addr
+      IPv4.new addr
     end
 
     # Summarization (or aggregation) is the process when two or more

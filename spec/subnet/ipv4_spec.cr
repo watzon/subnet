@@ -141,7 +141,7 @@ describe Subnet::IPv4 do
 
   describe "#data" do
     it "should output binary data" do
-      IP.data.should eq StaticArray[172, 16, 10, 1]
+      IP.data.should eq "\xAC\u0010\n\u0001"
     end
   end
 

@@ -46,8 +46,23 @@
       
     </li>
   
-  <li class=" current" data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
+  <li class="parent open current" data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
       <a href="../Subnet/IPv6.html">IPv6</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Mapped" data-name="subnet::ipv6::mapped">
+      <a href="../Subnet/IPv6/Mapped.html">Mapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Unspecified" data-name="subnet::ipv6::unspecified">
+      <a href="../Subnet/IPv6/Unspecified.html">Unspecified</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -90,12 +105,63 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>Class Subnet::IPv6 is used to handle IPv6 type addresses.</p>
+
+<h2>IPv6 addresses</h2>
+
+<p>IPv6 addresses are 128 bits long, in contrast with IPv4 addresses
+which are only 32 bits long. An IPv6 address is generally written as
+eight groups of four hexadecimal digits, each group representing 16
+bits or two octect. For example, the following is a valid IPv6
+address:</p>
+
+<pre><code><span class="n">2001</span>:<span class="n">0</span>db8:</code></pre>
+
+<p>Letters in an IPv6 address are usually written downcase, as per
+RFC. You can create a new IPv6 object using uppercase letters, but
+they will be converted.</p>
+
+<h3>Compression</h3>
+
+<p>Since IPv6 addresses are very long to write, there are some
+semplifications and compressions that you can use to shorten them.</p>
+
+<ul><li>Leading zeroes: all the leading zeroes within a group can be
+  omitted: "0008" would become "8"</li></ul>
+
+<ul><li>A string of consecutive zeroes can be replaced by the string
+  "::". This can be only applied once.</li></ul>
+
+<p>Using compression, the IPv6 address written above can be shorten into
+the following, equivalent, address</p>
+
+<pre><code><span class="n">2001</span><span class="n">:db8</span><span class="t">::</span><span class="n">8</span>:<span class="n">800</span>:<span class="n">200</span>c:<span class="n">417</span>a</code></pre>
+
+<p>This short version is often used in human representation.</p>
+
+<h3>Network Mask</h3>
+
+<p>As we used to do with IPv4 addresses, an IPv6 address can be written
+using the prefix notation to specify the subnet mask:</p>
+
+<pre><code><span class="n">2001</span><span class="n">:db8</span><span class="t">::</span><span class="n">8</span>:<span class="n">800</span>:<span class="n">200</span>c:<span class="n">417</span>a<span class="s">/64</code></pre>
+
+<p>The /64 part means that the first 64 bits of the address are
+representing the network portion, and the last 64 bits are the host
+portion.</p>
+
 
 
 
 
   <h2>Included Modules</h2>
   <ul class="other-types-list">
+  
+    <li class="other-type">Comparable(<a href="../Subnet/IPv6.html">Subnet::IPv6</a>)</li>
+  
+    <li class="other-type">Enumerable(<a href="../Subnet/IPv6.html">Subnet::IPv6</a>)</li>
   
     <li class="other-type"><a href="../Subnet.html">Subnet</a></li>
   
@@ -105,6 +171,15 @@
 
 
 
+  <h2>Direct Known Subclasses</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../Subnet/IPv6/Mapped.html">Subnet::IPv6::Mapped</a></li>
+  
+    <li class="other-type"><a href="../Subnet/IPv6/Unspecified.html">Subnet::IPv6::Unspecified</a></li>
+  
+  </ul>
+
 
 
 
@@ -113,7 +188,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv6.cr#L2" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L55" target="_blank">
         subnet/ipv6.cr
       </a>
     
@@ -122,17 +197,355 @@
 
 
 
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="IN6FORMAT">
+        <strong>IN6FORMAT</strong> = <code>(<span class="s">&quot;%04x:&quot;</span> <span class="o">*</span> <span class="n">8</span>).chomp</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Format string to pretty print IPv6 addresses</p>
+      </dd>
+      
+    
+  </dl>
 
 
 
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28str%3AString%29-class-method" class="signature"><strong>.new</strong>(str : String)</a>
+        
+          <div class="summary"><p>Creates a new IPv6 address object.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#compress%28str%29-class-method" class="signature"><strong>.compress</strong>(str)</a>
+        
+          <div class="summary"><p>Compress an IPv6 address in its compressed form</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expand%28str%29-class-method" class="signature"><strong>.expand</strong>(str)</a>
+        
+          <div class="summary"><p>Expands an IPv6 address in the canocical form</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#groups%28str%29-class-method" class="signature"><strong>.groups</strong>(str)</a>
+        
+          <div class="summary"><p>Extract 16 bits groups from a string</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_data%28data%29-class-method" class="signature"><strong>.parse_data</strong>(data)</a>
+        
+          <div class="summary"><p>Creates a new IPv6 object from binary data, like the one you get from a network stream.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_hex%28hex%2Cprefix%3D128%29-class-method" class="signature"><strong>.parse_hex</strong>(hex, prefix = <span class="n">128</span>)</a>
+        
+          <div class="summary"><p>Creates a new IPv6 object from a number expressed in hexdecimal format:</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_u128%28u128%2Cprefix%3D128%29-class-method" class="signature"><strong>.parse_u128</strong>(u128, prefix = <span class="n">128</span>)</a>
+        
+          <div class="summary"><p>Creates a new IPv6 object from an unsigned 128 bits integer.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%28oth%29-instance-method" class="signature"><strong>#<=></strong>(oth)</a>
+        
+          <div class="summary"><p>Spaceship operator to compare IPv6 objects</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28index%29-instance-method" class="signature"><strong>#[]</strong>(index)</a>
+        
+          <div class="summary"><p>Returns the 16-bits value specified by index</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3D%28index%2Cvalue%29-instance-method" class="signature"><strong>#[]=</strong>(index, value)</a>
+        
+          <div class="summary"><p>Updated the octet specified at index </p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#address%3AString-instance-method" class="signature"><strong>#address</strong> : String</a>
+        
+          <div class="summary"><p>Returns the IPv6 address in uncompressed form:</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#allocate%28skip%3D0%29-instance-method" class="signature"><strong>#allocate</strong>(skip = <span class="n">0</span>)</a>
+        
+          <div class="summary"><p>Allocates a new ip from the current subnet.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#arpa-instance-method" class="signature"><strong>#arpa</strong></a>
+        
+          <div class="summary"><p>Returns the IPv6 address in a DNS reverse lookup string, as per RFC3172 and RFC2874.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits-instance-method" class="signature"><strong>#bits</strong></a>
+        
+          <div class="summary"><p>Returns the address portion of an IP in binary format, as a string containing a sequence of 0 and 1</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#broadcast_u128-instance-method" class="signature"><strong>#broadcast_u128</strong></a>
+        
+          <div class="summary"><p>Returns the broadcast address in Unsigned 128bits format</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#compressed%3AString-instance-method" class="signature"><strong>#compressed</strong> : String</a>
+        
+          <div class="summary"><p>Compressed form of the IPv6 address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data-instance-method" class="signature"><strong>#data</strong></a>
+        
+          <div class="summary"><p>Returns the address portion of an IPv6 object in a network byte order format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each%28%26block%29-instance-method" class="signature"><strong>#each</strong>(&block)</a>
+        
+          <div class="summary"><p>Iterates over all the IP addresses for the given network (or IP address).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group%28index%29-instance-method" class="signature"><strong>#group</strong>(index)</a>
+        
+          <div class="summary"><p>Returns the 16-bits value specified by index</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#groups%3AArray%28Int32%29-instance-method" class="signature"><strong>#groups</strong> : Array(Int32)</a>
+        
+          <div class="summary"><p>Returns an array with the 16 bits groups in decimal format:</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexs-instance-method" class="signature"><strong>#hexs</strong></a>
+        
+          <div class="summary"><p>Returns an array of the 16 bits groups in hexdecimal format:</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexstring-instance-method" class="signature"><strong>#hexstring</strong></a>
+        
+          <div class="summary"><p>Returns a Base16 number representing the IPv6 address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes%3F%28oth%29-instance-method" class="signature"><strong>#includes?</strong>(oth)</a>
+        
+          <div class="summary"><p>Checks whether a subnet includes the given IP address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#link_local%3F-instance-method" class="signature"><strong>#link_local?</strong></a>
+        
+          <div class="summary"><p>Checks if an IPv6 address objects belongs to a link-local network RFC4291</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#literal-instance-method" class="signature"><strong>#literal</strong></a>
+        
+          <div class="summary"><p>Literal version of the IPv6 address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#loopback%3F-instance-method" class="signature"><strong>#loopback?</strong></a>
+        
+          <div class="summary"><p>Returns true if the address is a loopback address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapped%3F-instance-method" class="signature"><strong>#mapped?</strong></a>
+        
+          <div class="summary"><p>Returns true if the address is a mapped address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#network-instance-method" class="signature"><strong>#network</strong></a>
+        
+          <div class="summary"><p>Returns a new IPv6 object with the network number for the given IP.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#network%3F-instance-method" class="signature"><strong>#network?</strong></a>
+        
+          <div class="summary"><p>True if the IPv6 address is a network</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#network_u128-instance-method" class="signature"><strong>#network_u128</strong></a>
+        
+          <div class="summary"><p>Returns the network number in Unsigned 128bits format</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prefix%3APrefix128-instance-method" class="signature"><strong>#prefix</strong> : Prefix128</a>
+        
+          <div class="summary"><p>Returns an instance of the prefix object</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prefix%3D%28num%29-instance-method" class="signature"><strong>#prefix=</strong>(num)</a>
+        
+          <div class="summary"><p>Set a new prefix number for the object</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reverse-instance-method" class="signature"><strong>#reverse</strong></a>
+        
+          <div class="summary"><p>Returns the IPv6 address in a DNS reverse lookup string, as per RFC3172 and RFC2874.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size-instance-method" class="signature"><strong>#size</strong></a>
+        
+          <div class="summary"><p>Returns the number of IP addresses included in the network.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i-instance-method" class="signature"><strong>#to_i</strong></a>
+        
+          <div class="summary"><p>Returns a decimal format (unsigned 128 bit) of the IPv6 address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%3AString-instance-method" class="signature"><strong>#to_s</strong> : String</a>
+        
+          <div class="summary"><p>Returns the IPv6 address in a human readable form, using the compressed address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_string-instance-method" class="signature"><strong>#to_string</strong></a>
+        
+          <div class="summary"><p>Returns the IPv6 address in a human readable form, using the compressed address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_string_uncompressed-instance-method" class="signature"><strong>#to_string_uncompressed</strong></a>
+        
+          <div class="summary"><p>Unlike its counterpart IPv6#to_string method, IPv6#to_string_uncompressed returns the whole IPv6 address and prefix in an uncompressed form</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u128-instance-method" class="signature"><strong>#to_u128</strong></a>
+        
+          <div class="summary"><p>Returns a decimal format (unsigned 128 bit) of the IPv6 address</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unique_local%3F-instance-method" class="signature"><strong>#unique_local?</strong></a>
+        
+          <div class="summary"><p>Checks if an IPv6 address objects belongs to a unique-local network RFC4193</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unspecified%3F-instance-method" class="signature"><strong>#unspecified?</strong></a>
+        
+          <div class="summary"><p>Returns true if the address is an unspecified address</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
 
 
 <div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -235,9 +648,1086 @@
 </div>
 
 
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(str:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(str : String)
+
+        <a class="method-permalink" href="#new%28str%3AString%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new IPv6 address object.</p>
+
+<p>An IPv6 address can be expressed in any of the following forms:</p>
+
+<ul><li>"2001:0db8:0000:0000:0008:0800:200C:417A": IPv6 address with no compression</li><li>"2001:db8:0:0:8:800:200C:417A": IPv6 address with leading zeros compression</li><li>"2001:db8::8:800:200C:417A": IPv6 address with full compression</li></ul>
+
+<p>In all these 3 cases, a new IPv6 address object will be created, using the default
+subnet mask /128</p>
+
+<p>You can also specify the subnet mask as with IPv4 addresses:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L112" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="compress(str)-class-method">
+      <div class="signature">
+        
+        def self.<strong>compress</strong>(str)
+
+        <a class="method-permalink" href="#compress%28str%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Compress an IPv6 address in its compressed form</p>
+
+<pre><code><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.compress <span class="s">&quot;2001:0DB8:0000:CD30:0000:0000:0000:0000&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8:0:cd30::&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L553" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expand(str)-class-method">
+      <div class="signature">
+        
+        def self.<strong>expand</strong>(str)
+
+        <a class="method-permalink" href="#expand%28str%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Expands an IPv6 address in the canocical form</p>
+
+<pre><code><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.expand <span class="s">&quot;2001:0DB8:0:CD30::&quot;</span>
+  <span class="c">#=&gt; &quot;2001:0DB8:0000:CD30:0000:0000:0000:0000&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L543" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="groups(str)-class-method">
+      <div class="signature">
+        
+        def self.<strong>groups</strong>(str)
+
+        <a class="method-permalink" href="#groups%28str%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Extract 16 bits groups from a string</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L583" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_data(data)-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_data</strong>(data)
+
+        <a class="method-permalink" href="#parse_data%28data%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new IPv6 object from binary data,
+like the one you get from a network stream.</p>
+
+<p>For example, on a network stream the IP</p>
+
+<pre><code><span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span></code></pre>
+
+<p>is represented with the binary data</p>
+
+<pre><code><span class="s">&quot; \001\r\270\000\000\000\000\000\b\b\000 \fAz&quot;</span></code></pre>
+
+<p>With that data you can create a new IPv6 object:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_data <span class="s">&quot; \001\r\270\000\000\000\000\000\b\b\000 \fAz&quot;</span>
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+
+ip6.to_s
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L616" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_hex(hex,prefix=128)-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_hex</strong>(hex, prefix = <span class="n">128</span>)
+
+        <a class="method-permalink" href="#parse_hex%28hex%2Cprefix%3D128%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new IPv6 object from a number expressed in
+hexdecimal format:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_hex(<span class="s">&quot;20010db80000000000080800200c417a&quot;</span>)
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre>
+
+<p>The +prefix+ parameter is optional:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_hex(<span class="s">&quot;20010db80000000000080800200c417a&quot;</span>, <span class="n">64</span>)
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L663" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_u128(u128,prefix=128)-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_u128</strong>(u128, prefix = <span class="n">128</span>)
+
+        <a class="method-permalink" href="#parse_u128%28u128%2Cprefix%3D128%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new IPv6 object from an
+unsigned 128 bits integer.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_u128(</code></pre>
+
+<p>The +prefix+ parameter is optional:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_u128(</code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L639" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="(oth)-instance-method">
+      <div class="signature">
+        
+        def <strong><=></strong>(oth)
+
+        <a class="method-permalink" href="#%28oth%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Spaceship operator to compare IPv6 objects</p>
+
+<p>Comparing IPv6 addresses is useful to ordinate
+them into lists that match our intuitive
+perception of ordered IP addresses.</p>
+
+<p>The first comparison criteria is the u128 value.
+For example, 2001:db8:1::1 will be considered
+to be less than 2001:db8:2::1, because, in a ordered list,
+we expect 2001:db8:1::1 to come before 2001:db8:2::1.</p>
+
+<p>The second criteria, in case two IPv6 objects
+have identical addresses, is the prefix. An higher
+prefix will be considered greater than a lower
+prefix. This is because we expect to see
+2001:db8:1::1/64 come before 2001:db8:1::1/65</p>
+
+<p>Example:</p>
+
+<pre><code>ip1 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8:1::1/64&quot;</span>
+ip2 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8:2::1/64&quot;</span>
+ip3 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8:1::1/65&quot;</span>
+
+ip1 <span class="o">&lt;</span> ip2
+  <span class="c">#=&gt; true</span>
+ip1 <span class="o">&lt;</span> ip3
+  <span class="c">#=&gt; false</span>
+
+[ip1,ip2,ip3].sort.map{<span class="o">|</span>i<span class="o">|</span> i.to_string}
+  <span class="c">#=&gt; [&quot;2001:db8:1::1/64&quot;,&quot;2001:db8:1::1/65&quot;,&quot;2001:db8:2::1/64&quot;]</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L518" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](index)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(index)
+
+        <a class="method-permalink" href="#%5B%5D%28index%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the 16-bits value specified by index</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip[<span class="n">0</span>]
+  <span class="c">#=&gt; 8193</span>
+ip[<span class="n">1</span>]
+  <span class="c">#=&gt; 3512</span>
+ip[<span class="n">2</span>]
+  <span class="c">#=&gt; 0</span>
+ip[<span class="n">3</span>]
+  <span class="c">#=&gt; 0</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L241" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(index,value)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(index, value)
+
+        <a class="method-permalink" href="#%5B%5D%3D%28index%2Cvalue%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Updated the octet specified at index</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L252" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="address:String-instance-method">
+      <div class="signature">
+        
+        def <strong>address</strong> : String
+
+        <a class="method-permalink" href="#address%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the IPv6 address in uncompressed form:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.address
+  <span class="c">#=&gt; &quot;2001:0db8:0000:0000:0008:0800:200c:417a&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="allocate(skip=0)-instance-method">
+      <div class="signature">
+        
+        def <strong>allocate</strong>(skip = <span class="n">0</span>)
+
+        <a class="method-permalink" href="#allocate%28skip%3D0%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Allocates a new ip from the current subnet. Optional skip parameter
+can be used to skip addresses.</p>
+
+<p>Will raise StopIteration exception when all addresses have been allocated</p>
+
+<p>Example:</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;10.0.0.0/24&quot;</span>)
+ip.allocate
+  <span class="c">#=&gt; &quot;10.0.0.1/24&quot;</span>
+ip.allocate
+  <span class="c">#=&gt; &quot;10.0.0.2/24&quot;</span>
+ip.allocate(<span class="n">2</span>)
+  <span class="c">#=&gt; &quot;10.0.0.5/24&quot;</span></code></pre>
+
+<p>Uses an internal @allocator which tracks the state of allocated
+addresses.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L687" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="arpa-instance-method">
+      <div class="signature">
+        
+        def <strong>arpa</strong>
+
+        <a class="method-permalink" href="#arpa-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the IPv6 address in a DNS reverse lookup
+string, as per RFC3172 and RFC2874.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;3ffe:505:2::f&quot;</span>
+
+ip6.reverse
+  <span class="c">#=&gt; &quot;f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.0.0.5.0.5.0.e.f.f.3.ip6.arpa&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L325" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits-instance-method">
+      <div class="signature">
+        
+        def <strong>bits</strong>
+
+        <a class="method-permalink" href="#bits-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the address portion of an IP in binary format,
+as a string containing a sequence of 0 and 1</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
+
+ip6.bits
+  <span class="c">#=&gt; &quot;0010000000000001000011011011100000 [...] &quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L533" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="broadcast_u128-instance-method">
+      <div class="signature">
+        
+        def <strong>broadcast_u128</strong>
+
+        <a class="method-permalink" href="#broadcast_u128-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the broadcast address in Unsigned 128bits format</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.broadcast_u128
+  <span class="c">#=&gt; 42540766411282592875350729025363378175</span></code></pre>
+
+<p>Please note that there is no Broadcast concept in IPv6
+addresses as in IPv4 addresses, and this method is just
+an helper to other functions.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L354" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="compressed:String-instance-method">
+      <div class="signature">
+        
+        def <strong>compressed</strong> : String
+
+        <a class="method-permalink" href="#compressed%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Compressed form of the IPv6 address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.compressed
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L398" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data-instance-method">
+      <div class="signature">
+        
+        def <strong>data</strong>
+
+        <a class="method-permalink" href="#data-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the address portion of an IPv6 object
+in a network byte order format.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.data
+  <span class="c">#=&gt; &quot; \001\r\270\000\000\000\000\000\b\b\000 \fAz&quot;</span></code></pre>
+
+<p>It is usually used to include an IP address
+in a data packet to be sent over a socket</p>
+
+<pre><code>a <span class="o">=</span> <span class="t">Socket</span>.open(params) <span class="c"># socket details here</span>
+ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+binary_data <span class="o">=</span> [<span class="s">&quot;Address: &quot;</span>].pack(<span class="s">&quot;a*&quot;</span>) <span class="o">+</span> ip.data
+
+<span class="c"># Send binary data</span>
+a.puts binary_data</code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L291" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each</strong>(&block)
+
+        <a class="method-permalink" href="#each%28%26block%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Iterates over all the IP addresses for the given
+network (or IP address).</p>
+
+<p>The object yielded is a new IPv6 object created
+from the iteration.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::4/125&quot;</span>)
+
+ip6.each <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+  p i.compressed
+<span class="k">end</span>
+  <span class="c">#=&gt; &quot;2001:db8::&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::1&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::2&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::3&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::4&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::5&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::6&quot;</span>
+  <span class="c">#=&gt; &quot;2001:db8::7&quot;</span></code></pre>
+
+<p>WARNING: if the host portion is very large, this method
+can be very slow and possibly hang your system!</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L480" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group(index)-instance-method">
+      <div class="signature">
+        
+        def <strong>group</strong>(index)
+
+        <a class="method-permalink" href="#group%28index%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the 16-bits value specified by index</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip[<span class="n">0</span>]
+  <span class="c">#=&gt; 8193</span>
+ip[<span class="n">1</span>]
+  <span class="c">#=&gt; 3512</span>
+ip[<span class="n">2</span>]
+  <span class="c">#=&gt; 0</span>
+ip[<span class="n">3</span>]
+  <span class="c">#=&gt; 0</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L246" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="groups:Array(Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>groups</strong> : Array(Int32)
+
+        <a class="method-permalink" href="#groups%3AArray%28Int32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns an array with the 16 bits groups in decimal
+format:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.groups
+  <span class="c">#=&gt; [8193, 3512, 0, 0, 8, 2048, 8204, 16762]</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexs-instance-method">
+      <div class="signature">
+        
+        def <strong>hexs</strong>
+
+        <a class="method-permalink" href="#hexs-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns an array of the 16 bits groups in hexdecimal
+format:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.hexs
+  <span class="c">#=&gt; [&quot;2001&quot;, &quot;0db8&quot;, &quot;0000&quot;, &quot;0000&quot;, &quot;0008&quot;, &quot;0800&quot;, &quot;200c&quot;, &quot;417a&quot;]</span></code></pre>
+
+<p>Not to be confused with the similar <code><a href="../Subnet/IPv6.html#hexstring-instance-method">IPv6#hexstring</a></code> method.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L307" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexstring-instance-method">
+      <div class="signature">
+        
+        def <strong>hexstring</strong>
+
+        <a class="method-permalink" href="#hexstring-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns a Base16 number representing the IPv6
+address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.hexstring
+  <span class="c">#=&gt; &quot;20010db80000000000080800200c417a&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L266" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(oth)-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(oth)
+
+        <a class="method-permalink" href="#includes%3F%28oth%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Checks whether a subnet includes the given IP address.</p>
+
+<p>Example:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+addr <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:1/128&quot;</span>
+
+ip6.includes? addr
+  <span class="c">#=&gt; true</span>
+
+ip6.includes? <span class="t">Subnet</span>(<span class="s">&quot;2001:db8:1::8:800:200c:417a/76&quot;</span>)
+  <span class="c">#=&gt; false</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L386" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="link_local?-instance-method">
+      <div class="signature">
+        
+        def <strong>link_local?</strong>
+
+        <a class="method-permalink" href="#link_local%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Checks if an IPv6 address objects belongs
+to a link-local network RFC4291</p>
+
+<p>Example:</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;fe80::1&quot;</span>
+ip.link_local?
+  <span class="c">#=&gt; true</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L431" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="literal-instance-method">
+      <div class="signature">
+        
+        def <strong>literal</strong>
+
+        <a class="method-permalink" href="#literal-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Literal version of the IPv6 address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.literal
+  <span class="c">#=&gt; &quot;2001-0db8-0000-0000-0008-0800-200c-417a.ipv6-literal.net&quot;</span>
+ <span class="s">``</span><span class="s">`</code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L565" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="loopback?-instance-method">
+      <div class="signature">
+        
+        def <strong>loopback?</strong>
+
+        <a class="method-permalink" href="#loopback%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns true if the address is a loopback address</p>
+
+<p>See Subnet::IPv6::Loopback for more information</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L417" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapped?-instance-method">
+      <div class="signature">
+        
+        def <strong>mapped?</strong>
+
+        <a class="method-permalink" href="#mapped%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns true if the address is a mapped address</p>
+
+<p>See Subnet::IPv6::Mapped for more information</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L452" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="network-instance-method">
+      <div class="signature">
+        
+        def <strong>network</strong>
+
+        <a class="method-permalink" href="#network-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns a new IPv6 object with the network number
+for the given IP.</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8:1:1:1:1:1:1/32&quot;</span>
+
+ip.network.to_string
+  <span class="c">#=&gt; &quot;2001:db8::/32&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L578" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="network?-instance-method">
+      <div class="signature">
+        
+        def <strong>network?</strong>
+
+        <a class="method-permalink" href="#network%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>True if the IPv6 address is a network</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.network?
+  <span class="c">#=&gt; false</span>
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8:8:800::/64&quot;</span>
+
+ip6.network?
+  <span class="c">#=&gt; true</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L223" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="network_u128-instance-method">
+      <div class="signature">
+        
+        def <strong>network_u128</strong>
+
+        <a class="method-permalink" href="#network_u128-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the network number in Unsigned 128bits format</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.network_u128
+  <span class="c">#=&gt; 42540766411282592856903984951653826560</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L337" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prefix:Prefix128-instance-method">
+      <div class="signature">
+        
+        def <strong>prefix</strong> : <a href="../Subnet/Prefix128.html">Prefix128</a>
+
+        <a class="method-permalink" href="#prefix%3APrefix128-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns an instance of the prefix object</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.prefix
+  <span class="c">#=&gt; 64</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prefix=(num)-instance-method">
+      <div class="signature">
+        
+        def <strong>prefix=</strong>(num)
+
+        <a class="method-permalink" href="#prefix%3D%28num%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Set a new prefix number for the object</p>
+
+<p>This is useful if you want to change the prefix
+to an object created with IPv6::parse_u128 or
+if the object was created using the default prefix
+of 128 bits.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
+
+puts ip6.to_string
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/128&quot;</span>
+
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+puts ip6.to_string
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L149" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reverse-instance-method">
+      <div class="signature">
+        
+        def <strong>reverse</strong>
+
+        <a class="method-permalink" href="#reverse-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the IPv6 address in a DNS reverse lookup
+string, as per RFC3172 and RFC2874.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;3ffe:505:2::f&quot;</span>
+
+ip6.reverse
+  <span class="c">#=&gt; &quot;f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.0.0.5.0.5.0.e.f.f.3.ip6.arpa&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L320" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong>
+
+        <a class="method-permalink" href="#size-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the number of IP addresses included
+in the network. It also counts the network
+address and the broadcast address.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip6.size
+  <span class="c">#=&gt; 18446744073709551616</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L368" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i</strong>
+
+        <a class="method-permalink" href="#to_i-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns a decimal format (unsigned 128 bit) of the
+IPv6 address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.to_i
+  <span class="c">#=&gt; 42540766411282592856906245548098208122</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L201" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s:String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong> : String
+
+        <a class="method-permalink" href="#to_s%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the IPv6 address in a human readable form,
+using the compressed address.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.to_s
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L188" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_string-instance-method">
+      <div class="signature">
+        
+        def <strong>to_string</strong>
+
+        <a class="method-permalink" href="#to_string-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the IPv6 address in a human readable form,
+using the compressed address.</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:0db8:0000:0000:0008:0800:200c:417a/64&quot;</span>
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L175" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_string_uncompressed-instance-method">
+      <div class="signature">
+        
+        def <strong>to_string_uncompressed</strong>
+
+        <a class="method-permalink" href="#to_string_uncompressed-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Unlike its counterpart IPv6#to_string method, IPv6#to_string_uncompressed
+returns the whole IPv6 address and prefix in an uncompressed form</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.to_string_uncompressed
+  <span class="c">#=&gt; &quot;2001:0db8:0000:0000:0008:0800:200c:417a/64&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u128-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u128</strong>
+
+        <a class="method-permalink" href="#to_u128-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns a decimal format (unsigned 128 bit) of the
+IPv6 address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
+
+ip6.to_i
+  <span class="c">#=&gt; 42540766411282592856906245548098208122</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L206" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unique_local?-instance-method">
+      <div class="signature">
+        
+        def <strong>unique_local?</strong>
+
+        <a class="method-permalink" href="#unique_local%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Checks if an IPv6 address objects belongs
+to a unique-local network RFC4193</p>
+
+<p>Example:</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;fc00::1&quot;</span>
+ip.unique_local?
+  <span class="c">#=&gt; true</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L445" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unspecified?-instance-method">
+      <div class="signature">
+        
+        def <strong>unspecified?</strong>
+
+        <a class="method-permalink" href="#unspecified%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns true if the address is an unspecified address</p>
+
+<p>See Subnet::IPv6::Unspecified for more information</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L410" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

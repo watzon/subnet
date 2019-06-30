@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.29.0">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
+  <meta id="repository-name" content="github.com/watzon/subnet">
+  <title>Subnet::IPv6::Mapped - github.com/watzon/subnet</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/watzon/subnet/Subnet" data-name="subnet">
+      <a href="../../Subnet.html">Subnet</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv4" data-name="subnet::ipv4">
+      <a href="../../Subnet/IPv4.html">IPv4</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
+      <a href="../../Subnet/IPv6.html">IPv6</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="github.com/watzon/subnet/Subnet/IPv6/Mapped" data-name="subnet::ipv6::mapped">
+      <a href="../../Subnet/IPv6/Mapped.html">Mapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Unspecified" data-name="subnet::ipv6::unspecified">
+      <a href="../../Subnet/IPv6/Unspecified.html">Unspecified</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix" data-name="subnet::prefix">
+      <a href="../../Subnet/Prefix.html">Prefix</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix128" data-name="subnet::prefix128">
+      <a href="../../Subnet/Prefix128.html">Prefix128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/Prefix32" data-name="subnet::prefix32">
+      <a href="../../Subnet/Prefix32.html">Prefix32</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Subnet::IPv6::Mapped
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Subnet/IPv6/Mapped.html">Subnet::IPv6::Mapped</a></li><li class="superclass"><a href="../../Subnet/IPv6.html">Subnet::IPv6</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>It is usually identified as a IPv4 mapped IPv6 address, a particular
+IPv6 address which aids the transition from IPv4 to IPv6. The
+structure of the address is</p>
+
+<pre><code><span class="t">::</span>ffff<span class="n">:w</span>.y.x.z</code></pre>
+
+<p>where w.x.y.z is a normal IPv4 address. For example, the following is
+a mapped IPv6 address:</p>
+
+<pre><code><span class="t">::</span>ffff:<span class="n">192.168</span>.<span class="n">100.1</span></code></pre>
+
+<p>Subnet is very powerful in handling mapped IPv6 addresses, as the
+IPv4 portion is stored internally as a normal IPv4 object. Let's have
+a look at some examples. To create a new mapped address, just use the
+class builder itself</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span> <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+
+<p>or just use the wrapper method</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+
+<p>Let's check it's really a mapped address:</p>
+
+<pre><code>ip6.mapped?
+  <span class="c">#=&gt; true</span>
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;::FFFF:172.16.10.1/128&quot;</span></code></pre>
+
+<p>Now with the +ipv4+ attribute, we can easily access the IPv4 portion
+of the mapped IPv6 address:</p>
+
+<pre><code>ip6.ipv4.address
+  <span class="c">#=&gt; &quot;172.16.10.1&quot;</span></code></pre>
+
+<p>Internally, the IPv4 address is stored as two 16 bits
+groups. Therefore all the usual methods for an IPv6 address are
+working perfectly fine:</p>
+
+<pre><code>ip6.hexstring
+  <span class="c">#=&gt; &quot;00000000000000000000ffffac100a01&quot;</span>
+
+ip6.address
+  <span class="c">#=&gt; &quot;0000:0000:0000:0000:0000:ffff:ac10:0a01&quot;</span></code></pre>
+
+<p>A mapped IPv6 can also be created just by specify the address in the
+following format:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::172.16.10.1&quot;</span></code></pre>
+
+<p>That is, two colons and the IPv4 address. However, as by RFC, the ffff
+group will be automatically added at the beginning</p>
+
+<pre><code>ip6.to_string
+  => <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+
+<p>making it a mapped IPv6 compatible address.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L858" target="_blank">
+        subnet/ipv6.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28str%29-class-method" class="signature"><strong>.new</strong>(str)</a>
+        
+          <div class="summary"><p>Creates a new IPv6 IPv4-mapped address</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#ipv4%3AIPv4-instance-method" class="signature"><strong>#ipv4</strong> : IPv4</a>
+        
+          <div class="summary"><p>The internal IPv4 address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapped%3F-instance-method" class="signature"><strong>#mapped?</strong></a>
+        
+          <div class="summary"><p>Checks if the IPv6 address is IPv4 mapped</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
+        
+          <div class="summary"><p>Similar to IPv6#to_s, but prints out the IPv4 address in dotted decimal format</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_string-instance-method" class="signature"><strong>#to_string</strong></a>
+        
+          <div class="summary"><p>Similar to IPv6#to_string, but prints out the IPv4 address in dotted decimal format</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Subnet/IPv6.html">Subnet::IPv6</a></code></h3>
+  
+  
+    <a href="../../Subnet/IPv6.html#%28oth%29-instance-method" class="tooltip">
+      <span><=>(oth)</span>
+    <=></a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#%5B%5D%28index%29-instance-method" class="tooltip">
+      <span>[](index)</span>
+    []</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#%5B%5D%3D%28index%2Cvalue%29-instance-method" class="tooltip">
+      <span>[]=(index, value)</span>
+    []=</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#address%3AString-instance-method" class="tooltip">
+      <span>address : String</span>
+    address</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#allocate%28skip%3D0%29-instance-method" class="tooltip">
+      <span>allocate(skip = <span class="n">0</span>)</span>
+    allocate</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#arpa-instance-method" class="tooltip">
+      <span>arpa</span>
+    arpa</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#bits-instance-method" class="tooltip">
+      <span>bits</span>
+    bits</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#broadcast_u128-instance-method" class="tooltip">
+      <span>broadcast_u128</span>
+    broadcast_u128</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#compressed%3AString-instance-method" class="tooltip">
+      <span>compressed : String</span>
+    compressed</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#data-instance-method" class="tooltip">
+      <span>data</span>
+    data</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#each%28%26block%29-instance-method" class="tooltip">
+      <span>each(&block)</span>
+    each</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#group%28index%29-instance-method" class="tooltip">
+      <span>group(index)</span>
+    group</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#groups%3AArray%28Int32%29-instance-method" class="tooltip">
+      <span>groups : Array(Int32)</span>
+    groups</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#hexs-instance-method" class="tooltip">
+      <span>hexs</span>
+    hexs</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#hexstring-instance-method" class="tooltip">
+      <span>hexstring</span>
+    hexstring</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#includes%3F%28oth%29-instance-method" class="tooltip">
+      <span>includes?(oth)</span>
+    includes?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#link_local%3F-instance-method" class="tooltip">
+      <span>link_local?</span>
+    link_local?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#literal-instance-method" class="tooltip">
+      <span>literal</span>
+    literal</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#loopback%3F-instance-method" class="tooltip">
+      <span>loopback?</span>
+    loopback?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#mapped%3F-instance-method" class="tooltip">
+      <span>mapped?</span>
+    mapped?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#network-instance-method" class="tooltip">
+      <span>network</span>
+    network</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#network%3F-instance-method" class="tooltip">
+      <span>network?</span>
+    network?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#network_u128-instance-method" class="tooltip">
+      <span>network_u128</span>
+    network_u128</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#prefix%3APrefix128-instance-method" class="tooltip">
+      <span>prefix : Prefix128</span>
+    prefix</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#prefix%3D%28num%29-instance-method" class="tooltip">
+      <span>prefix=(num)</span>
+    prefix=</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#reverse-instance-method" class="tooltip">
+      <span>reverse</span>
+    reverse</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#size-instance-method" class="tooltip">
+      <span>size</span>
+    size</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_i-instance-method" class="tooltip">
+      <span>to_i</span>
+    to_i</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_s%3AString-instance-method" class="tooltip">
+      <span>to_s : String</span>
+    to_s</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_string-instance-method" class="tooltip">
+      <span>to_string</span>
+    to_string</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_string_uncompressed-instance-method" class="tooltip">
+      <span>to_string_uncompressed</span>
+    to_string_uncompressed</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_u128-instance-method" class="tooltip">
+      <span>to_u128</span>
+    to_u128</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#unique_local%3F-instance-method" class="tooltip">
+      <span>unique_local?</span>
+    unique_local?</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#unspecified%3F-instance-method" class="tooltip">
+      <span>unspecified?</span>
+    unspecified?</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Subnet/IPv6.html">Subnet::IPv6</a></code></h3>
+  
+  
+    <a href="../../Subnet/IPv6.html#new%28str%3AString%29-class-method" class="tooltip">
+      <span>new(str : String)</span>
+    new</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../../Subnet/IPv6.html">Subnet::IPv6</a></code></h3>
+  
+  
+    <a href="../../Subnet/IPv6.html#compress%28str%29-class-method" class="tooltip">
+      <span>compress(str)</span>
+    compress</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#expand%28str%29-class-method" class="tooltip">
+      <span>expand(str)</span>
+    expand</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#groups%28str%29-class-method" class="tooltip">
+      <span>groups(str)</span>
+    groups</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#parse_data%28data%29-class-method" class="tooltip">
+      <span>parse_data(data)</span>
+    parse_data</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#parse_hex%28hex%2Cprefix%3D128%29-class-method" class="tooltip">
+      <span>parse_hex(hex, prefix = <span class="n">128</span>)</span>
+    parse_hex</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#parse_u128%28u128%2Cprefix%3D128%29-class-method" class="tooltip">
+      <span>parse_u128(u128, prefix = <span class="n">128</span>)</span>
+    parse_u128</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
+  
+  
+    <a href="../../Subnet.html#ipv4%3F-instance-method" class="tooltip">
+      <span>ipv4?</span>
+    ipv4?</a>, 
+    
+  
+    <a href="../../Subnet.html#ipv6%3F-instance-method" class="tooltip">
+      <span>ipv6?</span>
+    ipv6?</a>
+    
+  
+
+
+    
+
+
+    
+
+  <h3>Class methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
+  
+  
+    <a href="../../Subnet.html#deprecate%28message%3Dnil%29-class-method" class="tooltip">
+      <span>deprecate(message = <span class="n">nil</span>)</span>
+    deprecate</a>, 
+    
+  
+    <a href="../../Subnet.html#ntoa%28uint%29-class-method" class="tooltip">
+      <span>ntoa(uint)</span>
+    ntoa</a>, 
+    
+  
+    <a href="../../Subnet.html#parse%28str%29-class-method" class="tooltip">
+      <span>parse(str)</span>
+    parse</a>, 
+    
+  
+    <a href="../../Subnet.html#valid%3F%28addr%29-class-method" class="tooltip">
+      <span>valid?(addr)</span>
+    valid?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ip%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ip?(addr)</span>
+    valid_ip?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ipv4%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4?(addr)</span>
+    valid_ipv4?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ipv4_netmask%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4_netmask?(addr)</span>
+    valid_ipv4_netmask?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ipv4_subnet%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv4_subnet?(addr)</span>
+    valid_ipv4_subnet?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ipv6%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv6?(addr)</span>
+    valid_ipv6?</a>, 
+    
+  
+    <a href="../../Subnet.html#valid_ipv6_subnet%3F%28addr%29-class-method" class="tooltip">
+      <span>valid_ipv6_subnet?(addr)</span>
+    valid_ipv6_subnet?</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(str)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(str)
+
+        <a class="method-permalink" href="#new%28str%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Creates a new IPv6 IPv4-mapped address</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span> <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
+
+ipv6.ipv4.<span class="k">class</span>
+  <span class="c">#=&gt; Subnet::IPv4</span></code></pre>
+
+<p>An IPv6 IPv4-mapped address can also be created using the
+IPv6 only format of the address:</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span> <span class="s">&quot;::0d01:4403&quot;</span>
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;::ffff:13.1.68.3&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L881" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="ipv4:IPv4-instance-method">
+      <div class="signature">
+        
+        def <strong>ipv4</strong> : <a href="../../Subnet/IPv4.html">IPv4</a>
+
+        <a class="method-permalink" href="#ipv4%3AIPv4-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>The internal IPv4 address.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L863" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapped?-instance-method">
+      <div class="signature">
+        
+        def <strong>mapped?</strong>
+
+        <a class="method-permalink" href="#mapped%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Checks if the IPv6 address is IPv4 mapped</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
+
+ip6.mapped?
+  <span class="c">#=&gt; true</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L926" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>
+
+        <a class="method-permalink" href="#to_s-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Similar to IPv6#to_s, but prints out the IPv4 address
+in dotted decimal format</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
+
+ip6.to_s
+  <span class="c">#=&gt; &quot;::ffff:172.16.10.1&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L901" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_string-instance-method">
+      <div class="signature">
+        
+        def <strong>to_string</strong>
+
+        <a class="method-permalink" href="#to_string-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Similar to IPv6#to_string, but prints out the IPv4 address
+in dotted decimal format</p>
+
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
+
+ip6.to_string
+  <span class="c">#=&gt; &quot;::ffff:172.16.10.1/128&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L914" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

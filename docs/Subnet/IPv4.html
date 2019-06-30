@@ -46,8 +46,23 @@
       
     </li>
   
-  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
+  <li class="parent " data-id="github.com/watzon/subnet/Subnet/IPv6" data-name="subnet::ipv6">
       <a href="../Subnet/IPv6.html">IPv6</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Mapped" data-name="subnet::ipv6::mapped">
+      <a href="../Subnet/IPv6/Mapped.html">Mapped</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/watzon/subnet/Subnet/IPv6/Unspecified" data-name="subnet::ipv6::unspecified">
+      <a href="../Subnet/IPv6/Unspecified.html">Unspecified</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -92,7 +107,7 @@
 
   <h2>Overview</h2>
 
-  <p>Represents a IPv4 style IP address.</p>
+  <p>Class <code><a href="../Subnet/IPv4.html">Subnet::IPv4</a></code> is used to handle IPv4 type addresses.</p>
 
 
 
@@ -121,7 +136,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L5" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L5" target="_blank">
         subnet/ipv4.cr
       </a>
     
@@ -374,7 +389,7 @@ prefix of /24 or 255.255.255.0</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#includes%3F%28oth%29-instance-method" class="signature"><strong>#includes?</strong>(oth)</a>
+        <a href="#includes%3F%28oth%3AIPv4%29-instance-method" class="signature"><strong>#includes?</strong>(oth : IPv4)</a>
         
           <div class="summary"><p>Checks whether a subnet includes the given IP address.</p></div>
         
@@ -742,7 +757,7 @@ ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -774,7 +789,7 @@ ip.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L953" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L952" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -810,7 +825,7 @@ prefix of /24 or 255.255.255.0</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1082" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1082" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -838,7 +853,7 @@ ip.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L937" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L936" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -870,7 +885,7 @@ ip.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L918" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L917" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -947,7 +962,7 @@ ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s"
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1028" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1028" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1024,7 +1039,7 @@ ip4 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s"
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1054" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1054" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1066,7 +1081,7 @@ p (ip1 <span class="o">+</span> ip2).map {<span class="o">|</span>i<span class="
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L831" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L829" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1093,7 +1108,7 @@ puts ip1 <span class="o">-</span> ip2
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L803" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L801" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1140,7 +1155,7 @@ network <span class="o">/</span> <span class="n">3</span>   <span class="c"># im
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L718" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L716" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1188,7 +1203,7 @@ ip1 <span class="o">&gt;</span> ip3
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L473" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L471" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1217,7 +1232,7 @@ ip[<span class="n">3</span>]
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L242" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L240" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1241,7 +1256,7 @@ ip[<span class="n">2</span>] <span class="o">=</span> <span class="n">200</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L260" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L258" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1268,7 +1283,7 @@ ip.a?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L848" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L846" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1292,7 +1307,7 @@ ip.address
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1326,7 +1341,7 @@ addresses.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1109" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1350,7 +1365,7 @@ ip.reverse
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L647" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L645" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1377,7 +1392,7 @@ ip.b?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L864" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L862" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1401,7 +1416,7 @@ ip.bits
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L274" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L272" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1424,7 +1439,7 @@ ip.broadcast.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L286" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L284" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1447,7 +1462,7 @@ ip.broadcast_u32
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L531" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L529" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1474,7 +1489,7 @@ ip.c?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L880" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L878" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1493,7 +1508,7 @@ in a network byte order format.</p>
 <pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)
 
 ip.data
-  <span class="c">#=&gt; Bytes[172, 16, 10, 1]</span></code></pre>
+  <span class="c">#=&gt; &quot;\254\020\n&quot; + &quot;\001&quot;</span></code></pre>
 
 <p>It is usually used to include an IP address
 in a data packet to be sent over a socket.</p></div>
@@ -1501,7 +1516,7 @@ in a data packet to be sent over a socket.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L222" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1537,7 +1552,7 @@ ip.each <span class="k">do</span> <span class="o">|</span>i<span class="o">|</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L435" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L433" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1568,7 +1583,7 @@ ip.each_host <span class="k">do</span> <span class="o">|</span>i<span class="o">
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L408" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L406" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1603,7 +1618,7 @@ ip.first.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L349" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L347" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1627,7 +1642,7 @@ ip.hexstring
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L206" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1656,17 +1671,17 @@ ip.hosts.map {<span class="o">|</span>i<span class="o">|</span> i.address}
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L507" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L505" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="includes?(oth)-instance-method">
+    <div class="entry-detail" id="includes?(oth:IPv4)-instance-method">
       <div class="signature">
         
-        def <strong>includes?</strong>(oth)
+        def <strong>includes?</strong>(oth : <a href="../Subnet/IPv4.html">IPv4</a>)
 
-        <a class="method-permalink" href="#includes%3F%28oth%29-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28oth%3AIPv4%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>Checks whether a subnet includes the given IP address.</p>
@@ -1686,7 +1701,7 @@ ip.includes? <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.0.
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L550" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L548" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1713,7 +1728,7 @@ ip.includes_all?(addr1,addr2)
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L566" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L564" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1740,7 +1755,7 @@ ip.includes_all?(addr1,addr2)
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L571" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L569" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1777,7 +1792,7 @@ automatically gets the network number from it</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L381" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L379" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1802,7 +1817,7 @@ ip.link_local?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L629" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L627" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1827,7 +1842,7 @@ ip.loopback?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L615" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L613" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1852,7 +1867,7 @@ ip.multicast?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L601" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L599" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1875,7 +1890,7 @@ ip.netmask
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1905,7 +1920,7 @@ puts ip
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1929,7 +1944,7 @@ ip.network.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L323" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L321" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1957,7 +1972,7 @@ ip.network?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L310" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L308" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1980,7 +1995,7 @@ ip.network_u32
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L519" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L517" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2009,7 +2024,7 @@ ip[<span class="n">3</span>]
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L247" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2032,7 +2047,7 @@ ip.octets
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2059,7 +2074,7 @@ ip.prefix.<span class="k">class</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2092,7 +2107,7 @@ puts ip
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2117,7 +2132,7 @@ ip.private?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L585" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L583" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2141,7 +2156,7 @@ ip.reverse
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L642" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L640" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2166,7 +2181,7 @@ ip.size
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L489" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L487" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2213,7 +2228,7 @@ network <span class="o">/</span> <span class="n">3</span>   <span class="c"># im
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L706" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L704" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2249,7 +2264,7 @@ a power of two.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L779" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L777" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2288,7 +2303,7 @@ network address will change:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L750" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L748" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2316,7 +2331,7 @@ ip.to(<span class="s">&quot;172.16.100.100&quot;</span>)
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L664" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L662" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2346,7 +2361,7 @@ puts ip
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2372,7 +2387,7 @@ ip.to_ipv6
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L895" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L893" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2396,7 +2411,7 @@ ip.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1129" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2420,7 +2435,7 @@ ip.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L1142" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L1142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2450,7 +2465,7 @@ puts ip
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L193" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2478,7 +2493,7 @@ ip.to_i
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/68bd9974aa6be4af57b7384d73fec7533f966a8d/src/subnet/ipv4.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
