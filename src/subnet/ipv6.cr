@@ -637,7 +637,7 @@ module Subnet
     # ip6.to_s
     # # => "2001:db8::8:800:200c:417a/64"
     # ```
-    def self.parse_data(data, prefix=128)
+    def self.parse_data(data, prefix = 128)
       self.parse_hex(data.to_slice.hexstring, prefix)
     end
 
@@ -811,7 +811,62 @@ module Subnet
       # # => "::1/128"
       # ```
       def initialize(bla = nil)
-        @address = ("0000:"*7) + "0001"
+        @address = ("0000:" * 8).chomp(':')
+        @groups = Array.new(8, 0)
+        @prefix = Prefix128.new(128)
+        @compressed = compress_address
+        @allocator = 0
+      end
+    end
+
+    # The loopback  address is a unicast localhost address. If an
+    # application in a host sends packets to this address, the IPv6 stack
+    # will loop these packets back on the same virtual interface.
+    #
+    # Loopback addresses are expressed in the following form:
+    #
+    # ```
+    # ::1
+    # ```
+    #
+    # or, with its appropriate prefix,
+    #
+    # ```
+    # ::1/128
+    # ```
+    #
+    # As for the unspecified addresses, IPv6 loopbacks can be created with
+    # Subnet calling their own class:
+    #
+    # ```crystal
+    # ip = Subnet::IPv6::Loopback.new
+    #
+    # ip.to_string
+    # # => "::1/128"
+    # ```
+    #
+    # Checking if an address is loopback is easy with the IPv6#loopback?
+    # method:
+    #
+    # ```crystal
+    # ip.loopback?
+    # # => true
+    # ```
+    #
+    # The IPv6 loopback address corresponds to 127.0.0.1 in IPv4.
+    #
+    class Subnet::IPv6::Loopback < Subnet::IPv6
+      #
+      # Creates a new IPv6 loopback address
+      #
+      # ```crystal
+      # ip = Subnet::IPv6::Loopback.new
+      #
+      # ip.to_string
+      # # => "::1/128"
+      # ```
+      def initialize(bla = nil)
+        @address = ("0000:" * 7) + "0001"
         @groups = Array.new(7, 0).push(1)
         @prefix = Prefix128.new(128)
         @compressed = compress_address
@@ -891,7 +946,7 @@ module Subnet
     #
     # ```
     # ip6.to_string
-    # => "::ffff:172.16.10.1/128"
+    # # => "::ffff:172.16.10.1/128"
     # ```
     #
     # making it a mapped IPv6 compatible address.
@@ -918,14 +973,16 @@ module Subnet
       # # => "::ffff:13.1.68.3"
       # ```
       def initialize(str)
-        string, netmask = str.split("/")
+        parts = str.split("/")
+        string = parts[0]
+        netmask = parts[1]?
         if string =~ /\./ # IPv4 in dotted decimal form
           @ipv4 = Subnet::IPv4.extract(string)
         else # IPv4 in hex form
           groups = Subnet::IPv6.groups(string)
           @ipv4 = Subnet::IPv4.parse_u32((groups[-2] << 16) + groups[-1])
         end
-        super("::ffff:#{@ipv4.to_ipv6}/#{netmask}")
+        super("::ffff:#{@ipv4.to_ipv6}/#{netmask || 128}")
       end
 
       # Similar to IPv6#to_s, but prints out the IPv4 address
@@ -951,7 +1008,7 @@ module Subnet
       # # => "::ffff:172.16.10.1/128"
       # ```
       def to_string
-        "::ffff:#{@ipv4.address}/#@prefix"
+        "::ffff:#{@ipv4.address}/#{@prefix}"
       end
 
       # Checks if the IPv6 address is IPv4 mapped

@@ -826,7 +826,7 @@ module Subnet
     # # => 256
     # ```
     def -(oth)
-      return (to_u32 - oth.to_u32).abs
+      return (to_i - oth.to_i).abs
     end
 
     # Returns a new IPv4 object which is the result

@@ -434,7 +434,7 @@ describe Subnet::IPv4 do
   end
 
   describe "#to_ipv6" do
-    pending "should convert ipv4 address to ipv6" do
+    it "should convert ipv4 address to ipv6" do
       IP.to_ipv6.should eq "ac10:0a01"
     end
   end
@@ -446,12 +446,12 @@ describe Subnet::IPv4 do
   end
 
   describe "Comparison operators" do
-    ip1 = Subnet::IPv4.new("10.1.1.1/8")
-    ip2 = Subnet::IPv4.new("10.1.1.1/16")
-    ip3 = Subnet::IPv4.new("172.16.1.1/14")
-    ip4 = Subnet::IPv4.new("10.1.1.1/8")
-
     it "should compare two addresses" do
+      ip1 = Subnet::IPv4.new("10.1.1.1/8")
+      ip2 = Subnet::IPv4.new("10.1.1.1/16")
+      ip3 = Subnet::IPv4.new("172.16.1.1/14")
+      ip4 = Subnet::IPv4.new("10.1.1.1/8")
+
       (ip1 < ip2).should be_true
       (ip1 > ip2).should be_false
       (ip2 < ip1).should be_false
@@ -468,6 +468,10 @@ describe Subnet::IPv4 do
     end
 
     it "should be in the correct order" do
+      ip1 = Subnet::IPv4.new("10.1.1.1/8")
+      ip2 = Subnet::IPv4.new("10.1.1.1/16")
+      ip3 = Subnet::IPv4.new("172.16.1.1/14")
+
       arr = ["10.1.1.1/8", "10.1.1.1/16", "172.16.1.1/14"]
       [ip1, ip2, ip3].sort.map(&.to_string).should eq arr
     end
@@ -476,16 +480,16 @@ describe Subnet::IPv4 do
       ip1 = Subnet::IPv4.new("10.0.0.0/24")
       ip2 = Subnet::IPv4.new("10.0.0.0/16")
       ip3 = Subnet::IPv4.new("10.0.0.0/8")
+
       arr = ["10.0.0.0/8", "10.0.0.0/16", "10.0.0.0/24"]
       [ip1, ip2, ip3].sort.map(&.to_string).should eq arr
     end
 
-    pending "should compare with spaceship operator" do
+    it "should compare with spaceship operator" do
       ip1 = Subnet::IPv4.new("127.0.0.1")
       ip2 = Subnet::IPv6.new("::1")
-      not_ip = String
-      (ip1 <=> ip2).should be_nil
-      (ip1 <=> not_ip).should be_nil
+
+      (ip1 <=> ip2).should eq 1
     end
   end
 
@@ -493,6 +497,7 @@ describe Subnet::IPv4 do
     it "should subtract two addresses" do
       ip1 = Subnet::IPv4.new("10.1.1.1/8")
       ip2 = Subnet::IPv4.new("10.1.1.10/8")
+
       (ip2 - ip1).should eq 9
       (ip1 - ip2).should eq 9
     end

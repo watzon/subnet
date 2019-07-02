@@ -458,4 +458,221 @@ describe Subnet::IPv6 do
       ip.to_string.should eq "2001:db8:4d2:0:8:800:200c:417a/64"
     end
   end
+
+  describe Subnet::IPv6::Unspecified do
+    describe "#initialize" do
+      it "should create a new unspecified address" do
+        Subnet::IPv6::Unspecified.new.should be_a Subnet::IPv6::Unspecified
+      end
+    end
+
+    describe "#compressed" do
+      it "should return the compressed version of the address" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.compressed.should eq "::"
+      end
+    end
+
+    describe "#prefix" do
+      it "should return the prefix" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.prefix.should eq 128
+      end
+    end
+
+    describe "#unspecified?" do
+      it "should return true" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.unspecified?.should be_true
+      end
+    end
+
+    describe "#to_s" do
+      it "should return the string representation of the address" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.to_s.should eq "::"
+      end
+    end
+
+    describe "#to_string" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.to_string.should eq "::/128"
+      end
+    end
+
+    describe "#to_string_uncompressed" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.to_string_uncompressed.should eq "0000:0000:0000:0000:0000:0000:0000:0000/128"
+      end
+    end
+
+    describe "#to_u128" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.to_u128.should eq 0
+      end
+    end
+
+    describe "#ipv6?" do
+      it "should be true" do
+        ip = Subnet::IPv6::Unspecified.new
+        ip.ipv6?.should be_true
+      end
+    end
+  end
+
+  describe Subnet::IPv6::Loopback do
+    describe "#initialize" do
+      it "should create a new loopback address" do
+        Subnet::IPv6::Loopback.new.should be_a Subnet::IPv6::Loopback
+      end
+    end
+
+    describe "#compressed" do
+      it "should return the compressed version of the address" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.compressed.should eq "::1"
+      end
+    end
+
+    describe "#loopback?" do
+      it "should return true" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.loopback?.should be_true
+      end
+    end
+
+    describe "#to_s" do
+      it "should return the string representation of the address" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.to_s.should eq "::1"
+      end
+    end
+
+    describe "#to_string" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.to_string.should eq "::1/128"
+      end
+    end
+
+    describe "#to_string_uncompressed" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.to_string_uncompressed.should eq "0000:0000:0000:0000:0000:0000:0000:0001/128"
+      end
+    end
+
+    describe "#to_u128" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.to_u128.should eq 1
+      end
+    end
+
+    describe "#ipv6?" do
+      it "should be true" do
+        ip = Subnet::IPv6::Loopback.new
+        ip.ipv6?.should be_true
+      end
+    end
+  end
+
+  describe Subnet::IPv6::Mapped do
+    describe "#initialize" do
+      it "should create a valid mapped address" do
+        Subnet::IPv6::Mapped.new("::172.16.10.1").should be_a Subnet::IPv6::Mapped
+
+        valid_mapped = {
+          "::13.1.68.3" => 281470899930115,
+          "0:0:0:0:0:ffff:129.144.52.38" => 281472855454758,
+          "::ffff:129.144.52.38" => 281472855454758
+        }
+
+        valid_mapped_ipv6 = {
+          "::0d01:4403" => 281470899930115,
+          "0:0:0:0:0:ffff:8190:3426" => 281472855454758,
+          "::ffff:8190:3426" => 281472855454758
+        }
+
+        valid_mapped.each do |(ip, u128)|
+          Subnet::IPv6::Mapped.new(ip).to_u128.should eq u128
+        end
+
+        valid_mapped_ipv6.each do |(ip6, ip4)|
+          Subnet::IPv6::Mapped.new(ip6).to_u128.should eq ip4
+        end
+      end
+
+      it "should convert to a valid ipv4" do
+        valid_mapped_ipv6_conversion = {
+          "::0d01:4403" => "13.1.68.3",
+          "0:0:0:0:0:ffff:8190:3426" => "129.144.52.38",
+          "::ffff:8190:3426" => "129.144.52.38"
+        }
+
+        valid_mapped_ipv6_conversion.each do |(ip6, ip4)|
+          Subnet::IPv6::Mapped.new(ip6).ipv4.to_s.should eq ip4
+        end
+      end
+    end
+
+    describe "#compressed" do
+      it "should return the compressed version of the address" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.compressed.should eq "::ffff:ac10:a01"
+      end
+    end
+
+    describe "#prefix" do
+      it "should return the prefix" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.prefix.should eq 128
+      end
+    end
+
+    describe "#mapped?" do
+      it "should return true" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.mapped?.should be_true
+      end
+    end
+
+    describe "#to_s" do
+      it "should return the string representation of the address" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.to_s.should eq "::ffff:172.16.10.1"
+      end
+    end
+
+    describe "#to_string" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.to_string.should eq "::ffff:172.16.10.1/128"
+      end
+    end
+
+    describe "#to_string_uncompressed" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.to_string_uncompressed.should eq "0000:0000:0000:0000:0000:ffff:ac10:0a01/128"
+      end
+    end
+
+    describe "#to_u128" do
+      it "should return the string representation of the address with prefix" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.to_u128.should eq BigInt.new("281473568475649")
+      end
+    end
+
+    describe "#ipv6?" do
+      it "should be true" do
+        ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
+        ip.ipv6?.should be_true
+      end
+    end
+  end
 end
