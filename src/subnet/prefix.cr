@@ -48,14 +48,13 @@ module Subnet
   end
 
   class Prefix32 < Prefix
-
     IN4MASK = 0xffffffff
 
     # Creates a new prefix object for 32 bits IPv4 addresses
     #
     # ```
     # prefix = Subnet::Prefix32.new 24
-    #   #=> 24
+    # # => 24
     # ```
     def initialize(num)
       num = num.to_i
@@ -72,7 +71,7 @@ module Subnet
     # prefix = Prefix32.new 24
     #
     # prefix.host_prefix
-    #   #=> 8
+    # # => 8
     # ```
     def host_prefix
       32 - @prefix
@@ -85,7 +84,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix.bits
-    #   #=> "11111111111111111111111100000000"
+    # # => "11111111111111111111111100000000"
     # ```
     def bits
       "%.32b" % to_u32
@@ -98,7 +97,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix.to_ip
-    #   #=> "255.255.255.0"
+    # # => "255.255.255.0"
     # ```
     def to_ip
       octets.join('.')
@@ -111,7 +110,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix.octets
-    #   #=> [255, 255, 255, 0]
+    # # => [255, 255, 255, 0]
     # ```
     def octets
       ("%08.64x" % bits.to_i64(2)).hexbytes
@@ -134,7 +133,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix[2]
-    #   #=> 255
+    # # => 255
     # ```
     def [](index)
       octets[index]
@@ -148,7 +147,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix.hostmask
-    #   #=> "0.0.0.255"
+    # # => "0.0.0.255"
     # ```
     def hostmask
       hostmask_octets.join('.')
@@ -160,7 +159,7 @@ module Subnet
     # prefix = Subnet::Prefix32.new 24
     #
     # prefix.hostmask_octets
-    #   # => StaticArray["0", "0", "0", "255"]
+    # # => StaticArray["0", "0", "0", "255"]
     # ```
     def hostmask_octets
       octets = uninitialized UInt8[4]
@@ -186,12 +185,11 @@ module Subnet
   end
 
   class Prefix128 < Prefix
-
     # Creates a new prefix object for 128 bits IPv6 addresses
     #
     # ```
     # prefix = Subnet::Prefix128.new 64
-    #   #=> 64
+    # # => 64
     # ```
     def initialize(num = 128)
       num = num.to_i
@@ -208,8 +206,8 @@ module Subnet
     # prefix = Subnet::Prefix128.new 64
     #
     # prefix.bits
-    #   #=> "1111111111111111111111111111111111111111111111111111111111111111 \
-    #   #=>   0000000000000000000000000000000000000000000000000000000000000000"
+    # # => "1111111111111111111111111111111111111111111111111111111111111111 \
+    # # => 0000000000000000000000000000000000000000000000000000000000000000"
     # ```
     def bits
       "1" * @prefix + "0" * (128 - @prefix)
@@ -222,7 +220,7 @@ module Subnet
     # prefix = Subnet::Prefix128.new 64
     #
     # prefix.to_u128
-    #   #=> 340282366920938463444927863358058659840
+    # # => 340282366920938463444927863358058659840
     # ```
     def to_u128
       # TODO: Update this to use `UInt128` once support
@@ -237,7 +235,7 @@ module Subnet
     # prefix = Prefix128.new 96
     #
     # prefix.host_prefix
-    #   #=> 32
+    # # => 32
     # ```
     def host_prefix
       128 - @prefix

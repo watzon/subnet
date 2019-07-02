@@ -64,7 +64,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.groups
-    #   #=> [8193, 3512, 0, 0, 8, 2048, 8204, 16762]
+    # # => [8193, 3512, 0, 0, 8, 2048, 8204, 16762]
     # ```
     getter groups : Array(Int32)
 
@@ -74,7 +74,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.address
-    #   #=> "2001:0db8:0000:0000:0008:0800:200c:417a"
+    # # => "2001:0db8:0000:0000:0008:0800:200c:417a"
     # ```
     getter address : String
 
@@ -86,7 +86,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.prefix
-    #   #=> 64
+    # # => 64
     # ```
     getter prefix : Prefix128
 
@@ -140,11 +140,11 @@ module Subnet
     # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a")
     #
     # puts ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/128"
+    # # => "2001:db8::8:800:200c:417a/128"
     #
     # ip6.prefix = 64
     # puts ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def prefix=(num)
       @prefix = Prefix128.new(num)
@@ -157,7 +157,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.to_string_uncompressed
-    #   #=> "2001:0db8:0000:0000:0008:0800:200c:417a/64"
+    # # => "2001:0db8:0000:0000:0008:0800:200c:417a/64"
     # ```
     def to_string_uncompressed
       "#{@address}/#{@prefix}"
@@ -170,7 +170,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:0db8:0000:0000:0008:0800:200c:417a/64"
     #
     # ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def to_string
       "#{@compressed}/#{@prefix}"
@@ -183,7 +183,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.to_s
-    #   #=> "2001:db8::8:800:200c:417a"
+    # # => "2001:db8::8:800:200c:417a"
     # ```
     def to_s
       @compressed
@@ -197,7 +197,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.to_i
-    #   #=> 42540766411282592856906245548098208122
+    # # => 42540766411282592856906245548098208122
     # ```
     def to_i
       to_big_i
@@ -219,12 +219,12 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.network?
-    #   #=> false
+    # # => false
     #
     # ip6 = Subnet.parse "2001:db8:8:800::/64"
     #
     # ip6.network?
-    #   #=> true
+    # # => true
     # ```
     def network?
       to_u128 | @prefix.to_u128 == @prefix.to_u128
@@ -236,13 +236,13 @@ module Subnet
     # ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
     #
     # ip[0]
-    #   #=> 8193
+    # # => 8193
     # ip[1]
-    #   #=> 3512
+    # # => 3512
     # ip[2]
-    #   #=> 0
+    # # => 0
     # ip[3]
-    #   #=> 0
+    # # => 0
     # ```
     def [](index)
       @groups[index]
@@ -267,7 +267,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.hexstring
-    #   #=> "20010db80000000000080800200c417a"
+    # # => "20010db80000000000080800200c417a"
     # ```
     def hexstring
       hex_groups.join("")
@@ -280,7 +280,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.data
-    #   #=> " \001\r\270\000\000\000\000\000\b\b\000 \fAz"
+    # # => " \001\r\270\000\000\000\000\000\b\b\000 \fAz"
     # ```
     #
     # It is usually used to include an IP address
@@ -296,7 +296,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.hex_groups
-    #   #=> ["2001", "0db8", "0000", "0000", "0008", "0800", "200c", "417a"]
+    # # => ["2001", "0db8", "0000", "0000", "0008", "0800", "200c", "417a"]
     # ```
     #
     # Not to be confused with the similar `IPv6#hexstring` method.
@@ -312,10 +312,10 @@ module Subnet
     # ip6 = Subnet.parse "3ffe:505:2::f"
     #
     # ip6.reverse
-    #   #=> "f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.0.0.5.0.5.0.e.f.f.3.ip6.arpa"
+    # # => "f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.0.0.5.0.5.0.e.f.f.3.ip6.arpa"
     # ```
     def reverse
-      hexstring.reverse.gsub(/./){|c| c + "."} + "ip6.arpa"
+      hexstring.reverse.gsub(/./) { |c| c + "." } + "ip6.arpa"
     end
 
     # ditto
@@ -329,7 +329,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.network_u128
-    #   #=> 42540766411282592856903984951653826560
+    # # => 42540766411282592856903984951653826560
     # ```
     def network_u128
       to_u128 & @prefix.to_u128
@@ -341,7 +341,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.broadcast_u128
-    #   #=> 42540766411282592875350729025363378175
+    # # => 42540766411282592875350729025363378175
     # ```
     #
     # Please note that there is no Broadcast concept in IPv6
@@ -360,7 +360,7 @@ module Subnet
     # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
     #
     # ip6.size
-    #   #=> 18446744073709551616
+    # # => 18446744073709551616
     # ```
     def size
       2.to_big_i ** @prefix.host_prefix.to_big_i
@@ -375,10 +375,10 @@ module Subnet
     # addr = Subnet.parse "2001:db8::8:800:200c:1/128"
     #
     # ip6.includes? addr
-    #   #=> true
+    # # => true
     #
     # ip6.includes? Subnet::IPv6.new("2001:db8:1::8:800:200c:417a/76")
-    #   #=> false
+    # # => false
     # ```
     def includes?(oth)
       @prefix <= oth.prefix && network_u128 == self.class.new(oth.address + "/#{@prefix}").network_u128
@@ -390,7 +390,7 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.compressed
-    #   #=> "2001:db8::8:800:200c:417a"
+    # # => "2001:db8::8:800:200c:417a"
     # ```
     def compressed
       @compressed
@@ -418,7 +418,7 @@ module Subnet
     # ```
     # ip = Subnet.parse "fe80::1"
     # ip.link_local?
-    #   #=> true
+    # # => true
     # ```
     def link_local?
       self.class.new("fe80::/10").includes?(self)
@@ -432,7 +432,7 @@ module Subnet
     # ```
     # ip = Subnet.parse "fc00::1"
     # ip.unique_local?
-    #   #=> true
+    # # => true
     # ```
     def unique_local?
       self.class.new("fc00::/7").includes?(self)
@@ -457,14 +457,14 @@ module Subnet
     # ip6.each do |i|
     #   p i.compressed
     # end
-    #   #=> "2001:db8::"
-    #   #=> "2001:db8::1"
-    #   #=> "2001:db8::2"
-    #   #=> "2001:db8::3"
-    #   #=> "2001:db8::4"
-    #   #=> "2001:db8::5"
-    #   #=> "2001:db8::6"
-    #   #=> "2001:db8::7"
+    # # => "2001:db8::"
+    # # => "2001:db8::1"
+    # # => "2001:db8::2"
+    # # => "2001:db8::3"
+    # # => "2001:db8::4"
+    # # => "2001:db8::5"
+    # # => "2001:db8::6"
+    # # => "2001:db8::7"
     # ```
     #
     # WARNING: if the host portion is very large, this method
@@ -500,12 +500,12 @@ module Subnet
     # ip3 = Subnet.parse "2001:db8:1::1/65"
     #
     # ip1 < ip2
-    #   #=> true
+    # # => true
     # ip1 < ip3
-    #   #=> false
+    # # => false
     #
-    # [ip1,ip2,ip3].sort.map{|i| i.to_string}
-    #   #=> ["2001:db8:1::1/64","2001:db8:1::1/65","2001:db8:2::1/64"]
+    # [ip1, ip2, ip3].sort.map { |i| i.to_string }
+    # # => ["2001:db8:1::1/64","2001:db8:1::1/65","2001:db8:2::1/64"]
     # ```
     def <=>(oth)
       return prefix <=> oth.prefix if to_i == oth.to_i
@@ -519,7 +519,7 @@ module Subnet
     # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a")
     #
     # ip6.bits
-    #   #=> "0010000000000001000011011011100000 [...] "
+    # # => "0010000000000001000011011011100000 [...] "
     # ```
     def bits
       "%0128b" % to_i
@@ -529,7 +529,7 @@ module Subnet
     #
     # ```
     # Subnet::IPv6.expand "2001:0DB8:0:CD30::"
-    #   #=> "2001:0DB8:0000:CD30:0000:0000:0000:0000"
+    # # => "2001:0DB8:0000:CD30:0000:0000:0000:0000"
     # ```
     def self.expand(str)
       self.new(str).address
@@ -539,7 +539,7 @@ module Subnet
     #
     # ```
     # Subnet::IPv6.compress "2001:0DB8:0000:CD30:0000:0000:0000:0000"
-    #   #=> "2001:db8:0:cd30::"
+    # # => "2001:db8:0:cd30::"
     # ```
     def self.compress(str)
       self.new(str).compressed
@@ -551,10 +551,10 @@ module Subnet
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
     # ip6.literal
-    #   #=> "2001-0db8-0000-0000-0008-0800-200c-417a.ipv6-literal.net"
+    # # => "2001-0db8-0000-0000-0008-0800-200c-417a.ipv6-literal.net"
     #  ```
     def literal
-      @address.gsub(":","-") + ".ipv6-literal.net"
+      @address.gsub(":", "-") + ".ipv6-literal.net"
     end
 
     # Returns a new IPv6 object with the network number
@@ -564,7 +564,7 @@ module Subnet
     # ip = Subnet.parse "2001:db8:1:1:1:1:1:1/32"
     #
     # ip.network.to_string
-    #   #=> "2001:db8::/32"
+    # # => "2001:db8::/32"
     # ```
     def network
       self.class.parse_u128(network_u128, @prefix)
@@ -633,7 +633,7 @@ module Subnet
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_u128(u128, prefix = 128)
-      str = IN6FORMAT % (0..7).map{ |i| (u128 >> (112 - 16 * i)) & 0xffff }
+      str = IN6FORMAT % (0..7).map { |i| (u128 >> (112 - 16 * i)) & 0xffff }
       self.new("#{str}/#{prefix}")
     end
 
@@ -656,7 +656,7 @@ module Subnet
     # ip6.to_string
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
-    def self.parse_hex(hexstring, prefix=128)
+    def self.parse_hex(hexstring, prefix = 128)
       self.parse_u128(hexstring.to_big_i(16), prefix)
     end
 
@@ -670,17 +670,17 @@ module Subnet
     # ```
     # ip = Subnet::IPv6.new("10.0.0.0/24")
     # ip.allocate
-    #   #=> "10.0.0.1/24"
+    # # => "10.0.0.1/24"
     # ip.allocate
-    #   #=> "10.0.0.2/24"
+    # # => "10.0.0.2/24"
     # ip.allocate(2)
-    #   #=> "10.0.0.5/24"
+    # # => "10.0.0.5/24"
     # ```
     #
     # Uses an internal @allocator which tracks the state of allocated
     # addresses.
     #
-    def allocate(skip=0)
+    def allocate(skip = 0)
       @allocator += 1 + skip
 
       next_ip = network_u128 + @allocator
@@ -692,7 +692,7 @@ module Subnet
     end
 
     private def compress_address
-      str = @groups.map{|i| i.to_s(16) }.join(":")
+      str = @groups.map { |i| i.to_s(16) }.join(":")
       orig = str.dup
       loop do
         str = str.sub(/\A0:0:0:0:0:0:0:0\Z/, "::")
@@ -713,7 +713,7 @@ module Subnet
       str.sub(/:{3,}/, "::")
     end
 
-      # The address with all zero bits is called the +unspecified+ address
+    # The address with all zero bits is called the +unspecified+ address
     # (corresponding to 0.0.0.0 in IPv4). It should be something like this:
     #
     # ```
@@ -740,7 +740,7 @@ module Subnet
     # ip = Subnet::IPv6::Unspecified.new
     #
     # ip.to_s
-    #   #=> => "::/128"
+    # # => => "::/128"
     # ```
     #
     # You can easily check if an IPv6 object is an unspecified address by
@@ -748,7 +748,7 @@ module Subnet
     #
     # ```
     # ip.unspecified?
-    #   #=> true
+    # # => true
     # ```
     #
     # An unspecified IPv6 address can also be created with the wrapper
@@ -758,7 +758,7 @@ module Subnet
     # ip = Subnet.parse "::"
     #
     # ip.unspecified?
-    #   #=> true
+    # # => true
     # ```
     #
     # This address must never be assigned to an interface and is to be used
@@ -772,11 +772,11 @@ module Subnet
       # ip = Subnet::IPv6::Loopback.new
       #
       # ip.to_string
-      #   #=> "::1/128"
+      # # => "::1/128"
       # ```
       def initialize(bla = nil)
-        @address = ("0000:"*7)+"0001"
-        @groups = Array.new(7,0).push(1)
+        @address = ("0000:"*7) + "0001"
+        @groups = Array.new(7, 0).push(1)
         @prefix = Prefix128.new(128)
         @compressed = compress_address
         @allocator = 0
@@ -817,10 +817,10 @@ module Subnet
     #
     # ```
     # ip6.mapped?
-    #   #=> true
+    # # => true
     #
     # ip6.to_string
-    #   #=> "::FFFF:172.16.10.1/128"
+    # # => "::FFFF:172.16.10.1/128"
     # ```
     #
     # Now with the +ipv4+ attribute, we can easily access the IPv4 portion
@@ -828,7 +828,7 @@ module Subnet
     #
     # ```
     # ip6.ipv4.address
-    #   #=> "172.16.10.1"
+    # # => "172.16.10.1"
     # ```
     #
     # Internally, the IPv4 address is stored as two 16 bits
@@ -837,10 +837,10 @@ module Subnet
     #
     # ```
     # ip6.hexstring
-    #   #=> "00000000000000000000ffffac100a01"
+    # # => "00000000000000000000ffffac100a01"
     #
     # ip6.address
-    #   #=> "0000:0000:0000:0000:0000:ffff:ac10:0a01"
+    # # => "0000:0000:0000:0000:0000:ffff:ac10:0a01"
     # ```
     #
     # A mapped IPv6 can also be created just by specify the address in the
@@ -855,12 +855,11 @@ module Subnet
     #
     # ```
     # ip6.to_string
-    #   => "::ffff:172.16.10.1/128"
+    # => "::ffff:172.16.10.1/128"
     # ```
     #
     # making it a mapped IPv6 compatible address.
     class Mapped < IPv6
-
       # The internal IPv4 address.
       getter ipv4 : IPv4
 
@@ -870,7 +869,7 @@ module Subnet
       # ip6 = Subnet::IPv6::Mapped.new "::ffff:172.16.10.1/128"
       #
       # ipv6.ipv4.class
-      #   #=> Subnet::IPv4
+      # # => Subnet::IPv4
       # ```
       #
       # An IPv6 IPv4-mapped address can also be created using the
@@ -880,7 +879,7 @@ module Subnet
       # ip6 = Subnet::IPv6::Mapped.new "::0d01:4403"
       #
       # ip6.to_string
-      #   #=> "::ffff:13.1.68.3"
+      # # => "::ffff:13.1.68.3"
       # ```
       def initialize(str)
         string, netmask = str.split("/")
@@ -888,7 +887,7 @@ module Subnet
           @ipv4 = Subnet::IPv4.extract(string)
         else # IPv4 in hex form
           groups = Subnet::IPv6.groups(string)
-          @ipv4 = Subnet::IPv4.parse_u32((groups[-2]<< 16)+groups[-1])
+          @ipv4 = Subnet::IPv4.parse_u32((groups[-2] << 16) + groups[-1])
         end
         super("::ffff:#{@ipv4.to_ipv6}/#{netmask}")
       end
@@ -900,7 +899,7 @@ module Subnet
       # ip6 = Subnet.parse "::ffff:172.16.10.1/128"
       #
       # ip6.to_s
-      #   #=> "::ffff:172.16.10.1"
+      # # => "::ffff:172.16.10.1"
       # ```
       def to_s
         "::ffff:#{@ipv4.address}"
@@ -913,7 +912,7 @@ module Subnet
       # ip6 = Subnet.parse "::ffff:172.16.10.1/128"
       #
       # ip6.to_string
-      #   #=> "::ffff:172.16.10.1/128"
+      # # => "::ffff:172.16.10.1/128"
       # ```
       def to_string
         "::ffff:#{@ipv4.address}/#@prefix"
@@ -925,7 +924,7 @@ module Subnet
       # ip6 = Subnet.parse "::ffff:172.16.10.1/128"
       #
       # ip6.mapped?
-      #   #=> true
+      # # => true
       # ```
       def mapped?
         true
@@ -933,4 +932,3 @@ module Subnet
     end
   end
 end
-

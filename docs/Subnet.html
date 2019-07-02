@@ -132,35 +132,35 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/version.cr#L1" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/version.cr#L1" target="_blank">
         subnet/version.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/prefix.cr#L3" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L3" target="_blank">
         subnet/prefix.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv4.cr#L3" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv4.cr#L3" target="_blank">
         subnet/ipv4.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L4" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L4" target="_blank">
         subnet/ipv6.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L7" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L7" target="_blank">
         subnet.cr
       </a>
     
@@ -183,6 +183,18 @@
 
 
 
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#parse%28str%29%3ASubnet-class-method" class="signature"><strong>.parse</strong>(str) : Subnet</a>
+        
+          <div class="summary"><p>Parse the argument string to create a new IPv4, IPv6 or Mapped IP object</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>Class Method Summary</h2>
@@ -199,13 +211,6 @@
         <a href="#ntoa%28uint%29-class-method" class="signature"><strong>.ntoa</strong>(uint)</a>
         
           <div class="summary"><p>Converts a unit32 to IPv4</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#parse%28str%29-class-method" class="signature"><strong>.parse</strong>(str)</a>
-        
-          <div class="summary"><p>Parse the argument string to create a new IPv4, IPv6 or Mapped IP object</p></div>
         
       </li>
     
@@ -290,56 +295,14 @@
 </div>
 
 
-
-
-  <h2>Class Method Detail</h2>
+  <h2>Constructor Detail</h2>
   
-    <div class="entry-detail" id="deprecate(message=nil)-class-method">
+    <div class="entry-detail" id="parse(str):Subnet-class-method">
       <div class="signature">
         
-        def self.<strong>deprecate</strong>(message = <span class="n">nil</span>)
+        def self.<strong>parse</strong>(str) : <a href="Subnet.html">Subnet</a>
 
-        <a class="method-permalink" href="#deprecate%28message%3Dnil%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Deprecate method
-:nodoc:</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L227" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="ntoa(uint)-class-method">
-      <div class="signature">
-        
-        def self.<strong>ntoa</strong>(uint)
-
-        <a class="method-permalink" href="#ntoa%28uint%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Converts a unit32 to IPv4</p>
-
-<pre><code><span class="t">Subnet</span><span class="t">::</span>ntoa(<span class="n">167837953</span>)
-  <span class="c"># =&gt; &quot;10.1.1.1&quot;</span></code></pre></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L54" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="parse(str)-class-method">
-      <div class="signature">
-        
-        def self.<strong>parse</strong>(str)
-
-        <a class="method-permalink" href="#parse%28str%29-class-method">#</a>
+        <a class="method-permalink" href="#parse%28str%29%3ASubnet-class-method">#</a>
       </div>
       
         <div class="doc"><p>Parse the argument string to create a new
@@ -363,7 +326,52 @@ ip_mapped.<span class="k">class</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="deprecate(message=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>deprecate</strong>(message = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#deprecate%28message%3Dnil%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Deprecate method
+:nodoc:</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L227" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ntoa(uint)-class-method">
+      <div class="signature">
+        
+        def self.<strong>ntoa</strong>(uint)
+
+        <a class="method-permalink" href="#ntoa%28uint%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Converts a unit32 to IPv4</p>
+
+<pre><code><span class="t">Subnet</span><span class="t">::</span>ntoa(<span class="n">167837953</span>)
+  <span class="c"># =&gt; &quot;10.1.1.1&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -395,7 +403,7 @@ ip_mapped.<span class="k">class</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -422,7 +430,7 @@ either IPv4 or IPv6</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L125" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -448,7 +456,7 @@ either IPv4 or IPv6</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L184" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L184" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -470,7 +478,7 @@ expressed in dotted decimal format.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L198" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -499,7 +507,7 @@ expressed in dotted decimal format.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L143" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L143" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -525,7 +533,7 @@ expressed in dotted decimal format.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L218" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L218" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -554,7 +562,7 @@ expressed in dotted decimal format.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -582,7 +590,7 @@ ip.ipv4?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -605,7 +613,7 @@ ip.ipv6?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>

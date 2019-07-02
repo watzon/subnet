@@ -159,7 +159,7 @@ portion.</p>
   <h2>Included Modules</h2>
   <ul class="other-types-list">
   
-    <li class="other-type">Comparable(<a href="../Subnet/IPv6.html">Subnet::IPv6</a>)</li>
+    <li class="other-type">Comparable(<a href="../Subnet.html">Subnet</a>)</li>
   
     <li class="other-type">Enumerable(<a href="../Subnet/IPv6.html">Subnet::IPv6</a>)</li>
   
@@ -188,7 +188,7 @@ portion.</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L55" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L55" target="_blank">
         subnet/ipv6.cr
       </a>
     
@@ -203,7 +203,7 @@ portion.</p>
   <dl>
     
       <dt class="entry-const" id="IN6FORMAT">
-        <strong>IN6FORMAT</strong> = <code>(<span class="s">&quot;%04x:&quot;</span> <span class="o">*</span> <span class="n">8</span>).chomp</code>
+        <strong>IN6FORMAT</strong> = <code>(<span class="s">&quot;%04x:&quot;</span> <span class="o">*</span> <span class="n">8</span>).chomp(<span class="s">&#39;:&#39;</span>)</code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -261,7 +261,7 @@ portion.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#parse_hex%28hex%2Cprefix%3D128%29-class-method" class="signature"><strong>.parse_hex</strong>(hex, prefix = <span class="n">128</span>)</a>
+        <a href="#parse_hex%28hexstring%2Cprefix%3D128%29-class-method" class="signature"><strong>.parse_hex</strong>(hexstring, prefix = <span class="n">128</span>)</a>
         
           <div class="summary"><p>Creates a new IPv6 object from a number expressed in hexdecimal format:</p></div>
         
@@ -373,7 +373,7 @@ portion.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#hexs-instance-method" class="signature"><strong>#hexs</strong></a>
+        <a href="#hex_groups-instance-method" class="signature"><strong>#hex_groups</strong></a>
         
           <div class="summary"><p>Returns an array of the 16 bits groups in hexdecimal format:</p></div>
         
@@ -471,9 +471,16 @@ portion.</p>
       </li>
     
       <li class="entry-summary">
+        <a href="#to_big_i-instance-method" class="signature"><strong>#to_big_i</strong></a>
+        
+          <div class="summary"><p>Return the address as a <code>BigInt</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_i-instance-method" class="signature"><strong>#to_i</strong></a>
         
-          <div class="summary"><p>Returns a decimal format (unsigned 128 bit) of the IPv6 address</p></div>
+          <div class="summary"><p>Returns a the address in as a <code>BigInt</code> (will return a <code>UInt128</code> once support for that is finished in the stdlib)</p></div>
         
       </li>
     
@@ -501,7 +508,7 @@ portion.</p>
       <li class="entry-summary">
         <a href="#to_u128-instance-method" class="signature"><strong>#to_u128</strong></a>
         
-          <div class="summary"><p>Returns a decimal format (unsigned 128 bit) of the IPv6 address</p></div>
+          <div class="summary"><p>Returns a the address in as a <code>BigInt</code> (will return a <code>UInt128</code> once support for that is finished in the stdlib)</p></div>
         
       </li>
     
@@ -566,6 +573,15 @@ portion.</p>
 
     
 
+  <h3>Constructor methods inherited from module <code><a href="../Subnet.html">Subnet</a></code></h3>
+  
+  
+    <a href="../Subnet.html#parse%28str%29%3ASubnet-class-method" class="tooltip">
+      <span>parse(str) : Subnet</span>
+    parse</a>
+    
+  
+
 
     
 
@@ -580,11 +596,6 @@ portion.</p>
     <a href="../Subnet.html#ntoa%28uint%29-class-method" class="tooltip">
       <span>ntoa(uint)</span>
     ntoa</a>, 
-    
-  
-    <a href="../Subnet.html#parse%28str%29-class-method" class="tooltip">
-      <span>parse(str)</span>
-    parse</a>, 
     
   
     <a href="../Subnet.html#valid%3F%28addr%29-class-method" class="tooltip">
@@ -674,7 +685,7 @@ subnet mask /128</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -700,7 +711,7 @@ subnet mask /128</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L553" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L544" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -721,7 +732,7 @@ subnet mask /128</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L543" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L534" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -739,7 +750,7 @@ subnet mask /128</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L583" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L574" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -774,17 +785,17 @@ ip6.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L616" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L612" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="parse_hex(hex,prefix=128)-class-method">
+    <div class="entry-detail" id="parse_hex(hexstring,prefix=128)-class-method">
       <div class="signature">
         
-        def self.<strong>parse_hex</strong>(hex, prefix = <span class="n">128</span>)
+        def self.<strong>parse_hex</strong>(hexstring, prefix = <span class="n">128</span>)
 
-        <a class="method-permalink" href="#parse_hex%28hex%2Cprefix%3D128%29-class-method">#</a>
+        <a class="method-permalink" href="#parse_hex%28hexstring%2Cprefix%3D128%29-class-method">#</a>
       </div>
       
         <div class="doc"><p>Creates a new IPv6 object from a number expressed in
@@ -806,7 +817,7 @@ ip6.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L663" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L659" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -831,7 +842,7 @@ unsigned 128 bits integer.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L639" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L635" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -883,7 +894,7 @@ ip1 <span class="o">&lt;</span> ip3
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L518" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L510" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -898,7 +909,7 @@ ip1 <span class="o">&lt;</span> ip3
       
         <div class="doc"><p>Returns the 16-bits value specified by index</p>
 
-<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
 
 ip[<span class="n">0</span>]
   <span class="c">#=&gt; 8193</span>
@@ -912,7 +923,7 @@ ip[<span class="n">3</span>]
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L241" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L247" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -930,7 +941,7 @@ ip[<span class="n">3</span>]
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L252" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L258" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -953,7 +964,7 @@ ip6.address
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -973,7 +984,7 @@ can be used to skip addresses.</p>
 
 <p>Example:</p>
 
-<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;10.0.0.0/24&quot;</span>)
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;10.0.0.0/24&quot;</span>)
 ip.allocate
   <span class="c">#=&gt; &quot;10.0.0.1/24&quot;</span>
 ip.allocate
@@ -987,7 +998,7 @@ addresses.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L687" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L683" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1011,7 +1022,7 @@ ip6.reverse
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L325" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L322" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1027,7 +1038,7 @@ ip6.reverse
         <div class="doc"><p>Returns the address portion of an IP in binary format,
 as a string containing a sequence of 0 and 1</p>
 
-<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
 
 ip6.bits
   <span class="c">#=&gt; &quot;0010000000000001000011011011100000 [...] &quot;</span></code></pre></div>
@@ -1035,7 +1046,7 @@ ip6.bits
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L533" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L524" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1062,7 +1073,7 @@ an helper to other functions.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L354" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L351" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1085,7 +1096,7 @@ ip6.compressed
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L398" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L395" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1107,19 +1118,12 @@ ip6.data
   <span class="c">#=&gt; &quot; \001\r\270\000\000\000\000\000\b\b\000 \fAz&quot;</span></code></pre>
 
 <p>It is usually used to include an IP address
-in a data packet to be sent over a socket</p>
-
-<pre><code>a <span class="o">=</span> <span class="t">Socket</span>.open(params) <span class="c"># socket details here</span>
-ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
-binary_data <span class="o">=</span> [<span class="s">&quot;Address: &quot;</span>].pack(<span class="s">&quot;a*&quot;</span>) <span class="o">+</span> ip.data
-
-<span class="c"># Send binary data</span>
-a.puts binary_data</code></pre></div>
+in a data packet to be sent over a socket</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L291" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L288" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1138,7 +1142,7 @@ network (or IP address).</p>
 <p>The object yielded is a new IPv6 object created
 from the iteration.</p>
 
-<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::4/125&quot;</span>)
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::4/125&quot;</span>)
 
 ip6.each <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
   p i.compressed
@@ -1158,7 +1162,7 @@ can be very slow and possibly hang your system!</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L480" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L472" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1173,7 +1177,7 @@ can be very slow and possibly hang your system!</p></div>
       
         <div class="doc"><p>Returns the 16-bits value specified by index</p>
 
-<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
 
 ip[<span class="n">0</span>]
   <span class="c">#=&gt; 8193</span>
@@ -1187,7 +1191,7 @@ ip[<span class="n">3</span>]
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L246" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L252" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1211,17 +1215,17 @@ ip6.groups
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="hexs-instance-method">
+    <div class="entry-detail" id="hex_groups-instance-method">
       <div class="signature">
         
-        def <strong>hexs</strong>
+        def <strong>hex_groups</strong>
 
-        <a class="method-permalink" href="#hexs-instance-method">#</a>
+        <a class="method-permalink" href="#hex_groups-instance-method">#</a>
       </div>
       
         <div class="doc"><p>Returns an array of the 16 bits groups in hexdecimal
@@ -1229,7 +1233,7 @@ format:</p>
 
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
 
-ip6.hexs
+ip6.hex_groups
   <span class="c">#=&gt; [&quot;2001&quot;, &quot;0db8&quot;, &quot;0000&quot;, &quot;0000&quot;, &quot;0008&quot;, &quot;0800&quot;, &quot;200c&quot;, &quot;417a&quot;]</span></code></pre>
 
 <p>Not to be confused with the similar <code><a href="../Subnet/IPv6.html#hexstring-instance-method">IPv6#hexstring</a></code> method.</p></div>
@@ -1237,7 +1241,7 @@ ip6.hexs
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L307" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L304" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1261,7 +1265,7 @@ ip6.hexstring
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L266" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L272" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1284,13 +1288,13 @@ addr <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s
 ip6.includes? addr
   <span class="c">#=&gt; true</span>
 
-ip6.includes? <span class="t">Subnet</span>(<span class="s">&quot;2001:db8:1::8:800:200c:417a/76&quot;</span>)
+ip6.includes? <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8:1::8:800:200c:417a/76&quot;</span>)
   <span class="c">#=&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L386" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L383" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1315,7 +1319,7 @@ ip.link_local?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L431" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L423" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1339,7 +1343,7 @@ ip6.literal
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L565" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L556" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1359,7 +1363,7 @@ ip6.literal
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L417" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L409" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1379,7 +1383,7 @@ ip6.literal
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L452" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L444" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1403,7 +1407,7 @@ ip.network.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L578" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L569" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1431,7 +1435,7 @@ ip6.network?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L229" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1454,7 +1458,7 @@ ip6.network_u128
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L337" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L334" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1477,7 +1481,7 @@ ip6.prefix
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1497,7 +1501,7 @@ to an object created with IPv6::parse_u128 or
 if the object was created using the default prefix
 of 128 bits.</p>
 
-<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a&quot;</span>)
 
 puts ip6.to_string
   <span class="c">#=&gt; &quot;2001:db8::8:800:200c:417a/128&quot;</span>
@@ -1509,7 +1513,7 @@ puts ip6.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L149" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L149" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1533,7 +1537,7 @@ ip6.reverse
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L320" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L317" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1550,7 +1554,7 @@ ip6.reverse
 in the network. It also counts the network
 address and the broadcast address.</p>
 
-<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+<pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
 
 ip6.size
   <span class="c">#=&gt; 18446744073709551616</span></code></pre></div>
@@ -1558,7 +1562,25 @@ ip6.size
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L368" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L365" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_big_i-instance-method">
+      <div class="signature">
+        
+        def <strong>to_big_i</strong>
+
+        <a class="method-permalink" href="#to_big_i-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Return the address as a <code>BigInt</code></p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L212" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1571,8 +1593,9 @@ ip6.size
         <a class="method-permalink" href="#to_i-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns a decimal format (unsigned 128 bit) of the
-IPv6 address</p>
+        <div class="doc"><p>Returns a the address in as a <code>BigInt</code> (will return a
+<code>UInt128</code> once support for that is finished in
+the stdlib)</p>
 
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
 
@@ -1582,7 +1605,7 @@ ip6.to_i
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L201" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L202" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1606,7 +1629,7 @@ ip6.to_s
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1630,7 +1653,7 @@ ip6.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L175" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L175" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1654,7 +1677,7 @@ ip6.to_string_uncompressed
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1667,8 +1690,9 @@ ip6.to_string_uncompressed
         <a class="method-permalink" href="#to_u128-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns a decimal format (unsigned 128 bit) of the
-IPv6 address</p>
+        <div class="doc"><p>Returns a the address in as a <code>BigInt</code> (will return a
+<code>UInt128</code> once support for that is finished in
+the stdlib)</p>
 
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>
 
@@ -1678,7 +1702,7 @@ ip6.to_i
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L206" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L207" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1703,7 +1727,7 @@ ip.unique_local?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L445" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L437" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1723,7 +1747,7 @@ ip.unique_local?
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/71c4942f72aba4369b2953afdee6335bb19a31c5/src/subnet/ipv6.cr#L410" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L402" target="_blank">View source</a>]
         
       </div>
     </div>

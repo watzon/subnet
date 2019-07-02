@@ -39,7 +39,7 @@ IPV6_NETWORKS = {
   "2001:db8::1/64"          => "2001:db8::/64",
 }
 
-IPV6   = Subnet::IPv6.new "2001:db8::8:800:200c:417a/64"
+IPV6         = Subnet::IPv6.new "2001:db8::8:800:200c:417a/64"
 IPV6_NETWORK = Subnet::IPv6.new "2001:db8:8:800::/64"
 IPV6_ARR     = [8193, 3512, 0, 0, 8, 2048, 8204, 16762]
 IPV6_HEX     = "20010db80000000000080800200c417a"
@@ -340,9 +340,9 @@ describe Subnet::IPv6 do
       ip = Subnet::IPv6.new("2001:db8::4/125")
       arr = [] of String
       ip.each { |i| arr << i.compressed }
-      expected = ["2001:db8::","2001:db8::1","2001:db8::2",
-                  "2001:db8::3","2001:db8::4","2001:db8::5",
-                  "2001:db8::6","2001:db8::7"]
+      expected = ["2001:db8::", "2001:db8::1", "2001:db8::2",
+                  "2001:db8::3", "2001:db8::4", "2001:db8::5",
+                  "2001:db8::6", "2001:db8::7"]
       arr.should eq expected
     end
   end
@@ -394,9 +394,9 @@ describe Subnet::IPv6 do
       (ip1 < ip4).should be_true
       (ip1 > ip4).should be_false
 
-      arr = ["2001:db8:1::1/64","2001:db8:1::1/65",
-            "2001:db8:1::2/64","2001:db8:2::1/64"]
-      [ip1,ip2,ip3,ip4].sort.map(&.to_string).should eq arr
+      arr = ["2001:db8:1::1/64", "2001:db8:1::1/65",
+             "2001:db8:1::2/64", "2001:db8:2::1/64"]
+      [ip1, ip2, ip3, ip4].sort.map(&.to_string).should eq arr
 
       ip1 = Subnet::IPv6.new("::1")
       ip2 = Subnet::IPv4.new("127.0.0.1")

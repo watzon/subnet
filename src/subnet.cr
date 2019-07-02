@@ -9,8 +9,8 @@ module Subnet
   # IPv4, IPv6 or Mapped IP object
   #
   # ```
-  # ip  = Subnet.parse 167837953 # 10.1.1.1
-  # ip  = Subnet.parse "172.16.10.1/24"
+  # ip = Subnet.parse 167837953 # 10.1.1.1
+  # ip = Subnet.parse "172.16.10.1/24"
   # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
   # ip_mapped = Subnet.parse "::ffff:172.16.10.1/128"
   # ```
@@ -20,14 +20,13 @@ module Subnet
   #
   # ```
   # ip.class
-  #   # => Subnet::IPv4
+  # # => Subnet::IPv4
   # ip6.class
-  #   # => Subnet::IPv6
+  # # => Subnet::IPv6
   # ip_mapped.class
-  #   # => Subnet::IPv6::Mapped
+  # # => Subnet::IPv6::Mapped
   # ```
   def self.parse(str) : Subnet
-
     # Check if an int was passed
     if str.is_a? Number
       return Subnet::IPv4.new(ntoa(str))
@@ -70,7 +69,7 @@ module Subnet
   # ip = Subnet.parse("192.168.10.100/24")
   #
   # ip.ipv4?
-  #   # => true
+  # # => true
   # ```
   def ipv4?
     self.is_a? Subnet::IPv4
@@ -83,7 +82,7 @@ module Subnet
   # ip = Subnet.parse("192.168.10.100/24")
   #
   # ip.ipv6?
-  #   # => false
+  # # => false
   # ```
   def ipv6?
     self.is_a? Subnet::IPv6
@@ -183,7 +182,7 @@ module Subnet
   # ```
   def self.valid_ipv4?(addr)
     if /\A(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\Z/ =~ addr
-      return $~.captures.all? {|i| i.to_i < 256 unless i.nil? }
+      return $~.captures.all? { |i| i.to_i < 256 unless i.nil? }
     end
     false
   end
@@ -193,10 +192,10 @@ module Subnet
   #
   # ```
   # Subnet.valid_ipv4_netmask? "255.255.0.0"
-  #   # => true
+  # # => true
   # ```
   def self.valid_ipv4_netmask?(addr)
-    arr = addr.split(".").map{|i| i.to_u8}
+    arr = addr.split(".").map { |i| i.to_u8 }
     bin = Slice.new(arr.to_unsafe, arr.size).hexstring.to_u32(16).to_s(2)
     bits = bin.scan(/01/)
     bits.empty? && valid_ipv4?(addr)

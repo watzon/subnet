@@ -31,7 +31,6 @@ U32_HASH = {
   30 => 4294967292,
 }
 
-
 describe Subnet::Prefix do
   describe Subnet::Prefix32 do
     it "should have a prefix" do
@@ -77,7 +76,7 @@ describe Subnet::Prefix do
       p1 = Subnet::Prefix32.new(8)
       p2 = Subnet::Prefix32.new(10)
       (p1 + p2).should eq 18
-      (p1 +  4).should eq 12
+      (p1 + 4).should eq 12
     end
 
     it "should subtract two prefixes" do
@@ -85,7 +84,7 @@ describe Subnet::Prefix do
       p2 = Subnet::Prefix32.new(24)
       (p1 - p2).should eq 16
       (p2 - p1).should eq 16
-      (p2 -  4).should eq 20
+      (p2 - 4).should eq 20
     end
 
     it "should fail to initialize with prefix over 32" do
