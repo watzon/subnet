@@ -55,9 +55,9 @@ This document provides a brief introduction to the library and examples of typic
 
 3. Require it in your project
 
-```crystal
-require "subnet"
-```
+  ```crystal
+  require "subnet"
+  ```
 
 ## IPv4
 
