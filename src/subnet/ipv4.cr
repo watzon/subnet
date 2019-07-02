@@ -5,7 +5,7 @@ module Subnet
   class IPv4
     include Subnet
     include Enumerable(IPv4)
-    include Comparable(IPv4)
+    include Comparable(Subnet)
 
     # This Hash contains the prefix values for Classful networks
     #
@@ -469,9 +469,8 @@ module Subnet
     #   #=> ["10.100.100.1/8","10.100.100.1/16","172.16.0.1/16"]
     # ```
     def <=>(oth)
-      return nil unless oth.is_a?(IPv4)
-      return prefix <=> oth.prefix if to_u32 == oth.to_u32
-      to_u32 <=> oth.to_u32
+      return prefix <=> oth.prefix if to_i == oth.to_i
+      to_i <=> oth.to_i
     end
 
     # Returns the number of IP addresses included
@@ -1114,7 +1113,7 @@ module Subnet
         return nil
       end
 
-      IPv4.parse_u32(network_u32 + @allocator, @prefix)
+      IPv4.parse_u32(next_ip, @prefix)
     end
 
     # Returns a string with the address portion of

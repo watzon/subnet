@@ -55,7 +55,7 @@ module Subnet
   class IPv6
     include Subnet
     include Enumerable(IPv6)
-    include Comparable(IPv6)
+    include Comparable(Subnet)
 
     # Returns an array with the 16 bits groups in decimal
     # format:
@@ -396,11 +396,6 @@ module Subnet
       @compressed
     end
 
-    # Returns true if the address is a link local address
-    def link_local?
-      @groups[0] == 0xfe80
-    end
-
     # Returns true if the address is an unspecified address
     #
     # See Subnet::IPv6::Unspecified for more information
@@ -426,7 +421,7 @@ module Subnet
     #   #=> true
     # ```
     def link_local?
-      [self.class.new("fe80::/64")].any? {|i| i.includes? self}
+      self.class.new("fe80::/10").includes?(self)
     end
 
     # Checks if an IPv6 address objects belongs
@@ -440,7 +435,7 @@ module Subnet
     #   #=> true
     # ```
     def unique_local?
-      [self.class.new("fc00::/7")].any? {|i| i.includes? self}
+      self.class.new("fc00::/7").includes?(self)
     end
 
     # Returns true if the address is a mapped address
@@ -513,9 +508,8 @@ module Subnet
     #   #=> ["2001:db8:1::1/64","2001:db8:1::1/65","2001:db8:2::1/64"]
     # ```
     def <=>(oth)
-      return nil unless oth.is_a?(self.class)
-      return prefix <=> oth.prefix if to_u128 == oth.to_u128
-      to_u128 <=> oth.to_u128
+      return prefix <=> oth.prefix if to_i == oth.to_i
+      to_i <=> oth.to_i
     end
 
     # Returns the address portion of an IP in binary format,
@@ -616,7 +610,7 @@ module Subnet
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_data(data)
-      self.new(IN6FORMAT % str.unpack("n8"))
+      self.parse_hex(data.to_slice.hexstring)
     end
 
     # Creates a new IPv6 object from an
@@ -638,9 +632,9 @@ module Subnet
     # ip6.to_string
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
-    def self.parse_u128(u128, prefix=128)
-      str = IN6FORMAT % (0..7).map{|i| (u128>>(112-16*i))&0xffff}
-      self.new(str + "/#{prefix}")
+    def self.parse_u128(u128, prefix = 128)
+      str = IN6FORMAT % (0..7).map{ |i| (u128 >> (112 - 16 * i)) & 0xffff }
+      self.new("#{str}/#{prefix}")
     end
 
     # Creates a new IPv6 object from a number expressed in
@@ -662,8 +656,8 @@ module Subnet
     # ip6.to_string
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
-    def self.parse_hex(hex, prefix=128)
-      self.parse_u128(hex.hex, prefix)
+    def self.parse_hex(hexstring, prefix=128)
+      self.parse_u128(hexstring.to_big_i(16), prefix)
     end
 
     # Allocates a new ip from the current subnet. Optional skip parameter
@@ -689,10 +683,11 @@ module Subnet
     def allocate(skip=0)
       @allocator += 1 + skip
 
-      next_ip = network_u128+@allocator
+      next_ip = network_u128 + @allocator
       if next_ip > broadcast_u128
-          raise StopIteration
+        return nil
       end
+
       self.class.parse_u128(next_ip, @prefix)
     end
 

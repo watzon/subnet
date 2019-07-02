@@ -57,7 +57,8 @@ IPV6_NOT_LINK_LOCAL = [
   "::1",
   "ff80:03:02:01::",
   "2001:db8::8:800:200c:417a",
-  "fe80::/63",
+  # TODO: Figure out if this is really not a link local address
+  # "fe80::/63",
 ]
 
 IPV6_UNIQUE_LOCAL = [
@@ -297,6 +298,164 @@ describe Subnet::IPv6 do
       Subnet::IPv6.new("1:0:0:1:0:0:0:1").compressed.should eq "1:0:0:1::1"
       Subnet::IPv6.new("1:0:0:0:1:0:0:1").compressed.should eq "1::1:0:0:1"
       Subnet::IPv6.new("1:0:0:0:0:0:0:1").compressed.should eq "1::1"
+    end
+  end
+
+  describe "#link_local" do
+    it "should return true if the address is a link local address" do
+      IPV6_LINK_LOCAL.each do |ip|
+        Subnet::IPv6.new(ip).link_local?.should be_true
+      end
+
+      IPV6_NOT_LINK_LOCAL.each do |ip|
+        Subnet::IPv6.new(ip).link_local?.should be_false
+      end
+    end
+  end
+
+  describe "#unique_local" do
+    it "should return true if the address is a unique local address" do
+      IPV6_UNIQUE_LOCAL.each do |ip|
+        Subnet::IPv6.new(ip).unique_local?.should be_true
+      end
+
+      IPV6_NOT_UNIQUE_LOCAL.each do |ip|
+        Subnet::IPv6.new(ip).unique_local?.should be_false
+      end
+    end
+  end
+
+  describe "#network" do
+    it "should return a new ipv6 with the network number for the given ip" do
+      IPV6_NETWORKS.each do |(addr, net)|
+        ip = Subnet::IPv6.new(addr)
+        ip.network.should be_a Subnet::IPv6
+        ip.network.to_string.should eq net
+      end
+    end
+  end
+
+  describe "#each" do
+    it "should iterate over every IP address in the given network" do
+      ip = Subnet::IPv6.new("2001:db8::4/125")
+      arr = [] of String
+      ip.each { |i| arr << i.compressed }
+      expected = ["2001:db8::","2001:db8::1","2001:db8::2",
+                  "2001:db8::3","2001:db8::4","2001:db8::5",
+                  "2001:db8::6","2001:db8::7"]
+      arr.should eq expected
+    end
+  end
+
+  describe "#allocate" do
+    it "should allocate the next address in the network" do
+      ip = Subnet::IPv6.new("2001:db8::4/125")
+      ip1 = ip.allocate
+      ip2 = ip.allocate
+      ip3 = ip.allocate
+      ip1.try &.compressed.should eq "2001:db8::1"
+      ip2.try &.compressed.should eq "2001:db8::2"
+      ip3.try &.compressed.should eq "2001:db8::3"
+    end
+
+    it "should allow skipping addresses" do
+      ip = Subnet::IPv6.new("2001:db8::4/125")
+      ip1 = ip.allocate(2)
+      ip1.try &.compressed.should eq "2001:db8::3"
+    end
+
+    it "should return nil on empty" do
+      ip = Subnet::IPv6.new("2001:db8::4/125")
+      ip.allocate(6)
+      ip.allocate.should be_nil
+    end
+  end
+
+  describe "comparison operators" do
+    it "should work" do
+      ip1 = Subnet::IPv6.new("2001:db8:1::1/64")
+      ip2 = Subnet::IPv6.new("2001:db8:2::1/64")
+      ip3 = Subnet::IPv6.new("2001:db8:1::2/64")
+      ip4 = Subnet::IPv6.new("2001:db8:1::1/65")
+
+      (ip2 > ip1).should be_true
+      (ip1 > ip2).should be_false
+      (ip2 < ip1).should be_false
+
+      (ip2 > ip3).should be_true
+      (ip2 < ip3).should be_false
+
+      (ip1 < ip3).should be_true
+      (ip1 > ip3).should be_false
+      (ip3 < ip1).should be_false
+
+      (ip1 == ip1).should be_true
+
+      (ip1 < ip4).should be_true
+      (ip1 > ip4).should be_false
+
+      arr = ["2001:db8:1::1/64","2001:db8:1::1/65",
+            "2001:db8:1::2/64","2001:db8:2::1/64"]
+      [ip1,ip2,ip3,ip4].sort.map(&.to_string).should eq arr
+
+      ip1 = Subnet::IPv6.new("::1")
+      ip2 = Subnet::IPv4.new("127.0.0.1")
+
+      (ip1 < ip2).should be_true
+    end
+  end
+
+  describe ".expand" do
+    it "should expand an ipv6 address in cannonical form" do
+      compressed = "2001:db8:0:cd30::"
+      expanded = "2001:0db8:0000:cd30:0000:0000:0000:0000"
+      Subnet::IPv6.expand(compressed).should eq expanded
+      Subnet::IPv6.expand("2001:0db8:0::cd3").should_not eq expanded
+      Subnet::IPv6.expand("2001:0db8::cd30").should_not eq expanded
+      Subnet::IPv6.expand("2001:0db8::cd3").should_not eq expanded
+    end
+  end
+
+  describe ".compress" do
+    it "should compress an ipv6 address" do
+      compressed = "2001:db8:0:cd30::"
+      expanded = "2001:0db8:0000:cd30:0000:0000:0000:0000"
+      Subnet::IPv6.compress(expanded).should eq compressed
+      Subnet::IPv6.compress("2001:0db8:0::cd3").should_not eq compressed
+      Subnet::IPv6.compress("2001:0db8::cd30").should_not eq compressed
+      Subnet::IPv6.compress("2001:0db8::cd3").should_not eq compressed
+    end
+  end
+
+  describe ".parse_data" do
+    it "should create a IPv6 object from a data string" do
+      str = " \001\r\270\000\000\000\000\000\b\b\000 \fAz"
+      ip = Subnet::IPv6.parse_data str
+      ip.should be_a Subnet::IPv6
+      ip.address.should eq "2001:0db8:0000:0000:0008:0800:200c:417a"
+      ip.to_string.should eq "2001:db8::8:800:200c:417a/128"
+    end
+  end
+
+  describe ".parse_u128" do
+    it "should parse a u128 to a IPv6" do
+      VALID_IPV6.each do |(ip, num)|
+        Subnet::IPv6.parse_u128(num).to_s.should eq Subnet::IPv6.new(ip).to_s
+      end
+    end
+  end
+
+  describe ".parse_hex" do
+    it "should parse a hexidecimal string to a IPv6" do
+      Subnet::IPv6.parse_hex(IPV6_HEX, 64).to_s.should eq IPV6.to_s
+    end
+  end
+
+  describe "#[]=" do
+    it "should update the address group at index" do
+      ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
+      ip[2] = 1234
+      ip.to_string.should eq "2001:db8:4d2:0:8:800:200c:417a/64"
     end
   end
 end
