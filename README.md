@@ -31,6 +31,13 @@ This document provides a brief introduction to the library and examples of typic
       - [Network Mask](#Network-Mask)
     - [Using Subnet with IPv6 addresses](#Using-Subnet-with-IPv6-addresses)
     - [Handling IPv6 addresses](#Handling-IPv6-addresses)
+    - [Compressing and uncompressing](#Compressing-and-uncompressing)
+    - [Other formats](#Other-formats)
+    - [Special IPv6 addresses](#Special-IPv6-addresses)
+      - [Unspecified addresses](#Unspecified-addresses)
+      - [Loopback addresses](#Loopback-addresses)
+      - [Mapped addresses](#Mapped-addresses)
+  - [Development](#Development)
   - [Contributing](#Contributing)
   - [Contributors](#Contributors)
 
@@ -705,6 +712,216 @@ ip6.to_string
 ip6.to_string_uncompressed
 # => "2001:0db8:0000:0000:0008:0800:200c:417a/96"
 ```
+
+### Compressing and uncompressing
+
+If you have a string representing an IPv6 address, you can easily compress it and uncompress it using the two class methods `IPv6.expand` and `IPv6.compress`.
+
+For example, let's say you have the following uncompressed IPv6 address
+
+```crystal
+ip6str = "2001:0DB8:0000:CD30:0000:0000:0000:0000"
+```
+
+Here is the compressed version
+
+```crystal
+Subnet::IPv6.compress(ip6str)
+# => "2001:db8:0:cd30::"
+```
+
+The other way works as well
+
+```crystal
+ip6str = "2001:db8:0:cd30::"
+
+Subnet::IPv6.expand(ip6str)
+# => "2001:0DB8:0000:CD30:0000:0000:0000:0000"
+```
+
+These methods can be used when you don't want to create a new object just for expanding or compressing an address (although a new object is actually created internally).
+
+### Other formats
+
+You can create a new IPv6 address from different formats than just a string representing the colon-hex groups.
+
+For instance, if you have a data stream, you can use `IPv6::parse_data`, like in the following example
+
+```crystal
+data = " \001\r\270\000\000\000\000\000\b\b\000 \fAz"
+
+ip6 = Subnet::IPv6::parse_data(data)
+ip6.prefix = 64
+
+ip6.to_string
+# => "2001:db8::8:800:200c:417a/64"
+```
+
+A new IPv6 address can also be created from an unsigned 128 bit (BigInt) integer. Once again, BigInt is being used until `UInt128` is supported by the Crystal compiler.
+
+```crystal
+u128 = BigInt.new("42540766411282592856906245548098208122")
+
+ip6 = Subnet::IPv6::parse_u128(u128)
+ip6.prefix = 64
+
+ip6.to_string
+# =>"2001:db8::8:800:200c:417a/64"
+```
+
+Finally, a new IPv6 address can be created from an hex string:
+
+```crystal
+hex = "20010db80000000000080800200c417a"   
+
+ip6 = Subnet::IPv6::parse_hex(hex)
+ip6.prefix = 64
+
+ip6.to_string
+# => "2001:db8::8:800:200c:417a/64"
+```
+
+### Special IPv6 addresses
+
+Some IPv6 have a special meaning and are expressed in a special form, quite different than an usual IPv6 address. IPAddress has built-in support for unspecified, loopback and mapped IPv6 addresses
+
+#### Unspecified addresses
+
+The address with all zero bits is called the `unspecified address` (corresponding to `0.0.0.0` in IPv4). It should be something like this
+
+```
+0000:0000:0000:0000:0000:0000:0000:0000
+```
+
+but, with the use of compression, it is usually written as just two colons
+
+```
+::
+```
+
+or, specifying the netmask
+
+```
+::/128
+```
+
+With Subnet, create a new unspecified IPv6 address using the `Unspecified` subclass
+
+```crystal
+ip = Subnet::IPv6::Unspecified.new
+
+ip.to_string
+# => "::/128"
+```
+
+You can easily check if an IPv6 object is an unspecified address by using the `IPv6#unspecified?` method
+
+```crystal
+ip.unspecified?
+# => true
+```
+
+This address must never be assigned to an interface and is to be used only in software before the application has learned its host's source address appropriate for a pending connection. Routers must not forward packets with the unspecified address.
+
+#### Loopback addresses
+
+The loopback address is a unicast localhost address. If an application in a host sends packets to this address, the IPv6 stack will loop these packets back on the same virtual interface.
+
+Loopback addresses are expressed in the following form
+
+```
+::1
+```
+
+or with its appropriate prefix
+
+```
+::1/128
+```
+
+As for the unspecified addresses, IPv6 loopbacks can be created with Subnet calling its own class
+
+```
+ip = Subnet::IPv6::Loopback.new
+
+ip.to_string
+# => "::1/128"
+```
+
+Checking if an address is loopback is easy with the `IPv6#loopback?` method
+
+```crystal
+ip.loopback?
+# => true
+```
+
+The IPv6 loopback address corresponds to `127.0.0.1` in IPv4.
+
+#### Mapped addresses
+
+It is usually identified as a IPv4 mapped IPv6 address, a particular IPv6 address which aids the transition from IPv4 to IPv6. The structure of the address is
+
+```
+::ffff:w.y.x.z
+```
+
+where `w.x.y.z` is a normal IPv4 address. For example, the following is a mapped IPv6 address
+
+```
+::ffff:192.168.100.1
+```
+
+Subnet is very powerful at handling mapped IPv6 addresses, as the IPv4 portion is stored internally as a normal IPv4 object. Let's have a look at some examples. To create a new mapped address, just use the class builder itself
+
+```crystal
+ip6 = Subnet::IPv6::Mapped.new("::ffff:172.16.10.1/128")
+```
+
+Let's check it's really a mapped address:
+
+```
+ip6.mapped?
+# => true
+
+ip6.to_string
+# => "::ffff:172.16.10.1/128"
+```
+
+Now with the `#ipv4` attribute, we can easily access the IPv4 portion of the mapped IPv6 address
+
+```crystal
+ip6.ipv4.address
+# => "172.16.10.1"
+```
+
+Internally, the IPv4 address is stored as two 16 bits groups. Therefore all the usual methods for an IPv6 address are working perfectly fine
+
+```crystal
+ip6.to_hex
+# => "00000000000000000000ffffac100a01"
+
+ip6.address
+# => "0000:0000:0000:0000:0000:ffff:ac10:0a01"
+```
+
+A mapped IPv6 can also be created just by specify the address in the following format
+
+```crystal
+ip6 = Subnet.parse("::172.16.10.1")
+```
+
+That is, two colons and the IPv4 address. However, as by RFC, the `ffff` group will be automatically added at the beginning
+
+```crystal
+ip6.to_string
+# => "::ffff:172.16.10.1/128"
+```
+
+making it a mapped IPv6 compatible address.
+
+## Development
+
+Subnet should be feature complete at the moment, but if there is anything missing feel free to create an issue and open a PR. The API may change as it is currently heavily based on the Ruby implementation, so please bear with me.
 
 ## Contributing
 
