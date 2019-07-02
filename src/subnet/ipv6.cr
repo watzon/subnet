@@ -645,7 +645,7 @@ module Subnet
     # ip6.prefix = 64
     #
     # ip6.to_s
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_data(data)
       self.parse_hex(data.to_slice.hexstring)
@@ -659,7 +659,7 @@ module Subnet
     # ip6.prefix = 64
     #
     # ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     #
     # The +prefix+ parameter is optional:
@@ -668,7 +668,7 @@ module Subnet
     # ip6 = Subnet::IPv6::parse_u128(42540766411282592856906245548098208122, 64)
     #
     # ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_u128(u128, prefix = 128)
       str = IN6FORMAT % (0..7).map { |i| (u128 >> (112 - 16 * i)) & 0xffff }
@@ -683,7 +683,7 @@ module Subnet
     # ip6.prefix = 64
     #
     # ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     #
     # The +prefix+ parameter is optional:
@@ -692,7 +692,7 @@ module Subnet
     # ip6 = Subnet::IPv6::parse_hex("20010db80000000000080800200c417a", 64)
     #
     # ip6.to_string
-    #   #=> "2001:db8::8:800:200c:417a/64"
+    # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_hex(hexstring, prefix = 128)
       self.parse_u128(hexstring.to_big_i(16), prefix)
