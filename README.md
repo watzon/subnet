@@ -25,6 +25,12 @@ This document provides a brief introduction to the library and examples of typic
       - [Subnetting](#Subnetting)
       - [Summarization](#Summarization)
       - [Supernetting](#Supernetting)
+  - [IPv6](#IPv6)
+    - [IPv6 addresses](#IPv6-addresses)
+      - [Compression](#Compression)
+      - [Network Mask](#Network-Mask)
+    - [Using Subnet with IPv6 addresses](#Using-Subnet-with-IPv6-addresses)
+    - [Handling IPv6 addresses](#Handling-IPv6-addresses)
   - [Contributing](#Contributing)
   - [Contributors](#Contributors)
 
@@ -556,6 +562,149 @@ ip.supernet(22).to_string
 ```
 
 This is because `172.16.10.0/22` is not a network anymore, but a host address.
+
+## IPv6
+
+IPv6 support in Subnet is still being tested and won't be super efficient until Crystal fully supports `UInt128`. The current implementation uses `BigInt` to handle math operations which may not be very efficient, but is necessary.
+
+That being said, Subnet fully supports IPv6 and allows you to perform an array of complex operations with IPv6 addresses.
+
+### IPv6 addresses
+
+IPv6 addresses are 128 bits long (hence the need for `UInt128`), in contrast with IPv4 addresses which are only 32 bits long. An IPv6 address is generally written as eight groups of four hexadecimal digits, each group representing 16 bits or two octet. For example, the following is a valid IPv6 address
+
+```
+2001:0db8:0000:0000:0008:0800:200c:417a
+```
+
+Letters in an IPv6 address are usually written lowercase, as per the RFC. You can create a new IPv6 object using uppercase letters, but they will be converted
+
+#### Compression
+
+Since IPv6 addresses are long (32 characters, not including colons), there are compression standards you can use to shorten the addresses:
+
+- Leading zeroes: all the leading zeroes within a group can be omitted: “0008” would become “8”.
+- A string of consecutive zeroes can be replaced by the string “::”. This can be only applied once.
+
+Using compression, the IPv6 address written above can be shorten into the following, equivalent, address
+
+```
+2001:db8::8:800:200c:417a
+```
+
+This shorter version is often used and is perfectly valid.
+
+#### Network Mask
+
+As we used to do with IPv4 addresses, an IPv6 address can be written using the prefix notation to specify the subnet mask
+
+```
+2001:db8::8:800:200c:417a/64
+```
+
+The `/64` part means that the first 64 bits of the address are representing the network portion, and the last 64 bits are the host portion.
+
+### Using Subnet with IPv6 addresses
+
+All the IPv6 representations we've just seen are perfectly fine when you want to create a new IPv6 address
+
+```crystal
+ip6 = Subnet::IPv6.new("2001:0db8:0000:0000:0008:0800:200C:417A")
+
+ip6 = Subnet::IPv6.new("2001:db8:0:0:8:800:200C:417A")
+
+ip6 = Subnet::IPv6.new("2001:db8:8:800:200C:417A")
+```
+
+All three return the same IPv6 object. The default subnet mask for an IPv6 is 128, as IPv6 addresses don't have classes like IPv4 addresses. If you want a different mask, you can go ahead and include it explicitly
+
+```crystal
+ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
+```
+
+Access the address portion and the prefix by using their respective methods
+
+```crystal
+ip6 = Subnet::IPv6.parse("2001:db8::8:800:200c:417a/64")
+
+ip6.address
+# => "2001:0db8:0000:0000:0008:0800:200c:417a"
+
+ip6.prefix
+# => 64
+```
+
+A compressed version of the IPv6 address can be obtained with the `IPv6#compressed` method
+
+```crystal
+ip6 = Subnet::IPv6.new("2001:0db8:0000:0000:0008:200c:417a:00ab/64")
+
+ip6.compressed
+# => "2001:db8::8:800:200c:417a"
+```
+
+### Handling IPv6 addresses
+
+Accessing the groups that form an IPv6 address is very easy with the `IPv6#groups` method
+
+```crystal
+ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
+
+ip6.groups
+# => [8193, 3512, 0, 0, 8, 2048, 8204, 16762]
+```
+
+As with IPv4 addresses, each individual group can be accessed using the `IPv6#[]` shortcut method
+
+```crystal
+ip6[0]
+# => 8193
+
+ip6[1]
+# => 3512
+
+ip6[2]
+# => 0
+
+ip6[3]
+# => 0
+```
+
+Note that each 16 bits group is expressed in its decimal form. You can also obtain the groups into hexadecimal format using the `IPv6#hex_groups` method
+
+```crystal
+ip6.hex_groups
+# => ["2001", "0db8", "0000", "0000", "0008", "0800", "200c", "417a"]
+```
+
+You can transform the address into it's decimal representation with `IPv6#to_i`. For now this returns a `BigInt`, but a `UInt128` will be returned in the future.
+
+```crystal
+ip6.to_i
+# => 42540766411282592856906245548098208122
+```
+
+You can also get the full hexidecimal representation of the address.
+
+```crystal
+ip6.hexstring
+# => "20010db80000000000080800200c417a"
+```
+
+Like IPv4, IPv6 includes both the `#to_s` and `#to_string` methods with the former returning the address without the netmask, and the latter containing the netmask. IPv6 also includes a `#to_string_uncompressed` to return the full, uncompressed address
+
+```crystal
+ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
+
+ip6.to_s
+# => "2001:db8::8:800:200c:417a"
+
+ip6.to_string
+# => "2001:db8::8:800:200c:417a/96"
+
+ip6.to_string_uncompressed
+# => "2001:0db8:0000:0000:0008:0800:200c:417a/96"
+```
 
 ## Contributing
 
