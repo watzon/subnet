@@ -1,6 +1,6 @@
 # Subnet
 
-![Travis (.org)](https://img.shields.io/travis/watzon/subnet.svg?style=for-the-badge) <a href="https://patreon.com/watzon">![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2Fwatzon%2Fpledgesssss&style=for-the-badge)</a>
+<a href="https://travis-ci.org/watzon/subnet">![Travis](https://img.shields.io/travis/watzon/subnet.svg?style=for-the-badge)</a> <a href="https://patreon.com/watzon">![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2Fwatzon%2Fpledgesssss&style=for-the-badge)</a>
 
 
 Subnet is a Crystal library designed to make the use of IPv4 and IPv6 addresses simple, powerful and enjoyable. It provides a complete set of methods to handle IP addresses for any need, from simple scripting to full network design.
