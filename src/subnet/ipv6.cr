@@ -652,7 +652,7 @@ module Subnet
     # # => "2001:db8::8:800:200c:417a/64"
     # ```
     #
-    # The +prefix+ parameter is optional:
+    # The `prefix` parameter is optional:
     #
     # ```
     # ip6 = Subnet::IPv6::parse_u128(42540766411282592856906245548098208122, 64)
@@ -676,7 +676,7 @@ module Subnet
     # # => "2001:db8::8:800:200c:417a/64"
     # ```
     #
-    # The +prefix+ parameter is optional:
+    # The `prefix` parameter is optional:
     #
     # ```
     # ip6 = Subnet::IPv6::parse_hex("20010db80000000000080800200c417a", 64)
@@ -749,7 +749,7 @@ module Subnet
       str.sub(/:{3,}/, "::")
     end
 
-    # The address with all zero bits is called the +unspecified+ address
+    # The address with all zero bits is called the `unspecified` address
     # (corresponding to 0.0.0.0 in IPv4). It should be something like this:
     #
     # ```
@@ -914,7 +914,7 @@ module Subnet
     # # => "::FFFF:172.16.10.1/128"
     # ```
     #
-    # Now with the +ipv4+ attribute, we can easily access the IPv4 portion
+    # Now with the `ipv4` attribute, we can easily access the IPv4 portion
     # of the mapped IPv6 address:
     #
     # ```
