@@ -170,7 +170,7 @@ This is very important because, for instance, IP `172.16.10.1/16` is very differ
 With Subnet it's very easy to calculate the network for an IP address
 
 ```crystal
-ip = Subnet.pars  "172.16.10.1/24"
+ip = Subnet::IPv4.new("172.16.10.1/24")
 
 net = ip.network
 # => #<Subnet::IPv4:0xb7a5ab24 @octets=[172, 16, 10, 0], 
@@ -184,8 +184,8 @@ The method `IPv4#network` creates a new IPv4 object from the network number, cal
 You can use method `IPv4#network?` to check whether an IP address is a network or not
 
 ```crystal
-ip1 = Subnet::IPv4.new "172.16.10.1/24"
-ip2 = Subnet::IPv4.new "172.16.10.4/30"
+ip1 = Subnet::IPv4.new("172.16.10.1/24")
+ip2 = Subnet::IPv4.new("172.16.10.4/30")
 
 ip1.network?
 # => false
@@ -251,7 +251,7 @@ ip.last.to_string
 Checking if an address is loopback is easy with the `IPv4#loopback?` method
 
 ```crystal
-ip = IPAddress "127.0.0.1"
+ip = Subnet::IPv4.new("127.0.0.1")
 
 ip.loopback?
 # => true
@@ -260,7 +260,7 @@ ip.loopback?
 Checking if an address is in the multicast range can be done using the `IPv4#multicast?` method
 
 ```crystal
-ip = IPAddress "224.0.0.1/32"
+ip = Subnet::IPv4.new("224.0.0.1/32")
 
 ip.multicast?
 # => true
@@ -269,7 +269,7 @@ ip.multicast?
 The ability to generate a range also exists by using the `IPv4#to()` method. This allows you to create a subnet agnostic range based off a fixed amount.
 
 ```crystal
-ip = IPAddress "172.16.10.100/24"
+ip = Subnet::IPv4.new("172.16.10.100/24")
 ip.to("172.16.10.110")
 # => ["172.16.10.100", ..., "172.16.10.110"]
 ```
