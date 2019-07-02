@@ -121,7 +121,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L50" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L50" target="_blank">
         subnet/prefix.cr
       </a>
     
@@ -343,12 +343,12 @@
         <div class="doc"><p>Creates a new prefix object for 32 bits IPv4 addresses</p>
 
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
-  <span class="c">#=&gt; 24</span></code></pre></div>
+<span class="c"># =&gt; 24</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -375,7 +375,7 @@ dotted decimal form</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -399,12 +399,12 @@ representation</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix[<span class="n">2</span>]
-  <span class="c">#=&gt; 255</span></code></pre></div>
+<span class="c"># =&gt; 255</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L138" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -423,12 +423,12 @@ representing the netmask</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.bits
-  <span class="c">#=&gt; &quot;11111111111111111111111100000000&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;11111111111111111111111100000000&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -447,12 +447,12 @@ of a netmask.</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.host_prefix
-  <span class="c">#=&gt; 8</span></code></pre></div>
+<span class="c"># =&gt; 8</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -472,12 +472,12 @@ hosts</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.hostmask
-  <span class="c">#=&gt; &quot;0.0.0.255&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;0.0.0.255&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L153" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -495,12 +495,12 @@ prefix.hostmask
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.hostmask_octets
-  <span class="c"># =&gt; StaticArray[&quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;255&quot;]</span></code></pre></div>
+<span class="c"># =&gt; StaticArray[&quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;255&quot;]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L165" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -519,12 +519,12 @@ format</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.octets
-  <span class="c">#=&gt; [255, 255, 255, 0]</span></code></pre></div>
+<span class="c"># =&gt; [255, 255, 255, 0]</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L116" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -543,12 +543,12 @@ i.e. the canonical netmask we're all used to</p>
 <pre><code>prefix <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">Prefix32</span>.<span class="k">new</span> <span class="n">24</span>
 
 prefix.to_ip
-  <span class="c">#=&gt; &quot;255.255.255.0&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;255.255.255.0&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L103" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -572,7 +572,7 @@ prefix.to_ip
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/prefix.cr#L126" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/prefix.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>

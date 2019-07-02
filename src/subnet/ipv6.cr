@@ -521,7 +521,7 @@ module Subnet
     # ip = Subnet.parse("192.168.45.23/16")
     #
     # ip.succ.to_string
-    #   => "192.168.45.24/16"
+    # => "192.168.45.24/16"
     # ```
     def succ
       self.class.parse_u128(to_i.succ, prefix)
@@ -544,7 +544,7 @@ module Subnet
     # ip = Subnet.parse("192.168.45.23/16")
     #
     # ip.pred.to_string
-    #   => "192.168.45.22/16"
+    # => "192.168.45.22/16"
     # ```
     def pred
       self.class.parse_u128(to_i.pred, prefix)

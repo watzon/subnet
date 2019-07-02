@@ -127,13 +127,13 @@ subclass:</p>
 <pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Unspecified</span>.<span class="k">new</span>
 
 ip.to_s
-  <span class="c">#=&gt; =&gt; &quot;::/128&quot;</span></code></pre>
+<span class="c"># =&gt; =&gt; &quot;::/128&quot;</span></code></pre>
 
 <p>You can easily check if an IPv6 object is an unspecified address by
 using the IPv6#unspecified? method</p>
 
 <pre><code>ip.unspecified?
-  <span class="c">#=&gt; true</span></code></pre>
+<span class="c"># =&gt; true</span></code></pre>
 
 <p>An unspecified IPv6 address can also be created with the wrapper
 method, like we've seen before</p>
@@ -141,7 +141,7 @@ method, like we've seen before</p>
 <pre><code>ip <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::&quot;</span>
 
 ip.unspecified?
-  <span class="c">#=&gt; true</span></code></pre>
+<span class="c"># =&gt; true</span></code></pre>
 
 <p>This address must never be assigned to an interface and is to be used
 only in software before the application has learned its host's source
@@ -164,7 +164,7 @@ packets with the unspecified address.</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L768" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L814" target="_blank">
         subnet/ipv6.cr
       </a>
     
@@ -317,6 +317,16 @@ packets with the unspecified address.</p>
     network_u128</a>, 
     
   
+    <a href="../../Subnet/IPv6.html#next-instance-method" class="tooltip">
+      <span>next</span>
+    next</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#pred-instance-method" class="tooltip">
+      <span>pred</span>
+    pred</a>, 
+    
+  
     <a href="../../Subnet/IPv6.html#prefix%3APrefix128-instance-method" class="tooltip">
       <span>prefix : Prefix128</span>
     prefix</a>, 
@@ -337,6 +347,11 @@ packets with the unspecified address.</p>
     size</a>, 
     
   
+    <a href="../../Subnet/IPv6.html#succ-instance-method" class="tooltip">
+      <span>succ</span>
+    succ</a>, 
+    
+  
     <a href="../../Subnet/IPv6.html#to_big_i-instance-method" class="tooltip">
       <span>to_big_i</span>
     to_big_i</a>, 
@@ -345,6 +360,11 @@ packets with the unspecified address.</p>
     <a href="../../Subnet/IPv6.html#to_i-instance-method" class="tooltip">
       <span>to_i</span>
     to_i</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_json%28json%3AJSON%3A%3ABuilder%29-instance-method" class="tooltip">
+      <span>to_json(json : JSON::Builder)</span>
+    to_json</a>, 
     
   
     <a href="../../Subnet/IPv6.html#to_s%3AString-instance-method" class="tooltip">
@@ -385,7 +405,7 @@ packets with the unspecified address.</p>
   
   
     <a href="../../Subnet/IPv6.html#new%28str%3AString%29-class-method" class="tooltip">
-      <span>new(str : String)</span>
+      <span>new(str : String)<br/>new(value : JSON::PullParser) : Subnet::IPv6</span>
     new</a>
     
   
@@ -451,6 +471,26 @@ packets with the unspecified address.</p>
   
     
 
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
   <h3>Instance methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
   
   
@@ -461,7 +501,12 @@ packets with the unspecified address.</p>
   
     <a href="../../Subnet.html#ipv6%3F-instance-method" class="tooltip">
       <span>ipv6?</span>
-    ipv6?</a>
+    ipv6?</a>, 
+    
+  
+    <a href="../../Subnet.html#to_json%28json%3AJSON%3A%3ABuilder%29-instance-method" class="tooltip">
+      <span>to_json(json : JSON::Builder)</span>
+    to_json</a>
     
   
 
@@ -470,6 +515,11 @@ packets with the unspecified address.</p>
 
   <h3>Constructor methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
   
+  
+    <a href="../../Subnet.html#new%28value%3AJSON%3A%3APullParser%29%3ASubnet-class-method" class="tooltip">
+      <span>new(value : JSON::PullParser) : Subnet</span>
+    new</a>, 
+    
   
     <a href="../../Subnet.html#parse%28str%29%3ASubnet-class-method" class="tooltip">
       <span>parse(str) : Subnet</span>
@@ -569,12 +619,12 @@ packets with the unspecified address.</p>
 <pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Loopback</span>.<span class="k">new</span>
 
 ip.to_string
-  <span class="c">#=&gt; &quot;::1/128&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;::1/128&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L777" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L823" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -95,11 +95,15 @@
 <div class="main-content">
 <h1>Subnet</h1>
 
-<p>Subnet is a Crystal library designed to make the use of IPv4 and IPv6 (soon) addresses simple, powerful and enjoyable. It provides a complete set of methods to handle IP addresses for any need, from simple scripting to full network design.</p>
+<p>Subnet is a Crystal library designed to make the use of IPv4 and IPv6 addresses simple, powerful and enjoyable. It provides a complete set of methods to handle IP addresses for any need, from simple scripting to full network design.</p>
 
 <p>Subnet is written with a full OO interface, and its code is easy to read, maintain and extend. The documentation is full of examples, to let you start being productive immediately.</p>
 
 <p>This document provides a brief introduction to the library and examples of typical usage. You can check out the full documentation <a href="https://watzon.github.io/subnet/" target="_blank">here</a>.</p>
+
+<h1>Table of Contents</h1>
+
+<ul><li><a href="#Subnet" target="_blank">Subnet</a></li><li><a href="#Table-of-Contents" target="_blank">Table of Contents</a></li><ul><li><a href="#Installation" target="_blank">Installation</a></li><li><a href="#IPv4" target="_blank">IPv4</a></li><li><a href="#Create-a-new-IPv4-address" target="_blank">Create a new IPv4 address</a></li><li><a href="#Handling-IPv4-addresses" target="_blank">Handling IPv4 addresses</a></li><li><a href="#Changing-netmask" target="_blank">Changing netmask</a></li><li><a href="#Working-with-networks-broadcasts-and-addresses" target="_blank">Working with networks, broadcasts, and addresses</a></li><li><a href="#Networks" target="_blank">Networks</a></li><li><a href="#Broadcast" target="_blank">Broadcast</a></li><li><a href="#Addresses-ranges-and-iterators" target="_blank">Addresses, ranges, and iterators</a></li><li><a href="#Special-formats" target="_blank">Special formats</a></li><li><a href="#Classful-networks" target="_blank">Classful networks</a></li><li><a href="#Network-design-with-Subnet" target="_blank">Network design with Subnet</a></li><li><a href="#Subnetting" target="_blank">Subnetting</a></li><li><a href="#Summarization" target="_blank">Summarization</a></li><li><a href="#Supernetting" target="_blank">Supernetting</a></li><li><a href="#IPv6" target="_blank">IPv6</a></li><li><a href="#IPv6-addresses" target="_blank">IPv6 addresses</a></li><li><a href="#Compression" target="_blank">Compression</a></li><li><a href="#Network-Mask" target="_blank">Network Mask</a></li><li><a href="#Using-Subnet-with-IPv6-addresses" target="_blank">Using Subnet with IPv6 addresses</a></li><li><a href="#Handling-IPv6-addresses" target="_blank">Handling IPv6 addresses</a></li><li><a href="#Compressing-and-uncompressing" target="_blank">Compressing and uncompressing</a></li><li><a href="#Other-formats" target="_blank">Other formats</a></li><li><a href="#Special-IPv6-addresses" target="_blank">Special IPv6 addresses</a></li><li><a href="#Unspecified-addresses" target="_blank">Unspecified addresses</a></li><li><a href="#Loopback-addresses" target="_blank">Loopback addresses</a></li><li><a href="#Mapped-addresses" target="_blank">Mapped addresses</a></li><li><a href="#Development" target="_blank">Development</a></li><li><a href="#Contributing" target="_blank">Contributing</a></li><li><a href="#Contributors" target="_blank">Contributors</a></li></ul></ul>
 
 <h2>Installation</h2>
 
@@ -115,15 +119,708 @@
 
 <ol><li>Run <code>shards install</code></li></ol>
 
-<h2>Usage</h2>
+<ol><li>Require it in your project</li></ol>
 
-<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;subnet&quot;</span></code></pre>
+<p><code></code>`crystal
+   require "subnet"
+   <code></code>`</p>
 
-<p><span class="flag orange">TODO</span>  Write usage instructions here</p>
+<h2>IPv4</h2>
+
+<p>The class <code><a href="Subnet/IPv4.html">Subnet::IPv4</a></code> is used to handle IPv4 type addresses. This, and other classes, are almost 1/1 the same as the <a href="https://github.com/ipaddress-gem/ipaddress" target="_blank">IPAddress</a> ruby gem which this was based off of.</p>
+
+<h3>Create a new IPv4 address</h3>
+
+<p>Creating a IPv4 address is simple</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1&quot;</span>)</code></pre>
+
+<p>and supports prefixes.</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)</code></pre>
+
+<p>You can also use the somewhat easier</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;172.16.10.1/24&quot;</span>)</code></pre>
+
+<p>which parses both IPv4 and IPv6 addresses. The result from this will be of type <code><a href="Subnet.html">Subnet</a></code> though and will only freely have the methods that both <code><a href="Subnet/IPv4.html">Subnet::IPv4</a></code> and <code><a href="Subnet/IPv6.html">Subnet::IPv6</a></code> share in common. For now to circumvent this you can do <code>.as(Subnet::IPv4)</code> or just use <code>IPv4.new</code>.</p>
+
+<p>If you don't explicitly specify the prefix (or the subnet mask), Subnet will think you're dealing with host addresses and not with networks. Therefore, the default prefix will be <code>/32</code>, or <code>255.255.255.255</code>. For example:</p>
+
+<pre><code class="language-crystal"><span class="c"># let&#39;s declare an host address</span>
+host <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.1.1.1&quot;</span>)
+
+puts host.to_string
+<span class="c"># =&gt; &quot;10.1.1.1/32&quot;</span></code></pre>
+
+<p>You can also parse a <code>UInt32</code> to create a new IPv4 object</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">IPv4</span>.parse_u32(<span class="n">167837953</span>)
+puts ip.to_string
+<span class="c"># =&gt; &quot;10.1.1.1/32&quot;</span></code></pre>
+
+<h3>Handling IPv4 addresses</h3>
+
+<p>Once created, you can obtain the attributes for an IPv4 object</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+ip.address
+<span class="c"># =&gt; &quot;172.16.10.1&quot;</span>
+ip.prefix
+<span class="c"># =&gt; 24</span></code></pre>
+
+<p>If you need to retrieve the netmask in IPv4 format, you can use the <code>IPv4#netmask</code> method:</p>
+
+<pre><code class="language-crystal">ip.netmask
+<span class="c"># =&gt; &quot;255.255.255.0&quot;</span></code></pre>
+
+<p>A special attribute, <code>IPv4#octets</code>, is available to get the four decimal octets from the IP address:</p>
+
+<pre><code class="language-crystal">ip.octets
+<span class="c"># =&gt; [172, 16, 10, 1]</span></code></pre>
+
+<p>The shortcut method <code>IPv4#[]</code>, provides access to a given octet at the specified index:</p>
+
+<pre><code>ip[<span class="n">1</span>]
+<span class="c"># =&gt; 16</span></code></pre>
+
+<p>If you need to print out the IPv4 address in a canonical form, you can use <code>IPv4#to_string</code>:</p>
+
+<pre><code class="language-crystal">ip.to_string
+<span class="c"># =&gt; &quot;172.16.10.1/24&quot;</span></code></pre>
+
+<p><code>IPv4#to_s</code> is also available and prints the address without the prefix</p>
+
+<pre><code class="language-crystal">ip.to_s
+<span class="c"># =&gt; &quot;172.16.10.1&quot;</span></code></pre>
+
+<h3>Changing netmask</h3>
+
+<p>You can set a new prefix (netmask) after creating an IPv4 object. For example</p>
+
+<pre><code>ip.prefix <span class="o">=</span> <span class="n">25</span>
+
+ip.to_string
+<span class="c"># =&gt; &quot;172.16.10.1/25&quot;</span></code></pre>
+
+<p>If you need to use a netmask in IPv4 format, you can do so by using the <code>IPv4#netmask=</code> method</p>
+
+<pre><code class="language-crystal">ip.netmask <span class="o">=</span> <span class="s">&quot;255.255.255.252&quot;</span>
+
+ip.to_string
+<span class="c"># =&gt; &quot;172.16.10.1/30&quot;</span></code></pre>
+
+<h3>Working with networks, broadcasts, and addresses</h3>
+
+<p>Some very important topics in dealing with IP addresses are the concepts of <code>network</code> and <code>broadcast</code>, as well as the addresses included in a range.</p>
+
+<p>When you specify an IPv4 address such as <code>172.16.10.1/24</code>, you are actually handling two different types of information:</p>
+
+<ul><li>The IP address itself, <code>172.16.10.1</code></li><li>The subnet mask which indicates the network</li></ul>
+
+<p>The network number is the IP which has all zeroes in the host portion. In our example, because the prefix is 24, we identify our network number to have the last 8 (32-24) bits all zeroes. Thus, IP address <code>172.16.10.1/24</code> belongs to network <code>172.16.10.0/24</code>.</p>
+
+<p>This is very important because, for instance, IP <code>172.16.10.1/16</code> is very different to the previous one, belonging to the very different network <code>172.16.0.0/16</code>.</p>
+
+<h4>Networks</h4>
+
+<p>With Subnet it's very easy to calculate the network for an IP address</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+net <span class="o">=</span> ip.network
+<span class="c"># =&gt; #&lt;Subnet::IPv4:0xb7a5ab24 @octets=[172, 16, 10, 0], </span>
+                               @prefix<span class="o">=</span><span class="n">24</span>,
+                               @address<span class="o">=</span><span class="s">&quot;172.16.10.0&quot;</span><span class="o">&gt;</span>
+net.to_string
+<span class="c"># =&gt; &quot;172.16.10.0/24&quot;</span></code></pre>
+
+<p>The method <code>IPv4#network</code> creates a new IPv4 object from the network number, calculated after the original object. I want to outline here that the network address is a perfectly legitimate IPv4 address, which just happen to have all zeroes in the host portion.</p>
+
+<p>You can use method <code>IPv4#network?</code> to check whether an IP address is a network or not</p>
+
+<pre><code class="language-crystal">ip1 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.4/30&quot;</span>)
+
+ip1.network?
+<span class="c"># =&gt; false</span>
+ip2.network?
+<span class="c"># =&gt; true</span></code></pre>
+
+<h4>Broadcast</h4>
+
+<p>The broadcast address is the oposite of the network number: where the network number has all zeroes in the host portion, the broadcast address has all one's. For example, the ip <code>172.16.10.1/24</code> has the broadcast <code>172.16.10.255/24</code>, where the ip <code>172.16.10.1/16</code> has the broadcast <code>172.16.255.255/16</code>.</p>
+
+<p>The method <code>IPv4#broadcast</code> has the same behavior as its <code>#network</code> counterpart: it creates a new IPv4 object to handle the broadcast address</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+bcast <span class="o">=</span> ip.broadcast
+<span class="c"># =&gt; #&lt;Subnet::IPv4:0xb7a406fc @octets=[172, 16, 10, 255],</span>
+                               @prefix<span class="o">=</span><span class="n">24</span>, 
+                               @address<span class="o">=</span><span class="s">&quot;172.16.10.255&quot;</span><span class="o">&gt;</span>
+bcast.to_string
+<span class="c"># =&gt; &quot;172.16.10.255/24&quot;</span></code></pre>
+
+<h3>Addresses, ranges, and iterators</h3>
+
+<p>Class <code>IPv4</code> includes the <code>Iterator</code> and <code>Enumberable</code> modules, as well as having the methods <code>succ</code> and <code>pred</code> which allow it to be used with <code>Range</code>. This makes creating sets of addresses very easy, and very powerful.</p>
+
+<p>Let's start with <code>IPv4#each</code>, which iterates over all addresses in a range</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+ip.each <span class="k">do</span> <span class="o">|</span>addr<span class="o">|</span>
+  puts addr
+<span class="k">end</span></code></pre>
+
+<p>It is important to note that it doesn't matter if the original IP is a host IP or a network number (or a broadcast address): the <code>#each</code> method only considers the range that the original IP specifies.</p>
+
+<p>If you only want to iterate over hosts IP, use the <code>IPv4#each_host</code> method</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+ip.each_host <span class="k">do</span> <span class="o">|</span>host<span class="o">|</span>
+  puts host
+<span class="k">end</span></code></pre>
+
+<p>Methods <code>IPv4#first</code> and <code>IPv4#last</code> return a new object containing respectively the first and the last host address in the range</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="n">:IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.100/24&quot;</span>)
+
+ip.first.to_string
+<span class="c"># =&gt; &quot;172.16.10.1/24&quot;</span>
+
+ip.last.to_string
+<span class="c"># =&gt; &quot;172.16.10.254/24&quot;</span></code></pre>
+
+<p>Checking if an address is loopback is easy with the <code>IPv4#loopback?</code> method</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;127.0.0.1&quot;</span>)
+
+ip.loopback?
+<span class="c"># =&gt; true</span></code></pre>
+
+<p>Checking if an address is in the multicast range can be done using the <code>IPv4#multicast?</code> method</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;224.0.0.1/32&quot;</span>)
+
+ip.multicast?
+<span class="c"># =&gt; true</span></code></pre>
+
+<p>The ability to generate a range also exists by using the <code>IPv4#to()</code> method. This allows you to create a subnet agnostic range based off a fixed amount.</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.100/24&quot;</span>)
+ip.to(<span class="s">&quot;172.16.10.110&quot;</span>)
+<span class="c"># =&gt; [&quot;172.16.10.100&quot;, ..., &quot;172.16.10.110&quot;]</span></code></pre>
+
+<p>As mentioned previously, you can also create Crystal Ranges using the Range literal</p>
+
+<pre><code class="language-crystal">range <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.0.1&quot;</span>)..<span class="t">Subnet</span>.parse(<span class="s">&quot;192.168.0.255&quot;</span>)
+puts range.size
+<span class="c"># =&gt; 255</span></code></pre>
+
+<h3>Special formats</h3>
+
+<p>The Subnet library provides a complete set of methods to access an IPv4 object in special formats such as binary, hexidecimal, 32 bit unsigned int, and a raw data string.</p>
+
+<p>Let's check out the following IPv4 for example</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+
+ip.address
+<span class="c"># =&gt; &quot;172.16.10.1&quot;</span></code></pre>
+
+<p>The first thing to highlight here is that all these conversion methods only take into consideration the address portion of an IPv4 object and not the prefix (netmask).</p>
+
+<p>So, to express the address in binary format, use the <code>IPv4#bits</code> method</p>
+
+<pre><code class="language-crystal">ip.bits
+<span class="c"># =&gt; &quot;10101100000100000000101000000001&quot;</span></code></pre>
+
+<p>To calculate the 32 bits unsigned int format of the ip address, use the <code>IPv4#to_u32</code> method</p>
+
+<pre><code class="language-crystal">ip.to_u32
+<span class="c"># =&gt; 2886732289</span></code></pre>
+
+<p>This method is the equivalent of the Unix call <code>pton()</code>, expressing an IP address in the so called <em>network byte order</em> notation.</p>
+
+<p>To maintain compatibility with the Ruby library the <code>IPv4#data</code> was included. Apparently it's useful for transmitting data over a network socket</p>
+
+<pre><code class="language-crystal">ip.data
+<span class="c"># =&gt; &quot;\254\020\n\001</span></code></pre>
+
+<p>You can also transform IPv4 addresses into a format which is suitable to use in IPv4-IPv6 mapped addresses</p>
+
+<pre><code class="language-crystal">ip.to_ipv6
+<span class="c"># =&gt; &quot;ac10:0a01&quot;</span></code></pre>
+
+<p>Finally, much like <code>IPv4#to_ipv6</code> you can use the <code>IPv4#hexstring</code> method to return a non-semicolon delineated string (useful with pcap/byte level usage)</p>
+
+<pre><code class="language-crystal">ip.hexstring
+<span class="c"># =&gt; &quot;ac100a01&quot;</span></code></pre>
+
+<h3>Classful networks</h3>
+
+<p>Subnet allows you to create and manipulate objects using the old and deprecated (but apparently still popular) classful networks concept.</p>
+
+<p>Classful networks and addresses don't have a prefix: their subnet mask is univocally identified by their address, and therefore divided in classes. As per RFC 791, these classes are:</p>
+
+<ul><li>Class A, from 0.0.0.0 to 127.255.255.255</li><li>Class B, from 128.0.0.0 to 191.255.255.255</li><li>Class C, from 192.0.0.0 to 255.255.255.255</li></ul>
+
+<p>Since classful networks here are only considered to calculate the default prefix number, classes D and E are not considered.</p>
+
+<p>To create a classful IP and prefix from an IP address, use the <code>IPv4::parse_classful</code> method</p>
+
+<pre><code class="language-crystal"><span class="c"># classful ip </span>
+ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span><span class="t">::</span>parse_classful(<span class="s">&quot;10.1.1.1&quot;</span>)
+
+ip.prefix
+<span class="c"># =&gt; 8</span></code></pre>
+
+<p>The method automatically creates a new IPv4 object and assigned it the correct prefix.</p>
+
+<p>You can easily check which CLASSFUL network an IPv4 object belongs to</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip.a?
+<span class="c"># =&gt; true</span>
+
+ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.1/24&quot;</span>)
+ip.b?
+<span class="c"># =&gt; true</span>
+
+ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;192.168.1.1/30&quot;</span>)
+ip.c?
+<span class="c"># =&gt; true</span></code></pre>
+
+<p>Remember that these methods are only checking the address portion of an IP, and are independent from its prefix, as classful networks have no concept of prefix.</p>
+
+<p>For more information on CLASSFUL networks visit the <a href="http://en.wikipedia.org/wiki/Classful_network" target="_blank">Wikipedia page</a>.</p>
+
+<h3>Network design with Subnet</h3>
+
+<p>Subnet includes several useful methods to manipulate IPv4 and IPv6 networks and do some basic network design.</p>
+
+<h4>Subnetting</h4>
+
+<p>The process of subnetting is the division of a network into smaller (in terms of hosts capacity) networks, called subnets, so that they all share a common root, which is the starting network.</p>
+
+<p>For example, if you have network <code>172.16.10.0/24</code>, we can subnet it into 4 smaller subnets. The new prefix will be /26, because 4 is 2^2 and therefore we add 2 bits to the network prefix (24+2=26).</p>
+
+<p>Subnetting is easy with Subnet. You actually have two options:</p>
+
+<ul><li><code>IPv4#subnet</code>: specify a new prefix</li><li><code>IPv4#split</code>: tell Subnet how many subnets you want to create</li></ul>
+
+<p>Let's examine <code>IPv4#subnet</code> first. Say you have network <code>172.16.10.0/24</code> and you want to subnet it into /26 networks. With Subnet it's extremely simple</p>
+
+<pre><code class="language-crystal">network <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+
+subnets <span class="o">=</span> network.subnet(<span class="n">26</span>)
+
+subnets.map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;172.16.10.0/26&quot;, </span>
+      <span class="s">&quot;172.16.10.64/26&quot;</span>, 
+      <span class="s">&quot;172.16.10.128/26&quot;</span>, 
+      <span class="s">&quot;172.16.10.192/26&quot;</span>]</code></pre>
+
+<p>As you can see, an Array has been created, containing 4 new IPv4 objects representing the new subnets.</p>
+
+<p>Another way to create subnets is to tell Subnet how many subnets you'd like to have, and letting the library calculate the new prefix for you.</p>
+
+<p>Let's see how it works, using <code>IPv4#split</code> method. Say you want 4 new subnets</p>
+
+<pre><code class="language-crystal">network <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+
+subnets <span class="o">=</span> network.split(<span class="n">4</span>)
+
+subnets.map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;172.16.10.0/26&quot;, </span>
+      <span class="s">&quot;172.16.10.64/26&quot;</span>, 
+      <span class="s">&quot;172.16.10.128/26&quot;</span>, 
+      <span class="s">&quot;172.16.10.192/26&quot;</span>]</code></pre>
+
+<p>Hey, that's the same result as before! This actually makes sense, as the two operations are complementary. When you use <code>IPv4#subnet</code> with the new prefix, Subnet will always create a number of subnets that is a power of two. This is equivalent to use <code>IPv4#split</code> with a power of 2.</p>
+
+<p>Where <code>IPv4#split</code> really shines is with the so called <em>uneven subnetting</em>. You are not limited to splitting a network into a power-of-two number of subnets: Subnet lets you create any number of subnets, and it will try to organize the new created network in the best possible way, making an efficient allocation of the space.</p>
+
+<p>An example here is worth a thousand words. Let's use the same network as the previous examples</p>
+
+<pre><code class="language-crystal">network <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.parse(<span class="s">&quot;172.16.10.0/24&quot;</span>)</code></pre>
+
+<p>How do we split this network into 3 subnets? Very easy</p>
+
+<pre><code class="language-crystal">subnets <span class="o">=</span> network.split(<span class="n">3</span>)
+
+subnets.map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;172.16.10.0/26&quot;,</span>
+      <span class="s">&quot;172.16.10.64/26&quot;</span>,
+      <span class="s">&quot;172.16.10.128/25&quot;</span>]</code></pre>
+
+<p>As you can see, Subnet tried to perform an efficient allocation by filling up all the address space from the original network. There is no point in splitting a network into 3 subnets like <code>172.16.10.0/26</code>, <code>172.16.10.64/26</code> and <code>172.16.10.128/26</code>, as you would end up having <code>172.16.10.192/26</code> wasted.</p>
+
+<p>We can go even further and split into 11 subnets</p>
+
+<pre><code class="language-crystal">subnets <span class="o">=</span> network.split(<span class="n">11</span>)
+
+subnets.map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;172.16.10.0/28&quot;, &quot;172.16.10.16/28&quot;, &quot;172.16.10.32/28&quot;,</span>
+      <span class="s">&quot;172.16.10.48/28&quot;</span>, <span class="s">&quot;172.16.10.64/28&quot;</span>, <span class="s">&quot;172.16.10.80/28&quot;</span>,
+      <span class="s">&quot;172.16.10.96/28&quot;</span>, <span class="s">&quot;172.16.10.112/28&quot;</span>, <span class="s">&quot;172.16.10.128/27&quot;</span>,
+      <span class="s">&quot;172.16.10.160/27&quot;</span>, <span class="s">&quot;172.16.10.192/26&quot;</span>]</code></pre>
+
+<p>As you can see, most of the networks are <code>/28</code>, with a few <code>/27</code> and one <code>/26</code> to fill up the remaining space.</p>
+
+<h4>Summarization</h4>
+
+<p>Summarization (or aggregation) is the process when two or more networks are taken together to check if a supernet, including all and only these networks, exists. If it exists then this supernet is called the summarized (or aggregated) network. It is very important to understand that summarization can only occur if there are no holes in the aggregated network, or, in other words, if the given networks fills completely the address space of the supernet. So the two rules are</p>
+
+<ol><li>The aggregate network must contain all the IP addresses of the original networks</li><li>The aggregate network must contain only the IP addresses of the original networks</li></ol>
+
+<p>A few examples will help clarify the above. Let's consider for instance the following two networks</p>
+
+<pre><code class="language-crystal">ip1 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.0/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.11.0/24&quot;</span>)</code></pre>
+
+<p>These two networks can be expressed using only one IP address network if we change the prefix. Let Crystal do the work</p>
+
+<pre><code class="language-crystal"><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span><span class="t">::</span>summarize(ip1, ip2).map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
+
+<p>We note how the network <code>172.16.10.0/23</code> includes all the addresses specified in the above networks, and (more importantly) includes ONLY those addresses.</p>
+
+<p>If we summarized <code>ip1</code> and <code>ip2</code> with the following network</p>
+
+<pre><code class="language-crystal"><span class="s">&quot;172.16.0.0/16&quot;</span></code></pre>
+
+<p>we would have satisfied rule #1 above, but not rule #2. So</p>
+
+<pre><code class="language-crystal"><span class="s">&quot;172.16.0.0/16&quot;</span></code></pre>
+
+<p>is not an aggregate network for ip1 and ip2.</p>
+
+<p>If it's not possible to compute a single aggregated network for all the original networks, the method returns an array with all the aggregate networks found. For example, the following four networks can be aggregated in a single <code>/22</code></p>
+
+<pre><code class="language-crystal">ip1 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.0.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.3.1/24&quot;</span>)
+
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span><span class="t">::</span>summarize(ip1, ip2, ip3, ip4).map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;10.0.0.0/22&quot;]</span></code></pre>
+
+<p>But the following networks can't be summarized in a single network:</p>
+
+<pre><code class="language-crystal">ip1 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.1.1/24&quot;</span>)
+ip2 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.2.1/24&quot;</span>)
+ip3 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.3.1/24&quot;</span>)
+ip4 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;10.0.4.1/24&quot;</span>)
+
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span><span class="t">::</span>summarize(ip1, ip2, ip3, ip4).map(<span class="o">&amp;</span>.to_string)
+<span class="c"># =&gt; [&quot;10.0.1.0/24&quot;, &quot;10.0.2.0/23&quot;, &quot;10.0.4.0/24&quot;]</span></code></pre>
+
+<p>In this case, the two summarizables networks have been aggregated into a single <code>/23</code>, while the other two networks have been left untouched.</p>
+
+<h4>Supernetting</h4>
+
+<p>Supernetting is a different operation than aggregation, as it only works on a single network and returns a new single IPv4 object, representing the supernet.</p>
+
+<p>Supernetting is similar to subnetting, except that you getting as a result a network with a smaller prefix (bigger host space). For example, given the network</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv4</span>.<span class="k">new</span>(<span class="s">&quot;172.16.10.0/24&quot;</span>)</code></pre>
+
+<p>you can supernet it with a new <code>/23</code> prefix</p>
+
+<pre><code class="language-crystal">ip.supernet(<span class="n">23</span>).to_string
+<span class="c"># =&gt; &quot;172.16.10.0/23&quot;</span></code></pre>
+
+<p>However if you supernet it with a <code>/22</code> prefix, the network address will change</p>
+
+<pre><code class="language-crystal">ip.supernet(<span class="n">22</span>).to_string
+<span class="c"># =&gt; &quot;172.16.8.0/22&quot;</span></code></pre>
+
+<p>This is because <code>172.16.10.0/22</code> is not a network anymore, but a host address.</p>
+
+<h2>IPv6</h2>
+
+<p>IPv6 support in Subnet is still being tested and won't be super efficient until Crystal fully supports <code>UInt128</code>. The current implementation uses <code>BigInt</code> to handle math operations which may not be very efficient, but is necessary.</p>
+
+<p>That being said, Subnet fully supports IPv6 and allows you to perform an array of complex operations with IPv6 addresses.</p>
+
+<h3>IPv6 addresses</h3>
+
+<p>IPv6 addresses are 128 bits long (hence the need for <code>UInt128</code>), in contrast with IPv4 addresses which are only 32 bits long. An IPv6 address is generally written as eight groups of four hexadecimal digits, each group representing 16 bits or two octet. For example, the following is a valid IPv6 address</p>
+
+<pre><code><span class="n">2001</span>:<span class="n">0</span>db8:</code></pre>
+
+<p>Letters in an IPv6 address are usually written lowercase, as per the RFC. You can create a new IPv6 object using uppercase letters, but they will be converted</p>
+
+<h4>Compression</h4>
+
+<p>Since IPv6 addresses are long (32 characters, not including colons), there are compression standards you can use to shorten the addresses:</p>
+
+<ul><li>Leading zeroes: all the leading zeroes within a group can be omitted: “0008” would become “8”.</li><li>A string of consecutive zeroes can be replaced by the string “::”. This can be only applied once.</li></ul>
+
+<p>Using compression, the IPv6 address written above can be shorten into the following, equivalent, address</p>
+
+<pre><code><span class="n">2001</span><span class="n">:db8</span><span class="t">::</span><span class="n">8</span>:<span class="n">800</span>:<span class="n">200</span>c:<span class="n">417</span>a</code></pre>
+
+<p>This shorter version is often used and is perfectly valid.</p>
+
+<h4>Network Mask</h4>
+
+<p>As we used to do with IPv4 addresses, an IPv6 address can be written using the prefix notation to specify the subnet mask</p>
+
+<pre><code><span class="n">2001</span><span class="n">:db8</span><span class="t">::</span><span class="n">8</span>:<span class="n">800</span>:<span class="n">200</span>c:<span class="n">417</span>a<span class="s">/64</code></pre>
+
+<p>The <code>/64</code> part means that the first 64 bits of the address are representing the network portion, and the last 64 bits are the host portion.</p>
+
+<h3>Using Subnet with IPv6 addresses</h3>
+
+<p>All the IPv6 representations we've just seen are perfectly fine when you want to create a new IPv6 address</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:0db8:0000:0000:0008:0800:200C:417A&quot;</span>)
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8:0:0:8:800:200C:417A&quot;</span>)
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8:8:800:200C:417A&quot;</span>)</code></pre>
+
+<p>All three return the same IPv6 object. The default subnet mask for an IPv6 is 128, as IPv6 addresses don't have classes like IPv4 addresses. If you want a different mask, you can go ahead and include it explicitly</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)</code></pre>
+
+<p>Access the address portion and the prefix by using their respective methods</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.parse(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip6.address
+<span class="c"># =&gt; &quot;2001:0db8:0000:0000:0008:0800:200c:417a&quot;</span>
+
+ip6.prefix
+<span class="c"># =&gt; 64</span></code></pre>
+
+<p>A compressed version of the IPv6 address can be obtained with the <code>IPv6#compressed</code> method</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:0db8:0000:0000:0008:200c:417a:00ab/64&quot;</span>)
+
+ip6.compressed
+<span class="c"># =&gt; &quot;2001:db8::8:800:200c:417a&quot;</span></code></pre>
+
+<h3>Handling IPv6 addresses</h3>
+
+<p>Accessing the groups that form an IPv6 address is very easy with the <code>IPv6#groups</code> method</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip6.groups
+<span class="c"># =&gt; [8193, 3512, 0, 0, 8, 2048, 8204, 16762]</span></code></pre>
+
+<p>As with IPv4 addresses, each individual group can be accessed using the <code>IPv6#[]</code> shortcut method</p>
+
+<pre><code class="language-crystal">ip6[<span class="n">0</span>]
+<span class="c"># =&gt; 8193</span>
+
+ip6[<span class="n">1</span>]
+<span class="c"># =&gt; 3512</span>
+
+ip6[<span class="n">2</span>]
+<span class="c"># =&gt; 0</span>
+
+ip6[<span class="n">3</span>]
+<span class="c"># =&gt; 0</span></code></pre>
+
+<p>Note that each 16 bits group is expressed in its decimal form. You can also obtain the groups into hexadecimal format using the <code>IPv6#hex_groups</code> method</p>
+
+<pre><code class="language-crystal">ip6.hex_groups
+<span class="c"># =&gt; [&quot;2001&quot;, &quot;0db8&quot;, &quot;0000&quot;, &quot;0000&quot;, &quot;0008&quot;, &quot;0800&quot;, &quot;200c&quot;, &quot;417a&quot;]</span></code></pre>
+
+<p>You can transform the address into it's decimal representation with <code>IPv6#to_i</code>. For now this returns a <code>BigInt</code>, but a <code>UInt128</code> will be returned in the future.</p>
+
+<pre><code class="language-crystal">ip6.to_i
+<span class="c"># =&gt; 42540766411282592856906245548098208122</span></code></pre>
+
+<p>You can also get the full hexidecimal representation of the address.</p>
+
+<pre><code class="language-crystal">ip6.hexstring
+<span class="c"># =&gt; &quot;20010db80000000000080800200c417a&quot;</span></code></pre>
+
+<p>Like IPv4, IPv6 includes both the <code>#to_s</code> and <code>#to_string</code> methods with the former returning the address without the netmask, and the latter containing the netmask. IPv6 also includes a <code>#to_string_uncompressed</code> to return the full, uncompressed address</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.<span class="k">new</span>(<span class="s">&quot;2001:db8::8:800:200c:417a/64&quot;</span>)
+
+ip6.to_s
+<span class="c"># =&gt; &quot;2001:db8::8:800:200c:417a&quot;</span>
+
+ip6.to_string
+<span class="c"># =&gt; &quot;2001:db8::8:800:200c:417a/96&quot;</span>
+
+ip6.to_string_uncompressed
+<span class="c"># =&gt; &quot;2001:0db8:0000:0000:0008:0800:200c:417a/96&quot;</span></code></pre>
+
+<h3>Compressing and uncompressing</h3>
+
+<p>If you have a string representing an IPv6 address, you can easily compress it and uncompress it using the two class methods <code>IPv6.expand</code> and <code>IPv6.compress</code>.</p>
+
+<p>For example, let's say you have the following uncompressed IPv6 address</p>
+
+<pre><code class="language-crystal">ip6str <span class="o">=</span> <span class="s">&quot;2001:0DB8:0000:CD30:0000:0000:0000:0000&quot;</span></code></pre>
+
+<p>Here is the compressed version</p>
+
+<pre><code class="language-crystal"><span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.compress(ip6str)
+<span class="c"># =&gt; &quot;2001:db8:0:cd30::&quot;</span></code></pre>
+
+<p>The other way works as well</p>
+
+<pre><code class="language-crystal">ip6str <span class="o">=</span> <span class="s">&quot;2001:db8:0:cd30::&quot;</span>
+
+<span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span>.expand(ip6str)
+<span class="c"># =&gt; &quot;2001:0DB8:0000:CD30:0000:0000:0000:0000&quot;</span></code></pre>
+
+<p>These methods can be used when you don't want to create a new object just for expanding or compressing an address (although a new object is actually created internally).</p>
+
+<h3>Other formats</h3>
+
+<p>You can create a new IPv6 address from different formats than just a string representing the colon-hex groups.</p>
+
+<p>For instance, if you have a data stream, you can use <code>IPv6::parse_data</code>, like in the following example</p>
+
+<pre><code class="language-crystal">data <span class="o">=</span> <span class="s">&quot; \001\r\270\000\000\000\000\000\b\b\000 \fAz&quot;</span>
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_data(data)
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+
+ip6.to_string
+<span class="c"># =&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre>
+
+<p>A new IPv6 address can also be created from an unsigned 128 bit (BigInt) integer. Once again, BigInt is being used until <code>UInt128</code> is supported by the Crystal compiler.</p>
+
+<pre><code class="language-crystal">u128 <span class="o">=</span> <span class="t">BigInt</span>.<span class="k">new</span>(<span class="s">&quot;42540766411282592856906245548098208122&quot;</span>)
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_u128(u128)
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+
+ip6.to_string
+<span class="c"># =&gt;&quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre>
+
+<p>Finally, a new IPv6 address can be created from an hex string:</p>
+
+<pre><code class="language-crystal">hex <span class="o">=</span> <span class="s">&quot;20010db80000000000080800200c417a&quot;</span>   
+
+ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span>parse_hex(hex)
+ip6.prefix <span class="o">=</span> <span class="n">64</span>
+
+ip6.to_string
+<span class="c"># =&gt; &quot;2001:db8::8:800:200c:417a/64&quot;</span></code></pre>
+
+<h3>Special IPv6 addresses</h3>
+
+<p>Some IPv6 have a special meaning and are expressed in a special form, quite different than an usual IPv6 address. IPAddress has built-in support for unspecified, loopback and mapped IPv6 addresses</p>
+
+<h4>Unspecified addresses</h4>
+
+<p>The address with all zero bits is called the <code>unspecified address</code> (corresponding to <code>0.0.0.0</code> in IPv4). It should be something like this</p>
+
+<pre><code></code></pre>
+
+<p>but, with the use of compression, it is usually written as just two colons</p>
+
+<pre><code><span class="t">::</span></code></pre>
+
+<p>or, specifying the netmask</p>
+
+<pre><code><span class="t">::</span><span class="s">/128</code></pre>
+
+<p>With Subnet, create a new unspecified IPv6 address using the <code>Unspecified</code> subclass</p>
+
+<pre><code class="language-crystal">ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Unspecified</span>.<span class="k">new</span>
+
+ip.to_string
+<span class="c"># =&gt; &quot;::/128&quot;</span></code></pre>
+
+<p>You can easily check if an IPv6 object is an unspecified address by using the <code>IPv6#unspecified?</code> method</p>
+
+<pre><code class="language-crystal">ip.unspecified?
+<span class="c"># =&gt; true</span></code></pre>
+
+<p>This address must never be assigned to an interface and is to be used only in software before the application has learned its host's source address appropriate for a pending connection. Routers must not forward packets with the unspecified address.</p>
+
+<h4>Loopback addresses</h4>
+
+<p>The loopback address is a unicast localhost address. If an application in a host sends packets to this address, the IPv6 stack will loop these packets back on the same virtual interface.</p>
+
+<p>Loopback addresses are expressed in the following form</p>
+
+<pre><code><span class="t">::</span><span class="n">1</span></code></pre>
+
+<p>or with its appropriate prefix</p>
+
+<pre><code><span class="t">::</span><span class="n">1</span><span class="s">/128</code></pre>
+
+<p>As for the unspecified addresses, IPv6 loopbacks can be created with Subnet calling its own class</p>
+
+<pre><code>ip <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Loopback</span>.<span class="k">new</span>
+
+ip.to_string
+<span class="c"># =&gt; &quot;::1/128&quot;</span></code></pre>
+
+<p>Checking if an address is loopback is easy with the <code>IPv6#loopback?</code> method</p>
+
+<pre><code class="language-crystal">ip.loopback?
+<span class="c"># =&gt; true</span></code></pre>
+
+<p>The IPv6 loopback address corresponds to <code>127.0.0.1</code> in IPv4.</p>
+
+<h4>Mapped addresses</h4>
+
+<p>It is usually identified as a IPv4 mapped IPv6 address, a particular IPv6 address which aids the transition from IPv4 to IPv6. The structure of the address is</p>
+
+<pre><code><span class="t">::</span>ffff<span class="n">:w</span>.y.x.z</code></pre>
+
+<p>where <code>w.x.y.z</code> is a normal IPv4 address. For example, the following is a mapped IPv6 address</p>
+
+<pre><code><span class="t">::</span>ffff:<span class="n">192.168</span>.<span class="n">100.1</span></code></pre>
+
+<p>Subnet is very powerful at handling mapped IPv6 addresses, as the IPv4 portion is stored internally as a normal IPv4 object. Let's have a look at some examples. To create a new mapped address, just use the class builder itself</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span>(<span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>)</code></pre>
+
+<p>Let's check it's really a mapped address:</p>
+
+<pre><code>ip6.mapped?
+<span class="c"># =&gt; true</span>
+
+ip6.to_string
+<span class="c"># =&gt; &quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+
+<p>Now with the <code>#ipv4</code> attribute, we can easily access the IPv4 portion of the mapped IPv6 address</p>
+
+<pre><code class="language-crystal">ip6.ipv4.address
+<span class="c"># =&gt; &quot;172.16.10.1&quot;</span></code></pre>
+
+<p>Internally, the IPv4 address is stored as two 16 bits groups. Therefore all the usual methods for an IPv6 address are working perfectly fine</p>
+
+<pre><code class="language-crystal">ip6.to_hex
+<span class="c"># =&gt; &quot;00000000000000000000ffffac100a01&quot;</span>
+
+ip6.address
+<span class="c"># =&gt; &quot;0000:0000:0000:0000:0000:ffff:ac10:0a01&quot;</span></code></pre>
+
+<p>A mapped IPv6 can also be created just by specify the address in the following format</p>
+
+<pre><code class="language-crystal">ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse(<span class="s">&quot;::172.16.10.1&quot;</span>)</code></pre>
+
+<p>That is, two colons and the IPv4 address. However, as by RFC, the <code>ffff</code> group will be automatically added at the beginning</p>
+
+<pre><code class="language-crystal">ip6.to_string
+<span class="c"># =&gt; &quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+
+<p>making it a mapped IPv6 compatible address.</p>
 
 <h2>Development</h2>
 
-<p><span class="flag orange">TODO</span>  Write development instructions here</p>
+<p>Subnet should be feature complete at the moment, but if there is anything missing feel free to create an issue and open a PR. The API may change as it is currently heavily based on the Ruby implementation, so please bear with me.</p>
 
 <h2>Contributing</h2>
 

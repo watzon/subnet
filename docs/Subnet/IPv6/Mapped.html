@@ -132,26 +132,26 @@ class builder itself</p>
 <p>Let's check it's really a mapped address:</p>
 
 <pre><code>ip6.mapped?
-  <span class="c">#=&gt; true</span>
+<span class="c"># =&gt; true</span>
 
 ip6.to_string
-  <span class="c">#=&gt; &quot;::FFFF:172.16.10.1/128&quot;</span></code></pre>
+<span class="c"># =&gt; &quot;::FFFF:172.16.10.1/128&quot;</span></code></pre>
 
 <p>Now with the +ipv4+ attribute, we can easily access the IPv4 portion
 of the mapped IPv6 address:</p>
 
 <pre><code>ip6.ipv4.address
-  <span class="c">#=&gt; &quot;172.16.10.1&quot;</span></code></pre>
+<span class="c"># =&gt; &quot;172.16.10.1&quot;</span></code></pre>
 
 <p>Internally, the IPv4 address is stored as two 16 bits
 groups. Therefore all the usual methods for an IPv6 address are
 working perfectly fine:</p>
 
 <pre><code>ip6.hexstring
-  <span class="c">#=&gt; &quot;00000000000000000000ffffac100a01&quot;</span>
+<span class="c"># =&gt; &quot;00000000000000000000ffffac100a01&quot;</span>
 
 ip6.address
-  <span class="c">#=&gt; &quot;0000:0000:0000:0000:0000:ffff:ac10:0a01&quot;</span></code></pre>
+<span class="c"># =&gt; &quot;0000:0000:0000:0000:0000:ffff:ac10:0a01&quot;</span></code></pre>
 
 <p>A mapped IPv6 can also be created just by specify the address in the
 following format:</p>
@@ -162,7 +162,7 @@ following format:</p>
 group will be automatically added at the beginning</p>
 
 <pre><code>ip6.to_string
-  => <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
+=> <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span></code></pre>
 
 <p>making it a mapped IPv6 compatible address.</p>
 
@@ -182,7 +182,7 @@ group will be automatically added at the beginning</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L862" target="_blank">
+      <a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L908" target="_blank">
         subnet/ipv6.cr
       </a>
     
@@ -368,6 +368,16 @@ group will be automatically added at the beginning</p>
     network_u128</a>, 
     
   
+    <a href="../../Subnet/IPv6.html#next-instance-method" class="tooltip">
+      <span>next</span>
+    next</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#pred-instance-method" class="tooltip">
+      <span>pred</span>
+    pred</a>, 
+    
+  
     <a href="../../Subnet/IPv6.html#prefix%3APrefix128-instance-method" class="tooltip">
       <span>prefix : Prefix128</span>
     prefix</a>, 
@@ -388,6 +398,11 @@ group will be automatically added at the beginning</p>
     size</a>, 
     
   
+    <a href="../../Subnet/IPv6.html#succ-instance-method" class="tooltip">
+      <span>succ</span>
+    succ</a>, 
+    
+  
     <a href="../../Subnet/IPv6.html#to_big_i-instance-method" class="tooltip">
       <span>to_big_i</span>
     to_big_i</a>, 
@@ -396,6 +411,11 @@ group will be automatically added at the beginning</p>
     <a href="../../Subnet/IPv6.html#to_i-instance-method" class="tooltip">
       <span>to_i</span>
     to_i</a>, 
+    
+  
+    <a href="../../Subnet/IPv6.html#to_json%28json%3AJSON%3A%3ABuilder%29-instance-method" class="tooltip">
+      <span>to_json(json : JSON::Builder)</span>
+    to_json</a>, 
     
   
     <a href="../../Subnet/IPv6.html#to_s%3AString-instance-method" class="tooltip">
@@ -436,7 +456,7 @@ group will be automatically added at the beginning</p>
   
   
     <a href="../../Subnet/IPv6.html#new%28str%3AString%29-class-method" class="tooltip">
-      <span>new(str : String)</span>
+      <span>new(str : String)<br/>new(value : JSON::PullParser) : Subnet::IPv6</span>
     new</a>
     
   
@@ -502,6 +522,26 @@ group will be automatically added at the beginning</p>
   
     
 
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
   <h3>Instance methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
   
   
@@ -512,7 +552,12 @@ group will be automatically added at the beginning</p>
   
     <a href="../../Subnet.html#ipv6%3F-instance-method" class="tooltip">
       <span>ipv6?</span>
-    ipv6?</a>
+    ipv6?</a>, 
+    
+  
+    <a href="../../Subnet.html#to_json%28json%3AJSON%3A%3ABuilder%29-instance-method" class="tooltip">
+      <span>to_json(json : JSON::Builder)</span>
+    to_json</a>
     
   
 
@@ -521,6 +566,11 @@ group will be automatically added at the beginning</p>
 
   <h3>Constructor methods inherited from module <code><a href="../../Subnet.html">Subnet</a></code></h3>
   
+  
+    <a href="../../Subnet.html#new%28value%3AJSON%3A%3APullParser%29%3ASubnet-class-method" class="tooltip">
+      <span>new(value : JSON::PullParser) : Subnet</span>
+    new</a>, 
+    
   
     <a href="../../Subnet.html#parse%28str%29%3ASubnet-class-method" class="tooltip">
       <span>parse(str) : Subnet</span>
@@ -620,7 +670,7 @@ group will be automatically added at the beginning</p>
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span> <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
 
 ipv6.ipv4.<span class="k">class</span>
-  <span class="c">#=&gt; Subnet::IPv4</span></code></pre>
+<span class="c"># =&gt; Subnet::IPv4</span></code></pre>
 
 <p>An IPv6 IPv4-mapped address can also be created using the
 IPv6 only format of the address:</p>
@@ -628,12 +678,12 @@ IPv6 only format of the address:</p>
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span><span class="t">::</span><span class="t">IPv6</span><span class="t">::</span><span class="t">Mapped</span>.<span class="k">new</span> <span class="s">&quot;::0d01:4403&quot;</span>
 
 ip6.to_string
-  <span class="c">#=&gt; &quot;::ffff:13.1.68.3&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;::ffff:13.1.68.3&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L885" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L930" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -658,7 +708,7 @@ ip6.to_string
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L867" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L912" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -676,12 +726,12 @@ ip6.to_string
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
 
 ip6.mapped?
-  <span class="c">#=&gt; true</span></code></pre></div>
+<span class="c"># =&gt; true</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L930" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L975" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -700,12 +750,12 @@ in dotted decimal format</p>
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
 
 ip6.to_s
-  <span class="c">#=&gt; &quot;::ffff:172.16.10.1&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;::ffff:172.16.10.1&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L905" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L950" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -724,12 +774,12 @@ in dotted decimal format</p>
 <pre><code>ip6 <span class="o">=</span> <span class="t">Subnet</span>.parse <span class="s">&quot;::ffff:172.16.10.1/128&quot;</span>
 
 ip6.to_string
-  <span class="c">#=&gt; &quot;::ffff:172.16.10.1/128&quot;</span></code></pre></div>
+<span class="c"># =&gt; &quot;::ffff:172.16.10.1/128&quot;</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/watzon/subnet/blob/615465ab49f296eebf14b24655abaf4dee4fc52c/src/subnet/ipv6.cr#L918" target="_blank">View source</a>]
+          [<a href="https://github.com/watzon/subnet/blob/0f3563ccc9127ae32d02b95be5186818d51e3a18/src/subnet/ipv6.cr#L963" target="_blank">View source</a>]
         
       </div>
     </div>
