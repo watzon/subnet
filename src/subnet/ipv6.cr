@@ -54,7 +54,6 @@ module Subnet
   # portion.
   class IPv6
     include Subnet
-    include Iterator(IPv6)
     include Enumerable(IPv6)
     include Comparable(Subnet)
 
@@ -527,15 +526,6 @@ module Subnet
       self.class.parse_u128(to_i.succ, prefix)
     end
 
-    # Returns the next IP address in the network, or
-    # `Iterator::Stop::INSTANCE` when out of
-    # addresses.
-    def next
-      next_i = to_i.succ
-      return Iterator::Stop::INSTANCE if next_i >= 2.to_big_i ** 64.to_big_i
-      self.class.parse_u128(next_i, prefix)
-    end
-
     # Returns the predecessor to the IP address
     #
     # Example:
@@ -647,8 +637,8 @@ module Subnet
     # ip6.to_s
     # # => "2001:db8::8:800:200c:417a/64"
     # ```
-    def self.parse_data(data)
-      self.parse_hex(data.to_slice.hexstring)
+    def self.parse_data(data, prefix=128)
+      self.parse_hex(data.to_slice.hexstring, prefix)
     end
 
     # Creates a new IPv6 object from an

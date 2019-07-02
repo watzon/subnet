@@ -231,7 +231,7 @@ bcast.to_string
 
 ### Addresses, ranges, and iterators
 
-Class `IPv4` includes the `Iterator` and `Enumberable` modules, as well as having the methods `succ` and `pred` which allow it to be used with `Range`. This makes creating sets of addresses very easy, and very powerful.
+Class `IPv4` includes the `Enumberable` module, as well as having the methods `succ` and `pred` which allow it to be used with `Range`. This makes creating sets of addresses very easy, and very powerful.
 
 Let's start with `IPv4#each`, which iterates over all addresses in a range
 

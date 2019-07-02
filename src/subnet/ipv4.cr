@@ -4,7 +4,6 @@ module Subnet
   # Class `Subnet::IPv4` is used to handle IPv4 type addresses.
   class IPv4
     include Subnet
-    include Iterator(IPv4)
     include Enumerable(IPv4)
     include Comparable(Subnet)
 
@@ -449,15 +448,6 @@ module Subnet
     # ```
     def succ
       self.class.parse_u32(to_i.succ, prefix)
-    end
-
-    # Returns the next IP address in the network, or
-    # `Iterator::Stop::INSTANCE` when out of
-    # addresses.
-    def next
-      next_i = to_i.succ
-      return Iterator::Stop::INSTANCE if next_i >= 4294967295
-      self.class.parse_u32(next_i, prefix)
     end
 
     # Returns the predecessor to the IP address
@@ -1070,7 +1060,7 @@ module Subnet
 
       i = 0
       args = args.to_a
-      result = args.dup.sort.map { |ip| ip.network }
+      result = args.dup.sort.map(&.network)
       while i < result.size - 1
         sum = result[i] + result[i + 1]
         result[i..i + 1] = sum.first if sum.size == 1
