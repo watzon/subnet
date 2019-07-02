@@ -1180,6 +1180,14 @@ module Subnet
       "#{@address}/#{@prefix}"
     end
 
+    def self.new(value : JSON::PullParser) : Subnet::IPv4
+      Subnet.parse(value.read_string)
+    end
+
+    def to_json(json : JSON::Builder)
+      json.string(to_string)
+    end
+
     # Tweaked to remove the `#upto(32)`
     private def newprefix(num)
       @prefix + (Math.log2(num).ceil)

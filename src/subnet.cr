@@ -226,4 +226,12 @@ module Subnet
     message ||= "You are using deprecated behavior which will be removed from the next major or minor release."
     warn("DEPRECATION WARNING: #{message}")
   end
+
+  def self.new(value : JSON::PullParser) : Subnet
+    Subnet.parse(value.read_string)
+  end
+
+  def to_json(json : JSON::Builder)
+    json.string(to_string)
+  end
 end

@@ -729,6 +729,14 @@ module Subnet
       self.class.parse_u128(next_ip, @prefix)
     end
 
+    def self.new(value : JSON::PullParser) : Subnet::IPv6
+      Subnet.parse(value.read_string)
+    end
+
+    def to_json(json : JSON::Builder)
+      json.string(to_string)
+    end
+
     private def compress_address
       str = @groups.map { |i| i.to_s(16) }.join(":")
       orig = str.dup
