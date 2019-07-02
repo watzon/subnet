@@ -91,7 +91,7 @@ module Subnet
     getter prefix : Prefix128
 
     # Format string to pretty print IPv6 addresses
-    IN6FORMAT = ("%04x:" * 8).chomp
+    IN6FORMAT = ("%04x:" * 8).chomp(':')
 
     # Creates a new IPv6 address object.
     #
@@ -137,7 +137,7 @@ module Subnet
     # of 128 bits.
     #
     # ```
-    # ip6 = Subnet("2001:db8::8:800:200c:417a")
+    # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a")
     #
     # puts ip6.to_string
     #   #=> "2001:db8::8:800:200c:417a/128"
@@ -160,7 +160,7 @@ module Subnet
     #   #=> "2001:0db8:0000:0000:0008:0800:200c:417a/64"
     # ```
     def to_string_uncompressed
-      "#@address/#@prefix"
+      "#{@address}/#{@prefix}"
     end
 
     # Returns the IPv6 address in a human readable form,
@@ -173,7 +173,7 @@ module Subnet
     #   #=> "2001:db8::8:800:200c:417a/64"
     # ```
     def to_string
-      "#@compressed/#@prefix"
+      "#{@compressed}/#{@prefix}"
     end
 
     # Returns the IPv6 address in a human readable form,
@@ -189,8 +189,9 @@ module Subnet
       @compressed
     end
 
-    # Returns a decimal format (unsigned 128 bit) of the
-    # IPv6 address
+    # Returns a the address in as a `BigInt` (will return a
+    # `UInt128` once support for that is finished in
+    # the stdlib)
     #
     # ```
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
@@ -199,12 +200,17 @@ module Subnet
     #   #=> 42540766411282592856906245548098208122
     # ```
     def to_i
-      hexstring.to_big_i(16)
+      to_big_i
     end
 
     # ditto
     def to_u128
-      to_i
+      to_big_i
+    end
+
+    # Return the address as a `BigInt`
+    def to_big_i
+      hexstring.to_big_i(16)
     end
 
     # True if the IPv6 address is a network
@@ -227,7 +233,7 @@ module Subnet
     # Returns the 16-bits value specified by index
     #
     # ```
-    # ip = Subnet("2001:db8::8:800:200c:417a/64")
+    # ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
     #
     # ip[0]
     #   #=> 8193
@@ -264,7 +270,7 @@ module Subnet
     #   #=> "20010db80000000000080800200c417a"
     # ```
     def hexstring
-      hexs.join("")
+      hex_groups.join("")
     end
 
     # Returns the address portion of an IPv6 object
@@ -279,15 +285,6 @@ module Subnet
     #
     # It is usually used to include an IP address
     # in a data packet to be sent over a socket
-    #
-    # ```
-    # a = Socket.open(params) # socket details here
-    # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
-    # binary_data = ["Address: "].pack("a*") + ip.data
-    #
-    # # Send binary data
-    # a.puts binary_data
-    # ```
     def data
       String.new(hexstring.hexbytes)
     end
@@ -298,13 +295,13 @@ module Subnet
     # ```
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
     #
-    # ip6.hexs
+    # ip6.hex_groups
     #   #=> ["2001", "0db8", "0000", "0000", "0008", "0800", "200c", "417a"]
     # ```
     #
     # Not to be confused with the similar `IPv6#hexstring` method.
     #
-    def hexs
+    def hex_groups
       @address.split(":")
     end
 
@@ -360,13 +357,13 @@ module Subnet
     # address and the broadcast address.
     #
     # ```
-    # ip6 = Subnet("2001:db8::8:800:200c:417a/64")
+    # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
     #
     # ip6.size
     #   #=> 18446744073709551616
     # ```
     def size
-      2 ** @prefix.host_prefix
+      2.to_big_i ** @prefix.host_prefix.to_big_i
     end
 
     # Checks whether a subnet includes the given IP address.
@@ -380,11 +377,11 @@ module Subnet
     # ip6.includes? addr
     #   #=> true
     #
-    # ip6.includes? Subnet("2001:db8:1::8:800:200c:417a/76")
+    # ip6.includes? Subnet::IPv6.new("2001:db8:1::8:800:200c:417a/76")
     #   #=> false
     # ```
     def includes?(oth)
-      @prefix <= oth.prefix && network_u128 == self.class.new(oth.address+"/#@prefix").network_u128
+      @prefix <= oth.prefix && network_u128 == self.class.new(oth.address + "/#{@prefix}").network_u128
     end
 
     # Compressed form of the IPv6 address
@@ -460,7 +457,7 @@ module Subnet
     # from the iteration.
     #
     # ```
-    # ip6 = Subnet("2001:db8::4/125")
+    # ip6 = Subnet::IPv6.new("2001:db8::4/125")
     #
     # ip6.each do |i|
     #   p i.compressed
@@ -525,13 +522,13 @@ module Subnet
     # as a string containing a sequence of 0 and 1
     #
     # ```
-    # ip6 = Subnet("2001:db8::8:800:200c:417a")
+    # ip6 = Subnet::IPv6.new("2001:db8::8:800:200c:417a")
     #
     # ip6.bits
     #   #=> "0010000000000001000011011011100000 [...] "
     # ```
     def bits
-      data.unpack("B*").first
+      "%0128b" % to_i
     end
 
     # Expands an IPv6 address in the canocical form
@@ -582,11 +579,16 @@ module Subnet
     # Extract 16 bits groups from a string
     def self.groups(str)
       l, r = if str =~ /^(.*)::(.*)$/
-               [$1, $2].map {|i| i.split ":"}
+               [$1, $2].map { |i| i.split ":" }
              else
                [str.split(":"), [] of String]
              end
-      (l + Array.new(8 - l.size - r.size, "0") + r).map(&.to_i(16))
+
+      (l + Array.new(8 - l.size - r.size, "0") + r)
+        # Ruby allows conversion of nil to int, but Crystal doesn't
+        # so we have to do this
+        .map { |s| s.empty? ? "0" : s }
+        .map(&.to_i(16))
     end
 
     # Creates a new IPv6 object from binary data,
@@ -672,7 +674,7 @@ module Subnet
     # Example:
     #
     # ```
-    # ip = Subnet("10.0.0.0/24")
+    # ip = Subnet::IPv6.new("10.0.0.0/24")
     # ip.allocate
     #   #=> "10.0.0.1/24"
     # ip.allocate
@@ -695,15 +697,22 @@ module Subnet
     end
 
     private def compress_address
-      str = @groups.map{|i| i.to_s 16}.join ":"
+      str = @groups.map{|i| i.to_s(16) }.join(":")
+      orig = str.dup
       loop do
-        break if str = str.sub(/\A0:0:0:0:0:0:0:0\Z/, "::")
-        break if str = str.sub(/\b0:0:0:0:0:0:0\b/, ":")
-        break if str = str.sub(/\b0:0:0:0:0:0\b/, ":")
-        break if str = str.sub(/\b0:0:0:0:0\b/, ":")
-        break if str = str.sub(/\b0:0:0:0\b/, ":")
-        break if str = str.sub(/\b0:0:0\b/, ":")
-        break if str = str.sub(/\b0:0\b/, ":")
+        str = str.sub(/\A0:0:0:0:0:0:0:0\Z/, "::")
+        break if str != orig
+        str = str.sub(/\b0:0:0:0:0:0:0\b/, ":")
+        break if str != orig
+        str = str.sub(/\b0:0:0:0:0:0\b/, ":")
+        break if str != orig
+        str = str.sub(/\b0:0:0:0:0\b/, ":")
+        break if str != orig
+        str = str.sub(/\b0:0:0:0\b/, ":")
+        break if str != orig
+        str = str.sub(/\b0:0:0\b/, ":")
+        break if str != orig
+        str = str.sub(/\b0:0\b/, ":")
         break
       end
       str.sub(/:{3,}/, "::")

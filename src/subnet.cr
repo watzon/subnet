@@ -26,7 +26,7 @@ module Subnet
   # ip_mapped.class
   #   # => Subnet::IPv6::Mapped
   # ```
-  def self.parse(str)
+  def self.parse(str) : Subnet
 
     # Check if an int was passed
     if str.is_a? Number
