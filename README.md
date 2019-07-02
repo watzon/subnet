@@ -19,6 +19,12 @@ This document provides a brief introduction to the library and examples of typic
       - [Networks](#Networks)
       - [Broadcast](#Broadcast)
     - [Addresses, ranges, and iterators](#Addresses-ranges-and-iterators)
+    - [Special formats](#Special-formats)
+    - [Classful networks](#Classful-networks)
+    - [Network design with Subnet](#Network-design-with-Subnet)
+      - [Subnetting](#Subnetting)
+      - [Summarization](#Summarization)
+      - [Supernetting](#Supernetting)
   - [Contributing](#Contributing)
   - [Contributors](#Contributors)
 
@@ -281,6 +287,275 @@ range = Subnet.parse("192.168.0.1")..Subnet.parse("192.168.0.255")
 puts range.size
 # => 255
 ```
+
+### Special formats
+
+The Subnet library provides a complete set of methods to access an IPv4 object in special formats such as binary, hexidecimal, 32 bit unsigned int, and a raw data string.
+
+Let's check out the following IPv4 for example
+
+```crystal
+ip = Subnet::IPv4.new("172.16.10.1/24")
+
+ip.address
+# => "172.16.10.1"
+```
+
+The first thing to highlight here is that all these conversion methods only take into consideration the address portion of an IPv4 object and not the prefix (netmask).
+
+So, to express the address in binary format, use the `IPv4#bits` method
+
+```crystal
+ip.bits
+# => "10101100000100000000101000000001"
+```
+
+To calculate the 32 bits unsigned int format of the ip address, use the `IPv4#to_u32` method
+
+```crystal
+ip.to_u32
+# => 2886732289
+```
+
+This method is the equivalent of the Unix call `pton()`, expressing an IP address in the so called *network byte order* notation.
+
+To maintain compatibility with the Ruby library the `IPv4#data` was included. Apparently it's useful for transmitting data over a network socket
+
+```crystal
+ip.data
+# => "\254\020\n\001
+```
+
+You can also transform IPv4 addresses into a format which is suitable to use in IPv4-IPv6 mapped addresses
+
+```crystal
+ip.to_ipv6
+# => "ac10:0a01"
+```
+
+Finally, much like `IPv4#to_ipv6` you can use the `IPv4#hexstring` method to return a non-semicolon delineated string (useful with pcap/byte level usage)
+
+```crystal
+ip.hexstring
+# => "ac100a01"
+```
+
+### Classful networks
+
+Subnet allows you to create and manipulate objects using the old and deprecated (but apparently still popular) classful networks concept.
+
+Classful networks and addresses don't have a prefix: their subnet mask is univocally identified by their address, and therefore divided in classes. As per RFC 791, these classes are:
+
+- Class A, from 0.0.0.0 to 127.255.255.255
+- Class B, from 128.0.0.0 to 191.255.255.255
+- Class C, from 192.0.0.0 to 255.255.255.255
+
+Since classful networks here are only considered to calculate the default prefix number, classes D and E are not considered.
+
+To create a classful IP and prefix from an IP address, use the `IPv4::parse_classful` method
+
+```crystal
+# classful ip 
+ip = Subnet::IPv4::parse_classful("10.1.1.1")
+
+ip.prefix
+# => 8
+```
+
+The method automatically creates a new IPv4 object and assigned it the correct prefix.
+
+You can easily check which CLASSFUL network an IPv4 object belongs to
+
+```crystal
+ip = Subnet::IPv4.new("10.0.0.1/24")
+ip.a?
+# => true
+
+ip = Subnet::IPv4.new("172.16.10.1/24")
+ip.b?
+# => true
+
+ip = Subnet::IPv4.new("192.168.1.1/30")
+ip.c?
+# => true
+```
+
+Remember that these methods are only checking the address portion of an IP, and are independent from its prefix, as classful networks have no concept of prefix.
+
+For more information on CLASSFUL networks visit the [Wikipedia page](http://en.wikipedia.org/wiki/Classful_network).
+
+### Network design with Subnet
+
+Subnet includes several useful methods to manipulate IPv4 and IPv6 networks and do some basic network design.
+
+#### Subnetting
+
+The process of subnetting is the division of a network into smaller (in terms of hosts capacity) networks, called subnets, so that they all share a common root, which is the starting network.
+
+For example, if you have network `172.16.10.0/24`, we can subnet it into 4 smaller subnets. The new prefix will be /26, because 4 is 2^2 and therefore we add 2 bits to the network prefix (24+2=26).
+
+Subnetting is easy with Subnet. You actually have two options:
+
+- `IPv4#subnet`: specify a new prefix
+- `IPv4#split`: tell Subnet how many subnets you want to create
+
+Let's examine `IPv4#subnet` first. Say you have network `172.16.10.0/24` and you want to subnet it into /26 networks. With Subnet it's extremely simple
+
+```crystal
+network = Subnet::IPv4.new("172.16.10.0/24")
+
+subnets = network.subnet(26)
+
+subnets.map(&.to_string)
+# => ["172.16.10.0/26", 
+      "172.16.10.64/26", 
+      "172.16.10.128/26", 
+      "172.16.10.192/26"]
+```
+
+As you can see, an Array has been created, containing 4 new IPv4 objects representing the new subnets.
+
+Another way to create subnets is to tell Subnet how many subnets you'd like to have, and letting the library calculate the new prefix for you.
+
+Let's see how it works, using `IPv4#split` method. Say you want 4 new subnets
+
+```crystal
+network = Subnet::IPv4.new("172.16.10.0/24")
+
+subnets = network.split(4)
+
+subnets.map(&.to_string)
+# => ["172.16.10.0/26", 
+      "172.16.10.64/26", 
+      "172.16.10.128/26", 
+      "172.16.10.192/26"]
+```
+
+Hey, that's the same result as before! This actually makes sense, as the two operations are complementary. When you use `IPv4#subnet` with the new prefix, Subnet will always create a number of subnets that is a power of two. This is equivalent to use `IPv4#split` with a power of 2.
+
+Where `IPv4#split` really shines is with the so called *uneven subnetting*. You are not limited to splitting a network into a power-of-two number of subnets: Subnet lets you create any number of subnets, and it will try to organize the new created network in the best possible way, making an efficient allocation of the space.
+
+An example here is worth a thousand words. Let's use the same network as the previous examples
+
+```crystal
+network = Subnet::IPv4.parse("172.16.10.0/24")
+```
+
+How do we split this network into 3 subnets? Very easy
+
+```crystal
+subnets = network.split(3)
+
+subnets.map(&.to_string)
+# => ["172.16.10.0/26",
+      "172.16.10.64/26",
+      "172.16.10.128/25"]
+```
+
+As you can see, Subnet tried to perform an efficient allocation by filling up all the address space from the original network. There is no point in splitting a network into 3 subnets like `172.16.10.0/26`, `172.16.10.64/26` and `172.16.10.128/26`, as you would end up having `172.16.10.192/26` wasted.
+
+We can go even further and split into 11 subnets
+
+```crystal
+subnets = network.split(11)
+
+subnets.map(&.to_string)
+# => ["172.16.10.0/28", "172.16.10.16/28", "172.16.10.32/28",
+      "172.16.10.48/28", "172.16.10.64/28", "172.16.10.80/28",
+      "172.16.10.96/28", "172.16.10.112/28", "172.16.10.128/27",
+      "172.16.10.160/27", "172.16.10.192/26"]
+```
+
+As you can see, most of the networks are `/28`, with a few `/27` and one `/26` to fill up the remaining space.
+
+#### Summarization
+
+Summarization (or aggregation) is the process when two or more networks are taken together to check if a supernet, including all and only these networks, exists. If it exists then this supernet is called the summarized (or aggregated) network. It is very important to understand that summarization can only occur if there are no holes in the aggregated network, or, in other words, if the given networks fills completely the address space of the supernet. So the two rules are
+
+1. The aggregate network must contain all the IP addresses of the original networks
+2. The aggregate network must contain only the IP addresses of the original networks
+
+A few examples will help clarify the above. Let's consider for instance the following two networks
+
+```crystal
+ip1 = Subnet::IPv4.new("172.16.10.0/24")
+ip2 = Subnet::IPv4.new("172.16.11.0/24")
+```
+
+These two networks can be expressed using only one IP address network if we change the prefix. Let Crystal do the work
+
+```crystal
+Subnet::IPv4::summarize(ip1, ip2).map(&.to_string)
+# => "172.16.10.0/23"
+```
+
+We note how the network `172.16.10.0/23` includes all the addresses specified in the above networks, and (more importantly) includes ONLY those addresses.
+
+If we summarized `ip1` and `ip2` with the following network
+
+```crystal
+"172.16.0.0/16"
+```
+
+we would have satisfied rule #1 above, but not rule #2. So
+
+```crystal
+"172.16.0.0/16"
+```
+
+is not an aggregate network for ip1 and ip2.
+
+If it's not possible to compute a single aggregated network for all the original networks, the method returns an array with all the aggregate networks found. For example, the following four networks can be aggregated in a single `/22`
+
+```crystal
+ip1 = Subnet::IPv4.new("10.0.0.1/24")
+ip2 = Subnet::IPv4.new("10.0.1.1/24")
+ip3 = Subnet::IPv4.new("10.0.2.1/24")
+ip4 = Subnet::IPv4.new("10.0.3.1/24")
+
+Subnet::IPv4::summarize(ip1, ip2, ip3, ip4).map(&.to_string)
+# => ["10.0.0.0/22"]
+```
+
+But the following networks can't be summarized in a single network:
+
+```crystal
+ip1 = Subnet::IPv4.new("10.0.1.1/24")
+ip2 = Subnet::IPv4.new("10.0.2.1/24")
+ip3 = Subnet::IPv4.new("10.0.3.1/24")
+ip4 = Subnet::IPv4.new("10.0.4.1/24")
+
+Subnet::IPv4::summarize(ip1, ip2, ip3, ip4).map(&.to_string)
+# => ["10.0.1.0/24", "10.0.2.0/23", "10.0.4.0/24"]
+```
+
+In this case, the two summarizables networks have been aggregated into a single `/23`, while the other two networks have been left untouched.
+
+#### Supernetting
+
+Supernetting is a different operation than aggregation, as it only works on a single network and returns a new single IPv4 object, representing the supernet.
+
+Supernetting is similar to subnetting, except that you getting as a result a network with a smaller prefix (bigger host space). For example, given the network
+
+```crystal
+ip = Subnet::IPv4.new("172.16.10.0/24")
+```
+
+you can supernet it with a new `/23` prefix
+
+```crystal
+ip.supernet(23).to_string
+# => "172.16.10.0/23"
+```
+
+However if you supernet it with a `/22` prefix, the network address will change
+
+```crystal
+ip.supernet(22).to_string
+# => "172.16.8.0/22"
+```
+
+This is because `172.16.10.0/22` is not a network anymore, but a host address.
 
 ## Contributing
 
