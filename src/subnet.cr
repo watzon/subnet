@@ -1,7 +1,6 @@
 require "./subnet/version"
 require "./subnet/ipv4"
 require "./subnet/ipv6"
-require "./subnet/mongoid"
 
 # TODO: Write documentation for `Subnet`
 module Subnet
