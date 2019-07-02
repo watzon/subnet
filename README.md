@@ -18,6 +18,7 @@ This document provides a brief introduction to the library and examples of typic
     - [Working with networks, broadcasts, and addresses](#Working-with-networks-broadcasts-and-addresses)
       - [Networks](#Networks)
       - [Broadcast](#Broadcast)
+    - [Addresses, ranges, and iterators](#Addresses-ranges-and-iterators)
   - [Contributing](#Contributing)
   - [Contributors](#Contributors)
 
@@ -72,7 +73,7 @@ If you don't explicitly specify the prefix (or the subnet mask), Subnet will thi
 host = Subnet::IPv4.new("10.1.1.1")
 
 puts host.to_string
-  #=> "10.1.1.1/32"
+# => "10.1.1.1/32"
 ```
 
 You can also parse a `UInt32` to create a new IPv4 object
@@ -80,7 +81,7 @@ You can also parse a `UInt32` to create a new IPv4 object
 ```crystal
 ip = IPv4.parse_u32(167837953)
 puts ip.to_string
-  #=> "10.1.1.1/32"
+# => "10.1.1.1/32"
 ```
 
 ### Handling IPv4 addresses
@@ -91,44 +92,44 @@ Once created, you can obtain the attributes for an IPv4 object
 ip = Subnet::IPv4.new("172.16.10.1/24")
 
 ip.address
-  #=> "172.16.10.1"
+# => "172.16.10.1"
 ip.prefix
-  #=> 24
+# => 24
 ```
 
 If you need to retrieve the netmask in IPv4 format, you can use the `IPv4#netmask` method:
 
 ```crystal
 ip.netmask
-  #=> "255.255.255.0"
+# => "255.255.255.0"
 ```
 
 A special attribute, `IPv4#octets`, is available to get the four decimal octets from the IP address:
 
 ```crystal
 ip.octets
-  #=> [172, 16, 10, 1]
+# => [172, 16, 10, 1]
 ```
 
 The shortcut method `IPv4#[]`, provides access to a given octet at the specified index:
 
 ```
 ip[1]
-  #=> 16
+# => 16
 ```
 
 If you need to print out the IPv4 address in a canonical form, you can use `IPv4#to_string`:
 
 ```crystal
 ip.to_string
-  #=> "172.16.10.1/24"
+# => "172.16.10.1/24"
 ```
 
 `IPv4#to_s` is also available and prints the address without the prefix
 
 ```crystal
 ip.to_s
-  #=> "172.16.10.1"
+# => "172.16.10.1"
 ```
 
 ### Changing netmask
@@ -139,7 +140,7 @@ You can set a new prefix (netmask) after creating an IPv4 object. For example
 ip.prefix = 25
 
 ip.to_string
-  #=> "172.16.10.1/25"
+# => "172.16.10.1/25"
 ```
 
 If you need to use a netmask in IPv4 format, you can do so by using the `IPv4#netmask=` method
@@ -148,7 +149,7 @@ If you need to use a netmask in IPv4 format, you can do so by using the `IPv4#ne
 ip.netmask = "255.255.255.252"
 
 ip.to_string
-  #=> "172.16.10.1/30"
+# => "172.16.10.1/30"
 ```
 
 ### Working with networks, broadcasts, and addresses
@@ -172,11 +173,11 @@ With Subnet it's very easy to calculate the network for an IP address
 ip = Subnet.pars  "172.16.10.1/24"
 
 net = ip.network
-  #=> #<Subnet::IPv4:0xb7a5ab24 @octets=[172, 16, 10, 0], 
-                                @prefix=24,
-                                @address="172.16.10.0">
+# => #<Subnet::IPv4:0xb7a5ab24 @octets=[172, 16, 10, 0], 
+                               @prefix=24,
+                               @address="172.16.10.0">
 net.to_string
-  #=> "172.16.10.0/24"
+# => "172.16.10.0/24"
 ```
 The method `IPv4#network` creates a new IPv4 object from the network number, calculated after the original object. I want to outline here that the network address is a perfectly legitimate IPv4 address, which just happen to have all zeroes in the host portion.
 
@@ -187,9 +188,9 @@ ip1 = Subnet::IPv4.new "172.16.10.1/24"
 ip2 = Subnet::IPv4.new "172.16.10.4/30"
 
 ip1.network?
-  #=> false
+# => false
 ip2.network?
-  #=> true
+# => true
 ```
 
 #### Broadcast
@@ -202,11 +203,83 @@ The method `IPv4#broadcast` has the same behavior as its `#network` counterpart:
 ip = Subnet::IPv4.new("172.16.10.1/24")
 
 bcast = ip.broadcast
-  #=> #<Subnet::IPv4:0xb7a406fc @octets=[172, 16, 10, 255],
-                                @prefix=24, 
-                                @address="172.16.10.255">
+# => #<Subnet::IPv4:0xb7a406fc @octets=[172, 16, 10, 255],
+                               @prefix=24, 
+                               @address="172.16.10.255">
 bcast.to_string
-  #=> "172.16.10.255/24"
+# => "172.16.10.255/24"
+```
+
+### Addresses, ranges, and iterators
+
+Class `IPv4` includes the `Iterator` and `Enumberable` modules, as well as having the methods `succ` and `pred` which allow it to be used with `Range`. This makes creating sets of addresses very easy, and very powerful.
+
+Let's start with `IPv4#each`, which iterates over all addresses in a range
+
+```crystal
+ip = Subnet::IPv4.new("172.16.10.1/24")
+
+ip.each do |addr|
+  puts addr
+end
+```
+
+It is important to note that it doesn't matter if the original IP is a host IP or a network number (or a broadcast address): the `#each` method only considers the range that the original IP specifies.
+
+If you only want to iterate over hosts IP, use the `IPv4#each_host` method
+
+```crystal
+ip = Subnet::IPv4.new("172.16.10.1/24")
+
+ip.each_host do |host|
+  puts host
+end
+```
+
+Methods `IPv4#first` and `IPv4#last` return a new object containing respectively the first and the last host address in the range
+
+```crystal
+ip = Subnet:IPv4.new("172.16.10.100/24")
+
+ip.first.to_string
+# => "172.16.10.1/24"
+
+ip.last.to_string
+# => "172.16.10.254/24"
+```
+
+Checking if an address is loopback is easy with the `IPv4#loopback?` method
+
+```crystal
+ip = IPAddress "127.0.0.1"
+
+ip.loopback?
+# => true
+```
+
+Checking if an address is in the multicast range can be done using the `IPv4#multicast?` method
+
+```crystal
+ip = IPAddress "224.0.0.1/32"
+
+ip.multicast?
+# => true
+```
+
+The ability to generate a range also exists by using the `IPv4#to()` method. This allows you to create a subnet agnostic range based off a fixed amount.
+
+```crystal
+ip = IPAddress "172.16.10.100/24"
+ip.to("172.16.10.110")
+# => ["172.16.10.100", ..., "172.16.10.110"]
+```
+
+As mentioned previously, you can also create Crystal Ranges using the Range literal
+
+```crystal
+range = Subnet.parse("192.168.0.1")..Subnet.parse("192.168.0.255")
+puts range.size
+# => 255
 ```
 
 ## Contributing
