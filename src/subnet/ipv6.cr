@@ -54,6 +54,7 @@ module Subnet
   # portion.
   class IPv6
     include Subnet
+    include Iterator(IPv6)
     include Enumerable(IPv6)
     include Comparable(Subnet)
 
@@ -510,6 +511,43 @@ module Subnet
     def <=>(oth)
       return prefix <=> oth.prefix if to_i == oth.to_i
       to_i <=> oth.to_i
+    end
+
+    # Returns the successor to the IP address
+    #
+    # Example:
+    #
+    # ```
+    # ip = Subnet.parse("192.168.45.23/16")
+    #
+    # ip.succ.to_string
+    #   => "192.168.45.24/16"
+    # ```
+    def succ
+      self.class.parse_u128(to_i.succ, prefix)
+    end
+
+    # Returns the next IP address in the network, or
+    # `Iterator::Stop::INSTANCE` when out of
+    # addresses.
+    def next
+      next_i = to_i.succ
+      return Iterator::Stop::INSTANCE if next_i >= 2.to_big_i ** 64.to_big_i
+      self.class.parse_u128(next_i, prefix)
+    end
+
+    # Returns the predecessor to the IP address
+    #
+    # Example:
+    #
+    # ```
+    # ip = Subnet.parse("192.168.45.23/16")
+    #
+    # ip.pred.to_string
+    #   => "192.168.45.22/16"
+    # ```
+    def pred
+      self.class.parse_u128(to_i.pred, prefix)
     end
 
     # Returns the address portion of an IP in binary format,
