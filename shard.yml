@@ -4,6 +4,6 @@ version: 0.1.0
 authors:
   - Chris Watson <chris@watzon.me>
 
-crystal: 0.29.0
+crystal: 0.30.0
 
 license: MIT
