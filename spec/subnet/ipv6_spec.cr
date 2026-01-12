@@ -1,4 +1,3 @@
-require "big"
 require "../subnet_spec"
 
 IPV6_COMPRESS_ADDR = {
@@ -10,20 +9,20 @@ IPV6_COMPRESS_ADDR = {
 }
 
 VALID_IPV6 = { # Kindly taken from the python IPy library
-  "FEDC:BA98:7654:3210:FEDC:BA98:7654:3210" => BigInt.new("338770000845734292534325025077361652240"),
-  "1080:0000:0000:0000:0008:0800:200C:417A" => BigInt.new("21932261930451111902915077091070067066"),
-  "1080:0:0:0:8:800:200C:417A"              => BigInt.new("21932261930451111902915077091070067066"),
-  "1080:0::8:800:200C:417A"                 => BigInt.new("21932261930451111902915077091070067066"),
-  "1080::8:800:200C:417A"                   => BigInt.new("21932261930451111902915077091070067066"),
-  "FF01:0:0:0:0:0:0:43"                     => BigInt.new("338958331222012082418099330867817087043"),
-  "FF01:0:0::0:0:43"                        => BigInt.new("338958331222012082418099330867817087043"),
-  "FF01::43"                                => BigInt.new("338958331222012082418099330867817087043"),
-  "0:0:0:0:0:0:0:1"                         => 1,
-  "0:0:0::0:0:1"                            => 1,
-  "::1"                                     => 1,
-  "0:0:0:0:0:0:0:0"                         => 0,
-  "0:0:0::0:0:0"                            => 0,
-  "::"                                      => 0,
+  "FEDC:BA98:7654:3210:FEDC:BA98:7654:3210" => 338770000845734292534325025077361652240_u128,
+  "1080:0000:0000:0000:0008:0800:200C:417A" => 21932261930451111902915077091070067066_u128,
+  "1080:0:0:0:8:800:200C:417A"              => 21932261930451111902915077091070067066_u128,
+  "1080:0::8:800:200C:417A"                 => 21932261930451111902915077091070067066_u128,
+  "1080::8:800:200C:417A"                   => 21932261930451111902915077091070067066_u128,
+  "FF01:0:0:0:0:0:0:43"                     => 338958331222012082418099330867817087043_u128,
+  "FF01:0:0::0:0:43"                        => 338958331222012082418099330867817087043_u128,
+  "FF01::43"                                => 338958331222012082418099330867817087043_u128,
+  "0:0:0:0:0:0:0:1"                         => 1_u128,
+  "0:0:0::0:0:1"                            => 1_u128,
+  "::1"                                     => 1_u128,
+  "0:0:0:0:0:0:0:0"                         => 0_u128,
+  "0:0:0::0:0:0"                            => 0_u128,
+  "::"                                      => 0_u128,
 }
 
 INVALID_IPV6 = [
@@ -130,7 +129,7 @@ describe Subnet::IPv6 do
       end
     end
 
-    pending "should be a UInt128" do
+    it "should be a UInt128" do
       IPV6.to_i.should be_a UInt128
     end
   end
@@ -198,14 +197,14 @@ describe Subnet::IPv6 do
 
   describe "#network_u128" do
     it "should return a 128 bit representation of the network address" do
-      num = BigInt.new("42540766411282592856903984951653826560")
+      num = 42540766411282592856903984951653826560_u128
       IPV6.network_u128.should eq num
     end
   end
 
   describe "#broadcast_u128" do
     it "should return a 128 bit representation of the network address" do
-      num = BigInt.new("42540766411282592875350729025363378175")
+      num = 42540766411282592875350729025363378175_u128
       IPV6.broadcast_u128.should eq num
     end
   end
@@ -213,16 +212,16 @@ describe Subnet::IPv6 do
   describe "#size" do
     it "should return the number of ip addresses in the network" do
       ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/64")
-      ip.size.should eq 2.to_big_i ** 64.to_big_i
+      ip.size.should eq 1_u128 << 64
 
       ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/32")
-      ip.size.should eq 2.to_big_i ** 96.to_big_i
+      ip.size.should eq 1_u128 << 96
 
       ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/120")
-      ip.size.should eq 2.to_big_i ** 8.to_big_i
+      ip.size.should eq 1_u128 << 8
 
       ip = Subnet::IPv6.new("2001:db8::8:800:200c:417a/124")
-      ip.size.should eq 2.to_big_i ** 4.to_big_i
+      ip.size.should eq 1_u128 << 4
     end
   end
 
@@ -664,7 +663,7 @@ describe Subnet::IPv6 do
     describe "#to_u128" do
       it "should return the string representation of the address with prefix" do
         ip = Subnet::IPv6::Mapped.new("::172.16.10.1")
-        ip.to_u128.should eq BigInt.new("281473568475649")
+        ip.to_u128.should eq 281473568475649_u128
       end
     end
 
