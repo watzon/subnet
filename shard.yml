@@ -1,9 +1,9 @@
 name: subnet
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - Chris Watson <chris@watzon.me>
 
-crystal: 0.30.0
+crystal: ">= 1.0.0"
 
 license: MIT
