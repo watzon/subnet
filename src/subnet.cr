@@ -54,7 +54,7 @@ module Subnet
       raise ArgumentError.new("not a long integer: #{uint.inspect}")
     end
 
-    ret = [] of UInt8 | UInt16 | UInt32 | UInt64 | Int32 | Int64 | BigInt
+    ret = [] of UInt8 | UInt16 | UInt32 | UInt64 | UInt128 | Int32 | Int64 | Int128
     4.times do
       ret.unshift(uint & 0xff)
       uint >>= 8
@@ -139,8 +139,10 @@ module Subnet
   #   # => false
   # ```
   def self.valid_ipv4_subnet?(addr)
-    ip, netmask = addr.split('/')
+    parts = addr.split('/')
+    return false unless parts.size == 2
 
+    ip, netmask = parts[0], parts[1]
     valid_ipv4?(ip) && (!(netmask =~ /\A([12]?\d|3[0-2])\z/).nil? || valid_ipv4_netmask?(netmask))
   end
 
@@ -159,11 +161,13 @@ module Subnet
   #   # => false
   # ```
   def self.valid_ipv6_subnet?(addr)
-    ip, netmask = addr.split('/')
+    parts = addr.split('/')
+    return false unless parts.size == 2
 
-    netmask = netmask.to_i(10)
+    ip, netmask = parts[0], parts[1]
+    netmask_i = netmask.to_i(10)
 
-    valid_ipv6?(ip) && netmask >= 0 && netmask <= 128
+    valid_ipv6?(ip) && netmask_i >= 0 && netmask_i <= 128
   rescue ArgumentError
     false
   end

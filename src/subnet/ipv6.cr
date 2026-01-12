@@ -90,6 +90,8 @@ module Subnet
     # ```
     getter prefix : Prefix128
 
+    @allocator : UInt128 = 0_u128
+
     # Format string to pretty print IPv6 addresses
     IN6FORMAT = ("%04x:" * 8).chomp(':')
 
@@ -126,7 +128,6 @@ module Subnet
       end
 
       @prefix = Prefix128.new(netmask ? netmask : 128)
-      @allocator = 0
     end
 
     # Set a new prefix number for the object
@@ -189,9 +190,7 @@ module Subnet
       @compressed
     end
 
-    # Returns a the address in as a `BigInt` (will return a
-    # `UInt128` once support for that is finished in
-    # the stdlib)
+    # Returns the address as a `UInt128`
     #
     # ```
     # ip6 = Subnet.parse "2001:db8::8:800:200c:417a/64"
@@ -199,18 +198,13 @@ module Subnet
     # ip6.to_i
     # # => 42540766411282592856906245548098208122
     # ```
-    def to_i
-      to_big_i
+    def to_i : UInt128
+      to_u128
     end
 
-    # ditto
-    def to_u128
-      to_big_i
-    end
-
-    # Return the address as a `BigInt`
-    def to_big_i
-      hexstring.to_big_i(16)
+    # Returns the address as a `UInt128`
+    def to_u128 : UInt128
+      hexstring.to_u128(16)
     end
 
     # True if the IPv6 address is a network
@@ -362,8 +356,8 @@ module Subnet
     # ip6.size
     # # => 18446744073709551616
     # ```
-    def size
-      2.to_big_i ** @prefix.host_prefix.to_big_i
+    def size : UInt128
+      1_u128 << @prefix.host_prefix
     end
 
     # Checks whether a subnet includes the given IP address.
@@ -507,9 +501,9 @@ module Subnet
     # [ip1, ip2, ip3].sort.map { |i| i.to_string }
     # # => ["2001:db8:1::1/64","2001:db8:1::1/65","2001:db8:2::1/64"]
     # ```
-    def <=>(oth)
-      return prefix <=> oth.prefix if to_i == oth.to_i
-      to_i <=> oth.to_i
+    def <=>(other)
+      return prefix <=> other.prefix if to_i == other.to_i
+      to_i <=> other.to_i
     end
 
     # Returns the successor to the IP address
@@ -685,7 +679,7 @@ module Subnet
     # # => "2001:db8::8:800:200c:417a/64"
     # ```
     def self.parse_hex(hexstring, prefix = 128)
-      self.parse_u128(hexstring.to_big_i(16), prefix)
+      self.parse_u128(hexstring.to_u128(16), prefix)
     end
 
     # Allocates a new ip from the current subnet. Optional skip parameter
@@ -720,7 +714,7 @@ module Subnet
     end
 
     def self.new(value : JSON::PullParser) : Subnet::IPv6
-      Subnet.parse(value.read_string)
+      new(value.read_string)
     end
 
     def to_json(json : JSON::Builder)
@@ -815,7 +809,6 @@ module Subnet
         @groups = Array.new(8, 0)
         @prefix = Prefix128.new(128)
         @compressed = compress_address
-        @allocator = 0
       end
     end
 
@@ -855,7 +848,7 @@ module Subnet
     #
     # The IPv6 loopback address corresponds to 127.0.0.1 in IPv4.
     #
-    class Subnet::IPv6::Loopback < Subnet::IPv6
+    class Loopback < IPv6
       #
       # Creates a new IPv6 loopback address
       #
@@ -870,7 +863,6 @@ module Subnet
         @groups = Array.new(7, 0).push(1)
         @prefix = Prefix128.new(128)
         @compressed = compress_address
-        @allocator = 0
       end
     end
 
@@ -980,7 +972,7 @@ module Subnet
           @ipv4 = Subnet::IPv4.extract(string)
         else # IPv4 in hex form
           groups = Subnet::IPv6.groups(string)
-          @ipv4 = Subnet::IPv4.parse_u32((groups[-2] << 16) + groups[-1])
+          @ipv4 = Subnet::IPv4.parse_u32((groups[-2].to_u32 << 16) + groups[-1].to_u32)
         end
         super("::ffff:#{@ipv4.to_ipv6}/#{netmask || 128}")
       end

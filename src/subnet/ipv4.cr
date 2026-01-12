@@ -286,7 +286,7 @@ module Subnet
       when prefix <= 30
         IPv4.parse_u32(broadcast_u32, @prefix)
       when prefix == 31
-        IPv4.parse_u32(-1, @prefix)
+        IPv4.parse_u32(0xFFFFFFFF_u32, @prefix)
       else # prefix == 32
         return self
       end
@@ -496,9 +496,9 @@ module Subnet
     # [ip1, ip2, ip3].sort.map { |i| i.to_s }
     # # => ["10.100.100.1/8","10.100.100.1/16","172.16.0.1/16"]
     # ```
-    def <=>(oth)
-      return prefix <=> oth.prefix if to_i == oth.to_i
-      to_i <=> oth.to_i
+    def <=>(other)
+      return prefix <=> other.prefix if to_i == other.to_i
+      to_i <=> other.to_i
     end
 
     # Returns the number of IP addresses included
@@ -1171,7 +1171,7 @@ module Subnet
     end
 
     def self.new(value : JSON::PullParser) : Subnet::IPv4
-      Subnet.parse(value.read_string)
+      new(value.read_string)
     end
 
     def to_json(json : JSON::Builder)

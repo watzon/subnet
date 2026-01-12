@@ -1,5 +1,3 @@
-require "big"
-
 module Subnet
   # The base class for `Prefix32` and `Prefix128` defining some
   # common methods that exist in both.
@@ -113,7 +111,7 @@ module Subnet
     # # => [255, 255, 255, 0]
     # ```
     def octets
-      ("%08.64x" % bits.to_i64(2)).hexbytes
+      ("%08x" % to_u32).hexbytes
     end
 
     # Unsigned 32 bit number representing the prefix.
@@ -222,10 +220,8 @@ module Subnet
     # prefix.to_u128
     # # => 340282366920938463444927863358058659840
     # ```
-    def to_u128
-      # TODO: Update this to use `UInt128` once support
-      # for it is finished.
-      bits.to_big_i(2)
+    def to_u128 : UInt128
+      bits.to_u128(2)
     end
 
     # Returns the length of the host portion
